@@ -44,3 +44,30 @@
     background: #0056b3;
 }
 
+
+  
+  .footer {
+    color: white;
+    text-align: center;
+    align-items: center;
+    margin-top: auto;
+  }
+  
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .footer-links a {
+    color: white;
+    text-decoration: underline;
+    font-size: 19px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-links a:hover {
+    color: #2ecc71;
+  }
+  

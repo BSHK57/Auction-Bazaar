@@ -24,15 +24,7 @@
     justify-content: center;
 }
 
-.login-image::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(52, 152, 219, 0.7);
-}
+
 
 .login-image h1 {
     color: white;
@@ -53,7 +45,7 @@
 
 .login-form h2 {
     text-align: center;
-    color: var(--text-color);
+    color: #2c3e50;
     margin-bottom: 30px;
     font-size: 1.5rem;
 }
@@ -83,7 +75,7 @@
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #6879e3;
+    color:  #3498db;
     transition: color 0.3s ease;
     font-size: 16px;
     pointer-events: none;

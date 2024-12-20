@@ -1,32 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-body {
-    background: linear-gradient(135deg, #667eea 120%, #764ba2 100%);
-    /* background:linear-gradient(to bottom, #3498db, #2ecc71); */
-}
-.footer {
-    color: white;
-    text-align: center;
-    align-items: center;
-    padding-bottom: 20px;
-    position: absolute;
-    width: 97.5%;
-    bottom: 0;
-  }
-  
-  .footer-links {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .footer-links a {
-    color: white;
-    text-decoration: underline;
-    font-size: 19px;
-    font-weight: bold;
-    transition: color 0.3s ease;
-  }
-  
-  .footer-links a:hover {
-    color:  #2ecc71;
-  }
+/* *{
+  padding: 0%;
+  margin: 0%;
+} */
