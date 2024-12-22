@@ -12,7 +12,8 @@
     gap: 20px; /* Space between the blocks */
 }
 
-.Product-image{
+/* Styling for the product image section */
+.Product-image {
     flex: 1;
     background: linear-gradient(to top, #3498db, #2ecc71);
     background-size: cover;
@@ -21,7 +22,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    border-radius:15px 15px 0 0;
+    border-radius: 15px 15px 0 0;
 }
 
 .product-image {
@@ -42,6 +43,7 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Styling for an empty box in the product image section */
 .empty-box {
     width: 200px;
     height: 200px;
@@ -56,6 +58,7 @@
     background-color: #f9f9f9;
 }
 
+/* Styling for the product form section */
 .product_form {
     flex: 2; /* Larger space for the form */
     display: flex;
@@ -69,6 +72,7 @@
     flex-direction: column;
 }
 
+/* Styling for input groups */
 .input-group {
     position: relative;
     margin-bottom: 15px;
@@ -81,9 +85,11 @@
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 14px;
+    box-sizing: border-box; /* Ensure padding does not affect width */
     transition: all 0.3s ease;
 }
 
+/* Focus styling for inputs */
 .input-group input:focus,
 .input-group select:focus {
     border-color: #2e92d4;
@@ -91,12 +97,15 @@
     box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
 }
 
+/* Label styling */
 .input-group label {
     margin-bottom: 5px;
     font-size: 14px;
     color: #4a4a4a;
 }
-.button-group{
+
+/* Styling for the button group */
+.button-group {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -113,14 +122,16 @@
     cursor: pointer;
     transition: transform 0.2s ease;
     margin-top: 10px;
-    margin-left:20px ;
+    margin-left: 20px;
 }
 
+/* Disabled button styling */
 .button-group button:disabled {
     background: #ccc;
     cursor: not-allowed;
 }
 
+/* Hover and active button styling */
 .button-group button:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
@@ -131,6 +142,7 @@
     transform: scale(0.95);
 }
 
+/* Styling for rows */
 .row-2 {
     display: flex;
     justify-content: space-between;
@@ -142,8 +154,86 @@
     margin-right: 10px;
 }
 
+/* Styling for time and date inputs */
 .time-group input,
 .date-group input {
     width: 100%; /* Stretch the inputs to fill their containers */
-    
+}
+
+/* Responsive Design: Mobile and tablet adjustments */
+@media (max-width: 910px) {
+    .productDetail-wrapper {
+        flex-direction: column; /* Stack elements on top of each other */
+        width: 100%;
+        padding: 10px;
+    }
+
+    .Product-image {
+        border-radius: 15px;
+        margin-bottom: 15px; /* Add space between image and form */
+    }
+
+    .product_form {
+        padding: 10px;
+    }
+
+    .product-image img {
+        max-width: 150px; /* Adjust image size */
+        max-height: 150px;
+    }
+
+    .input-group input,
+    .input-group select {
+        font-size: 16px; /* Make text larger for easier readability */
+        width: 100%;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button-group button {
+        width: 100%; /* Make buttons full width on small screens */
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    .row-2 {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .row-2 .input-group {
+        margin-right: 0;
+        width: 100%; /* Full width for inputs */
+    }
+}
+
+/* Responsive Design: Extra small devices (mobile phones) */
+@media (max-width: 480px) {
+    .productDetail-wrapper {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .Product-image {
+        padding: 15px;
+    }
+
+    .product_image img {
+        max-width: 120px;
+        max-height: 120px;
+    }
+
+    .input-group input,
+    .input-group select {
+        font-size: 14px; /* Smaller font size for small screens */
+    }
+
+    .button-group button {
+        font-size: 14px; /* Smaller font size for small screens */
+        padding: 8px;
+    }
 }
