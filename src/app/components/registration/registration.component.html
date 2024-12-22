@@ -12,13 +12,13 @@
                 <i class="fas fa-user"></i>
                 <input type="text" id="name" name="name" placeholder="Full Name*" [(ngModel)]="name"
                     #nameInput="ngModel" required />
-                <div *ngIf="nameInput.invalid && nameInput.touched" class="error-text">Name is required.</div>
+                <span *ngIf="nameInput.invalid && nameInput.touched" class="error-text">Name is required.</span>
             </div>
             <div class="input-group">
                 <i class="fas fa-user"></i>
                 <input type="text" id="username" name="username" placeholder="Username*" [(ngModel)]="username"
                     #usernameInput="ngModel" required />
-                <div *ngIf="usernameInput.invalid && usernameInput.touched" class="error-text">Username is required.</div>
+                <span *ngIf="usernameInput.invalid && usernameInput.touched" class="error-text">Username is required.</span>
             </div>
             <div class="input-group">
                 <i class="fas fa-envelope"></i>
