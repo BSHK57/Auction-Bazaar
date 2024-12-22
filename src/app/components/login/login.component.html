@@ -21,7 +21,7 @@
         <input [type]="passwordFieldType" id="password" name="password" placeholder="Password*" [(ngModel)]="password"
           #passwordInput="ngModel" required />
         <i class="fas fa-eye toggle-password" [class.fa-eye-slash]="passwordFieldType === 'text'"
-          (click)="ttogglePasswordVisibility()"></i>
+          (click)="togglePasswordVisibility()"></i>
       </div>
 
 

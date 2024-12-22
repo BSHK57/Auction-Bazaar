@@ -1,22 +1,26 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 
 @Component({
   selector: 'app-registration',
-  imports:[CommonModule, FormsModule, RouterLink],
+  standalone: true,
+  imports: [CommonModule, FormsModule, HttpClientModule], // Add HttpClientModule to imports here
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent {
   passwordFieldType: string = "password";
   errorMessage: string = "";
-  name: string = "";
+  name: string = ""; // Include name field
   username: string = "";
   email: string = "";
   password: string = "";
   signupAs: string = "";
+
+  constructor(private http: HttpClient) {} // Inject HttpClient directly into the component
 
   togglePasswordVisibility(): void {
     this.passwordFieldType =
@@ -37,9 +41,24 @@ export class RegistrationComponent {
     }
 
     this.errorMessage = "";
-    alert("SignUp Successful");
-    console.log('Form submitted successfully:', { name, username, email, password, signupAs });
-    signupForm.reset();
+
+    // Create the user data object to send to the backend, including name
+    const userData = { name, username, email, password, role: signupAs };
+
+    // Make the POST request to the backend
+    this.http.post('http://localhost:5000/register', userData).subscribe(
+      (response: any) => {
+        // Handle successful response
+        alert("SignUp Successful");
+        console.log('User registered successfully:', response);
+        signupForm.reset();
+      },
+      (error) => {
+        // Handle error response
+        this.errorMessage = "Error registering user. Please try again.";
+        console.error('Error registering user:', error);
+      }
+    );
   }
 
   isValidEmail(email: string): boolean {
