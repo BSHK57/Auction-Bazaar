@@ -98,7 +98,9 @@
 }
 .button-group{
     display: flex;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-around;
 }
 
 .button-group button {
@@ -127,4 +129,21 @@
 .button-group button:active {
     background: #003f7f;
     transform: scale(0.95);
+}
+
+.row-2 {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Space between the time and date inputs */
+}
+
+.row-2 .input-group {
+    flex: 1; /* Ensure equal width for both inputs */
+    margin-right: 10px;
+}
+
+.time-group input,
+.date-group input {
+    width: 100%; /* Stretch the inputs to fill their containers */
+    
 }
