@@ -34,7 +34,7 @@ export const routes: Routes = [
         component:ForgetPasswordComponent
     },
     {
-        path:"klkl",
+        path:"user-dashboard",
         component:AddProductComponent
     }
 ];
