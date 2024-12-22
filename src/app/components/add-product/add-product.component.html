@@ -1,0 +1,59 @@
+<div class="Product-image">
+    <h1>Add Product Details</h1>
+</div>
+<div class="productDetail-wrapper">
+    <div class="product-image">
+        
+        <p>File Selected: {{ selectedFile ? selectedFile.name : 'No file selected' }}</p>
+        <div *ngIf="isImage(selectedFile); else noFile">
+            <img [src]="filePreview" alt="File preview" />
+        </div>
+        <ng-template #noFile>
+            <div class="empty-box">
+                <p>No file selected</p>
+            </div>
+        </ng-template>
+    </div>
+
+    <!-- Form Section -->
+    <div class="product_form">
+        <form (ngSubmit)="onSubmit()">
+            <div class="input-group">
+                <input type="file" id="file" (change)="onFileSelected($event)" placeholder="Choose File" required />
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="productName" [(ngModel)]="productName" name="productName"
+                    placeholder="Product Name" required />
+            </div>
+
+            <div class="input-group">
+                <input type="number" id="minPrice" [(ngModel)]="minPrice" name="minPrice" placeholder="Min Price"
+                    required />
+            </div>
+
+            <div class="input-group">
+                <select id="category" [(ngModel)]="category" name="category" required>
+                    <option value="" disabled selected hidden>Category</option>
+                    <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <input type="time" id="time" [(ngModel)]="time" name="time" placeholder="Time" required />
+            </div>
+
+            <div class="input-group">
+                <input type="date" id="date" [(ngModel)]="date" name="date" placeholder="Date" required />
+            </div>
+
+            <div class="button-group">
+                <button type="submit"
+                    [disabled]="!selectedFile || !productName || !minPrice || !category || !time || !date">
+                    Add Product
+                </button>
+                <button type="button" (click)="clearForm()">Clear Form</button>
+            </div>
+        </form>
+    </div>
+</div>

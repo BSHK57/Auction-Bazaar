@@ -1,0 +1,130 @@
+/* Styling for the productDetail-wrapper */
+.productDetail-wrapper {
+    display: flex;
+    flex-direction: row; /* Arrange blocks in a row */
+    width: 850px;
+    background-color: white;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    padding: 20px;
+    margin: auto;
+    gap: 20px; /* Space between the blocks */
+}
+
+.Product-image{
+    flex: 1;
+    background: linear-gradient(to top, #3498db, #2ecc71);
+    background-size: cover;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius:15px 15px 0 0;
+}
+
+.product-image {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-right: 2px solid #e0e0e0; /* Add a separator between blocks */
+    padding-right: 20px;
+}
+
+.product-image img {
+    max-width: 200px;
+    max-height: 200px;
+    margin-top: 10px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.empty-box {
+    width: 200px;
+    height: 200px;
+    border: 2px dashed #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    color: #a0a0a0;
+    font-size: 14px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.product_form {
+    flex: 2; /* Larger space for the form */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.product_form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    border-color: #2e92d4;
+    outline: none;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #4a4a4a;
+}
+.button-group{
+    display: flex;
+    align-items: center;
+}
+
+.button-group button {
+    padding: 10px;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    margin-top: 10px;
+    margin-left:20px ;
+}
+
+.button-group button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.button-group button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+.button-group button:active {
+    background: #003f7f;
+    transform: scale(0.95);
+}

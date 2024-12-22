@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { AddProductComponent } from './components/add-product/add-product.component';
 
 export const routes: Routes = [
     {
@@ -31,5 +32,9 @@ export const routes: Routes = [
     {
         path:"forgot-password",
         component:ForgetPasswordComponent
+    },
+    {
+        path:"klkl",
+        component:AddProductComponent
     }
 ];

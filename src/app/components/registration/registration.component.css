@@ -36,34 +36,26 @@
 
 .signup-form h2 {
     text-align: center;
-    color: var(--text-color);
     margin-bottom: 20px; 
     font-size: 1.5rem; 
 }
 
 .input-group {
     position: relative;
-    margin-bottom: 15px; /* Reduced space between inputs */
+    margin-bottom: 25px; /* Adjusted to allow space for error messages */
 }
 
 .input-group input,
 .input-group select {
     width: 87%;
-    padding: 12px; /* Adjusted padding for smaller fields */
+    padding: 12px;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
-    font-size: 14px; /* Reduced font size */
+    font-size: 14px;
     transition: all 0.3s ease;
-    appearance: none; /* Removes default browser styling for dropdown */
-    background: none; /* Removes background color for dropdown */
-    padding-left: 35px; /* Added padding for icons */
-}
-
-.input-group input:focus,
-.input-group select:focus {
-    border-color: #2e92d4;
-    outline: none;
-    box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+    appearance: none;
+    background: none;
+    padding-left: 35px; /* Maintain padding for icons */
 }
 
 .input-group i {
@@ -72,9 +64,17 @@
     top: 50%;
     transform: translateY(-50%);
     color: #3498db;
-    transition: color 0.3s ease;
-    font-size: 16px; /* Reduced icon size */
-    pointer-events: none; /* Prevent icon blocking clicks */
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.input-group .error-text {
+    position: absolute;
+    bottom: -20px; /* Ensure it stays below the input */
+    left: 0;
+    font-size: 12px;
+    color: #e74c3c;
+    min-height: 1em; /* Reserve space for error message */
 }
 
 .input-group input:focus + i,
@@ -82,21 +82,27 @@
     color: #2e92d4;
 }
 
+/* Error state for input fields */
+.input-group input.ng-invalid.ng-touched,
+.input-group select.ng-invalid.ng-touched {
+    border-color: #e74c3c;
+}
+
+/* Ensure toggle-password alignment */
 .input-group .toggle-password {
     position: absolute;
     top: 50%;
-    right: 10%;
-    transform: translate(100%, -50%);
+    right: 15px; /* Adjust to align with input field */
+    transform: translate(95%,-50%);
     color: #a0a0a0;
-    font-size: 16px; /* Adjusted icon size */
-    cursor: pointer; /* Allow clicking */
-    pointer-events: all;
-    transition: color 0.3s ease;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .input-group .toggle-password:hover {
     color: #2e92d4;
 }
+
 
 .signup-btn {
     width: 100%;
