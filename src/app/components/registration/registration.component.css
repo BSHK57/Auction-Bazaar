@@ -19,7 +19,7 @@
 
 .signup-image h1 {
     color: white;
-    font-size: 1.8rem; 
+    font-size: 1.8rem;
     text-align: center;
     z-index: 1;
     position: relative;
@@ -27,7 +27,7 @@
 
 .signup-form {
     flex: 1;
-    padding: 50px; 
+    padding: 50px;
     background: white;
     display: flex;
     flex-direction: column;
@@ -36,18 +36,18 @@
 
 .signup-form h2 {
     text-align: center;
-    margin-bottom: 20px; 
-    font-size: 1.5rem; 
+    margin-bottom: 20px;
+    font-size: 1.5rem;
 }
 
 .input-group {
     position: relative;
-    margin-bottom: 25px; /* Adjusted to allow space for error messages */
+    margin-bottom: 25px;
 }
 
 .input-group input,
 .input-group select {
-    width: 87%;
+    width: 80%;
     padding: 12px;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
@@ -56,6 +56,7 @@
     appearance: none;
     background: none;
     padding-left: 35px; /* Maintain padding for icons */
+    padding-right: 40px; /* Space for the eye icon */
 }
 
 .input-group i {
@@ -68,17 +69,19 @@
     pointer-events: none;
 }
 
-.input-group .error-text {
+.input-group .toggle-password {
     position: absolute;
-    bottom: -20px; /* Ensure it stays below the input */
-    left: 0;
-    font-size: 12px;
-    color: #e74c3c;
-    min-height: 1em; /* Reserve space for error message */
+    top: 50%;
+    right: 15px; /* Adjust the right space to be more consistent */
+    transform: translate(95%,-50%);
+    color: #a0a0a0;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 2; /* Ensure it's above the input field */
+    pointer-events: all; /* Make the icon clickable */
 }
 
-.input-group input:focus + i,
-.input-group select:focus + i {
+.input-group .toggle-password:hover {
     color: #2e92d4;
 }
 
@@ -88,30 +91,23 @@
     border-color: #e74c3c;
 }
 
-/* Ensure toggle-password alignment */
-.input-group .toggle-password {
+.input-group .error-text {
     position: absolute;
-    top: 50%;
-    right: 15px; /* Adjust to align with input field */
-    transform: translate(95%,-50%);
-    color: #a0a0a0;
-    font-size: 16px;
-    cursor: pointer;
+    bottom: -20px; /* Ensure it stays below the input */
+    left: 0;
+    font-size: 12px;
+    color: #e74c3c;
+    min-height: 1em; /* Reserve space for error message */
 }
-
-.input-group .toggle-password:hover {
-    color: #2e92d4;
-}
-
 
 .signup-btn {
     width: 100%;
-    padding: 10px; /* Reduced padding */
+    padding: 10px;
     background: linear-gradient(to right, #3498db, #2ecc71);
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 16px; /* Adjusted font size */
+    font-size: 16px;
     cursor: pointer;
     transition: transform 0.2s ease;
 }
@@ -130,15 +126,15 @@
 }
 
 .signup-btn:active {
-    background: #003f7f; /* Change color when clicked */
-    transform: scale(0.95); /* Optional: add a pressed effect */
+    background: #003f7f;
+    transform: scale(0.95);
 }
 
 .additional-links {
     display: flex;
     justify-content: space-between;
-    margin-top: 10px; /* Reduced margin */
-    font-size: 13px; /* Smaller text */
+    margin-top: 10px;
+    font-size: 13px;
 }
 
 .additional-links a {
@@ -149,12 +145,12 @@
 .error-message {
     color: #e74c3c;
     text-align: center;
-    margin-bottom: 10px; /* Adjusted margin */
+    margin-bottom: 10px;
 }
 
 .input-group select {
     color:#6b6b6b;
-    padding: 12px 35px 12px 40px; /* Adjusted padding for dropdown spacing */
+    padding: 12px 35px 12px 40px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath fill='%236879e3' d='M5 6L0 0h10z'/%3E%3C/svg%3E") no-repeat right 15px center;
     background-size: 10px;
 }
