@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule], // Add HttpClientModule to imports here
+  imports: [CommonModule, FormsModule, HttpClientModule,RouterLink], // Add HttpClientModule to imports here
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })

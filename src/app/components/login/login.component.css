@@ -16,15 +16,12 @@
 .login-image {
     flex: 1;
     background: linear-gradient(to bottom, #3498db, #2ecc71);
-    /* background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 810" preserveAspectRatio="xMinYMin slice"><path fill="%233498db" d="M0 0h1440v810H0z"/><path d="M0 405h1440v405H0z" fill="%232ecc71"/></svg>') no-repeat center center; */
     background-size: cover;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
-
 
 .login-image h1 {
     color: white;
@@ -88,19 +85,18 @@
 .input-group .toggle-password {
     position: absolute;
     top: 50%;
-    right: 10%; /* Adjust as per your input box width */
+    right: 10%;
     transform: translate(100%,-50%);
     color: #a0a0a0;
     font-size: 16px;
     cursor: pointer;
     pointer-events: all;
     transition: color 0.3s ease;
-  }
-  
-  .input-group .toggle-password:hover {
+}
+
+.input-group .toggle-password:hover {
     color: #2e92d4;
-  }
-  
+}
 
 .login-btn {
     width: 100%;
@@ -184,4 +180,113 @@
 .radio-group input[type="radio"]:checked+label {
     color: #3498db;
     font-weight: bold;
+}
+
+/* Media Queries for Responsive Design */
+
+@media (max-width: 1200px) {
+    .login-wrapper {
+        width: 90%;
+    }
+}
+
+@media (max-width: 992px) {
+    .login-wrapper {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .login-image {
+        height: 200px;
+    }
+
+    .login-form {
+        padding: 30px;
+    }
+
+    .login-form h2 {
+        font-size: 1.3rem;
+    }
+
+    .input-group input {
+        font-size: 13px;
+    }
+
+    .login-btn {
+        font-size: 14px;
+    }
+
+    .additional-links {
+        flex-direction: column;
+        font-size: 12px;
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-wrapper {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .login-image h1 {
+        font-size: 1.5rem;
+    }
+
+    .login-form h2 {
+        font-size: 1.2rem;
+    }
+
+    .input-group input {
+        font-size: 12px;
+    }
+
+    .login-btn {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .radio-group p {
+        font-size: 14px;
+    }
+
+    .radio-group label {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-wrapper {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .login-image {
+        height: 150px;
+    }
+
+    .login-image h1 {
+        font-size: 1.2rem;
+    }
+
+    .login-form h2 {
+        font-size: 1rem;
+    }
+
+    .input-group input {
+        font-size: 11px;
+    }
+
+    .login-btn {
+        font-size: 13px;
+        padding: 6px;
+    }
+
+    .radio-group p {
+        font-size: 12px;
+    }
+
+    .radio-group label {
+        font-size: 12px;
+    }
 }
