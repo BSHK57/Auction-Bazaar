@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-registration',
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports:[CommonModule, FormsModule, RouterLink],
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
@@ -23,7 +23,7 @@ export class RegistrationComponent {
       this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 
-  onSignup(signupForm: any) {
+  onSignup(signupForm: any): void {
     if (signupForm.invalid) {
       this.errorMessage = "Please fill all required fields correctly!";
       return;

@@ -116,6 +116,14 @@
     transition: transform 0.2s ease;
 }
 
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    cursor: pointer;
+  }
+  
+
 .signup-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);

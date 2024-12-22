@@ -31,11 +31,13 @@
             <div class="input-group">
                 <i class="fas fa-lock"></i>
                 <input [type]="passwordFieldType" id="password" name="password" placeholder="Password*" [(ngModel)]="password"
-                    #passwordInput="ngModel" required />
-                <i class="fas fa-eye toggle-password" [class.fa-eye-slash]="passwordFieldType === 'text'"
-                    (click)="togglePasswordVisibility()"></i>
+                  #passwordInput="ngModel" required />
+                <i class="fas fa-eye toggle-password" 
+                   [class.fa-eye-slash]="passwordFieldType === 'text'" 
+                   (click)="togglePasswordVisibility()"></i>
                 <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error-text">Password is required.</div>
-            </div>
+              </div>
+              
             <div class="input-group">
                 <i class="fas fa-user-tag"></i>
                 <select id="signupAs" name="signupAs" [(ngModel)]="signupAs" #signupAsInput="ngModel" required>
