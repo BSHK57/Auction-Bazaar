@@ -15,10 +15,6 @@ export const routes: Routes = [
         component:RegistrationComponent
     },
     {
-        path:"usus",
-        component:LandingPageComponent
-    },
-    {
         path:"login",
         component:LoginComponent
     },
@@ -40,6 +36,6 @@ export const routes: Routes = [
     },
     {
         path:"user-dashboard",
-        component:AddProductComponent
+        component:LandingPageComponent
     }
 ];

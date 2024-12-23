@@ -16,3 +16,13 @@ isHovered: any;
     image: string;
   };
 }
+
+export interface Product {
+  productName: string;
+  minPrice: number | null;
+  category: string;
+  time: string;
+  date: string;
+  selectedFile: File | null;
+  description: string | null;
+}

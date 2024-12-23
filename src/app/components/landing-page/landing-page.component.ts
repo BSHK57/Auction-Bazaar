@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { AddProductComponent } from '../add-product/add-product.component';
 
 @Component({
   selector: 'app-landing-page',
   standalone:true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,MatDialogModule, MatButtonModule],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css'
 })
@@ -30,6 +33,8 @@ export class LandingPageComponent {
     { name: 'Auction 1', category: 'Electronics' },
     { name: 'Auction 2', category: 'Furniture' },
   ];
+  addproduct: boolean =false;
+  constructor(private dialog: MatDialog) {}
 
   get filteredAuctions() {
     return this.auctions.filter(
@@ -48,10 +53,22 @@ export class LandingPageComponent {
   hideTooltip() {
     // Logic to hide tooltip
   }
-  // userRole = 'auctioneer'; // Set user role dynamically
   selectedTab: string = 'activeAuctions'; // Default tab
 
   setTab(tab: string) {
     this.selectedTab = tab;
   }
+  addproductfunction(): void {
+    const dialogRef = this.dialog.open(AddProductComponent, {
+      // width: 'auto',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Product added:', result);
+        // Handle adding the product to the list
+      }
+    });
+  }
+
 }

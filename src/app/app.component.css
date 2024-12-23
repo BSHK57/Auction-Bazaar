@@ -1,22 +1,9 @@
-/* General Styles */
-body {
-  margin: 0;
-  background: linear-gradient(135deg, #667eea 120%, #764ba2 100%);
-  box-sizing: border-box;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-}
-
-html, body {
-  width: 100%; /* Ensure body spans full width */
-  height: 100%; /* Ensure full height */
-}
-
 /* Container */
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width: 100%; /* Full width */
+  /* width: 100%; Full width */
   margin: 0;
   box-sizing: border-box;
   overflow-x: hidden; /* Prevent horizontal overflow */
@@ -71,7 +58,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px; 
+  /* padding: 20px;  */
   margin: 0 auto; 
   max-width: 1200px; 
   min-width: 100vw; 

@@ -7,8 +7,8 @@
 
         <div class="product-image">
 
-            <p>File Selected: {{ selectedFile ? selectedFile.name : 'No file selected' }}</p>
-            <div *ngIf="isImage(selectedFile); else noFile">
+            <p>File Selected: {{ product.selectedFile ? product.selectedFile.name : 'No file selected' }}</p>
+            <div *ngIf="isImage(product.selectedFile); else noFile">
                 <img [src]="filePreview" alt="File preview" />
             </div>
             <ng-template #noFile>
@@ -23,23 +23,23 @@
 
         <div class="product_form">
             <div class="input-group">
-                <input type="text" id="productName" [(ngModel)]="productName" name="productName"
+                <input type="text" id="productName" [(ngModel)]="product.productName" name="productName"
                     placeholder="Product Name*" required />
             </div>
 
             <div class="input-group">
-                <textarea id="Description" [(ngModel)]="Description" name="Description" 
+                <textarea id="Description" [(ngModel)]="product.description" name="Description" 
                     placeholder="Product Description*" required></textarea>
             </div>
             
 
             <div class="input-group">
-                <input type="number" id="minPrice" [(ngModel)]="minPrice" name="minPrice" placeholder="Min Price*" [value]="''" 
+                <input type="number" id="minPrice" [(ngModel)]="product.minPrice" name="minPrice" placeholder="Min Price*" [value]="''" 
                     required />
             </div>
 
             <div class="input-group">
-                <select id="category" [(ngModel)]="category" name="category" required>
+                <select id="category" [(ngModel)]="product.category" name="category" required>
                     <option value="" disabled selected hidden>Category*</option>
                     <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
                 </select>
@@ -47,11 +47,11 @@
 
             <div class="row-2">
                 <div class="input-group">
-                    <input type="time" id="time" [(ngModel)]="time" name="time" placeholder="Time" required />
+                    <input type="time" id="time" [(ngModel)]="product.time" name="time" placeholder="Time" required />
                 </div>
 
                 <div class="input-group">
-                    <input type="date" id="date" [(ngModel)]="date" name="date" placeholder="Date" required />
+                    <input type="date" id="date" [(ngModel)]="product.date" name="date" placeholder="Date" required />
                 </div>
             </div>
 
@@ -59,7 +59,7 @@
 
             <div class="button-group">
                 <button type="submit"
-                    [disabled]="!selectedFile || !productName || !minPrice || !category || !time || !date">
+                    [disabled]="!product.selectedFile || !product.productName || !product.minPrice || !product.category || !product.time || !product.date">
                     Add Product
                 </button>
                 <button type="button" (click)="clearForm()">Clear Form</button>

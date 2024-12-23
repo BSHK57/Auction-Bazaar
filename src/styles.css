@@ -1,3 +1,5 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
 body {
   margin: 0;
   background: linear-gradient(135deg, #667eea 120%, #764ba2 100%);
@@ -23,3 +25,4 @@ body::-webkit-scrollbar {
 body {
   scrollbar-width: none; /* Hides scrollbar in Firefox */
 }
+
