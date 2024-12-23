@@ -121,8 +121,8 @@ textarea {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: vertical;
+    border-radius: 8px;
+    resize: none;
     outline: none;
     transition: border-color 0.3s ease;
 }

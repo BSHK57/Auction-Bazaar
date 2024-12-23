@@ -26,3 +26,6 @@ body {
   scrollbar-width: none; /* Hides scrollbar in Firefox */
 }
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
