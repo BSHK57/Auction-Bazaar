@@ -11,13 +11,14 @@ import { FormsModule } from '@angular/forms';
 })
 export class AddProductComponent {
   productName: string = '';
-  minPrice: number = 0;
+  minPrice: number |null=null;
   category: string = '';
   time: string = '';
   date: string = '';
   categories = ['Electronics', 'Clothing', 'Home', 'Books'];
   selectedFile: File | null = null;
   filePreview: string | null = null;
+  Description: string  | null=null;
 
   // This method is triggered when a file is selected
   onFileSelected(event: Event) {
@@ -51,16 +52,18 @@ export class AddProductComponent {
     console.log('Time:', this.time);
     console.log('Date:', this.date);
     console.log('Selected File:', this.selectedFile);
+    console.log('Description',this.Description);
   }
 
   clearForm() {
     this.selectedFile = null;
     this.filePreview = null;
     this.productName = '';
-    this.minPrice = 0;
+    this.minPrice = null;
     this.category = '';
     this.time = '';
     this.date = '';
+    this.Description='';
 }
 
 }

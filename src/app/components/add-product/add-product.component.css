@@ -1,7 +1,6 @@
-/* Styling for the productDetail-wrapper */
 .productDetail-wrapper {
     display: flex;
-    flex-direction: row; /* Arrange blocks in a row */
+    flex-direction: row; 
     width: 850px;
     background-color: white;
     border-radius: 0 0 15px 15px;
@@ -9,10 +8,9 @@
     overflow: hidden;
     padding: 20px;
     margin: auto;
-    gap: 20px; /* Space between the blocks */
+    gap: 20px; 
 }
 
-/* Styling for the product image section */
 .Product-image {
     flex: 1;
     background: linear-gradient(to top, #3498db, #2ecc71);
@@ -23,6 +21,7 @@
     justify-content: center;
     text-align: center;
     border-radius: 15px 15px 0 0;
+    color: white;
 }
 
 .product-image {
@@ -43,7 +42,6 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Styling for an empty box in the product image section */
 .empty-box {
     width: 200px;
     height: 200px;
@@ -58,9 +56,8 @@
     background-color: #f9f9f9;
 }
 
-/* Styling for the product form section */
 .product_form {
-    flex: 2; /* Larger space for the form */
+    flex: 2;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -72,7 +69,13 @@
     flex-direction: column;
 }
 
-/* Styling for input groups */
+/* Label styling */
+.input-group label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #4a4a4a;
+}
+
 .input-group {
     position: relative;
     margin-bottom: 15px;
@@ -85,11 +88,10 @@
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 14px;
-    box-sizing: border-box; /* Ensure padding does not affect width */
+    box-sizing: border-box; 
     transition: all 0.3s ease;
 }
 
-/* Focus styling for inputs */
 .input-group input:focus,
 .input-group select:focus {
     border-color: #2e92d4;
@@ -97,14 +99,45 @@
     box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
 }
 
-/* Label styling */
-.input-group label {
-    margin-bottom: 5px;
-    font-size: 14px;
-    color: #4a4a4a;
+
+.input-group select {
+    appearance: none;
+    background: none;
+    color: #6b6b6b;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath fill='%236879e3' d='M5 6L0 0h10z'/%3E%3C/svg%3E") no-repeat right 15px center;
+    background-size: 10px;
+    cursor:pointer;
 }
 
-/* Styling for the button group */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+textarea {
+    /* height: 60px; */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+    border-color: #2e92d4;
+    outline: none;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+}
+
+textarea::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
 .button-group {
     display: flex;
     flex-direction: row;
@@ -122,10 +155,8 @@
     cursor: pointer;
     transition: transform 0.2s ease;
     margin-top: 10px;
-    margin-left: 20px;
 }
 
-/* Disabled button styling */
 .button-group button:disabled {
     background: #ccc;
     cursor: not-allowed;
@@ -150,8 +181,7 @@
 }
 
 .row-2 .input-group {
-    flex: 1; /* Ensure equal width for both inputs */
-    margin-right: 10px;
+    flex: 1; 
 }
 
 /* Styling for time and date inputs */

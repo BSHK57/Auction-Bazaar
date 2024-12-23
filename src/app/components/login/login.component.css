@@ -5,6 +5,7 @@
 }
 
 .login-wrapper {
+    margin: auto;
     display: flex;
     width: 850px;
     background-color: white;

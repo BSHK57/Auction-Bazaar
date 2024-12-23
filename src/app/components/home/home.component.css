@@ -1,13 +1,16 @@
 .home-wrapper {
     flex: 1;
     text-align: center;
-    margin-top: 50px;
+    margin: 50px auto;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(to top, #3498db, #2ecc71);
     background-size: cover;
     padding: 50px 20px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    /* max-width: 800px; */
+    /* min-width: 100vw; */
+    margin: 50px auto;
   }
   
   h1 {

@@ -1,14 +1,25 @@
-<header class="header">
-  <div class="header-title">Auction Bazaar</div>
-  <a routerLink="/login" class="login-button">Login</a>
-</header>
 <div class="container">
-  <router-outlet></router-outlet>
-</div>
-<footer class="footer">
-  <div class="footer-links">
-    <a href="/">Home</a>
-    <a href="/about-us">About Us</a>
-    <a href="/contact">Contact</a>
+  <header>
+    <nav class="navbar">
+    <div class="navbar-left">
+      <h2>Auction Bazaar</h2>
+    </div>
+    <div class="navbar-right">
+      <input type="text" placeholder="Search..." class="search-bar" />
+      <i class="fas fa-user-circle profile-icon"></i>
+    </div>
+  </nav>
+  </header>
+  <div class="router-outlet">
+    <router-outlet ></router-outlet>
   </div>
-</footer>
+  
+
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/about-us">About Us</a>
+      <a routerLink="/contact">Contact</a>
+    </div>
+  </footer>
+</div>

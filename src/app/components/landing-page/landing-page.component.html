@@ -1,0 +1,74 @@
+<div class="dashboard-container">
+  <!-- Dashboard Header -->
+  <div class="dashboard-header">
+    <h1>Auctioneer Dashboard</h1>
+    <button class="add-product-btn">Add Product</button>
+  </div>
+
+  <!-- Auctioneer Statistics -->
+  <div class="dashboard-grid">
+    <div class="card">
+      <h3>Active Auctions</h3>
+      <p>12</p>
+    </div>
+    <div class="card">
+      <h3>Total Sales</h3>
+      <p>$45,231</p>
+    </div>
+    <div class="card">
+      <h3>Total Products</h3>
+      <p>24</p>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <div class="dashboard-nav">
+    <button 
+      class="nav-link" 
+      [ngClass]="{ active: selectedTab === 'activeAuctions' }"
+      (click)="setTab('activeAuctions')"
+    >
+      Active Auctions
+    </button>
+    <button 
+      class="nav-link" 
+      [ngClass]="{ active: selectedTab === 'soldItems' }"
+      (click)="setTab('soldItems')"
+    >
+      Sold Items
+    </button>
+  </div>
+
+  <!-- Dynamic Content -->
+  <div class="dashboard-content">
+    <!-- Active Auctions -->
+    <div *ngIf="selectedTab === 'activeAuctions'" class="auction-list">
+      <div class="card">
+        <h4>Vintage Watch</h4>
+        <p>Luxury vintage timepiece</p>
+        <p>Current Bid: $1,500</p>
+        <p>2 days left</p>
+      </div>
+      <div class="card">
+        <h4>Art Painting</h4>
+        <p>Original abstract art</p>
+        <p>Current Bid: $2,000</p>
+        <p>5 days left</p>
+      </div>
+    </div>
+
+    <!-- Sold Items -->
+    <div *ngIf="selectedTab === 'soldItems'" class="auction-list">
+      <div class="card">
+        <h4>Antique Vase</h4>
+        <p>Sold for: $1,200</p>
+        <p>Sold on: 12/12/2024</p>
+      </div>
+      <div class="card">
+        <h4>Rare Book</h4>
+        <p>Sold for: $800</p>
+        <p>Sold on: 10/12/2024</p>
+      </div>
+    </div>
+  </div>
+</div>
