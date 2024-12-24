@@ -25,7 +25,7 @@ export class LandingPageComponent {
   activeAuctions = [
     {
       id: '1',
-      name: 'Vintage Watch',
+      productName: 'Vintage Watch',
       description: 'Luxury vintage timepiece',
       currentBid: '₹1,500',
       daysLeft: 2,
@@ -33,7 +33,7 @@ export class LandingPageComponent {
     },
     {
       id: '2',
-      name: 'Art Painting',
+      productName: 'Art Painting',
       description: 'Original abstract art',
       currentBid: '₹2,000',
       daysLeft: 5,
@@ -111,7 +111,7 @@ export class LandingPageComponent {
       const completedAuction = this.activeAuctions.splice(auctionIndex, 1)[0];
       this.soldItems.push({
         id: completedAuction.id,
-        name: completedAuction.name,
+        name: completedAuction.productName,
         soldPrice: completedAuction.currentBid,
         soldDate: new Date().toLocaleDateString(),
         image: completedAuction.image,

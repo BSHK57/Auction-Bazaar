@@ -48,9 +48,9 @@
     <!-- Active Auctions -->
     <div *ngIf="selectedTab === 'activeAuctions'" class="auction-list">
       <div class="card-img" *ngFor="let auction of activeAuctions">
-        <img [src]="auction.image" [alt]="auction.name" class="auction-image">
+        <img [src]="auction.image" [alt]="auction.productName" class="auction-image">
         <div class="img">
-          <h4>{{ auction.name }}</h4>
+          <h4>{{ auction.productName }}</h4>
           <p>{{ auction.description }}</p>
           <p>Current Bid: {{ auction.currentBid }}</p>
           <p>{{ auction.daysLeft }} days left</p>
