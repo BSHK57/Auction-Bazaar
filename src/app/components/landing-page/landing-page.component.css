@@ -10,11 +10,6 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Card Styling for Images */
-
-/* Rest of the CSS as previously defined... */
-
-
 /* Header */
 .dashboard-header {
   display: flex;
@@ -154,6 +149,18 @@
   color: #7f8c8d; /* Neutral gray for details */
 }
 
+.complete-auction-btn {
+  background: linear-gradient(to right, #3498db, #2ecc71);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.complete-auction-btn:hover {
+  background-color: #218838;
+}
 /* Responsive Design */
 @media (max-width: 768px) {
   .dashboard-header {
@@ -179,3 +186,6 @@
     flex-direction: column; /* Stack the items vertically on smaller screens */
   }
 }
+
+
+
