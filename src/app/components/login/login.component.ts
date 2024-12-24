@@ -38,7 +38,7 @@ export class LoginComponent {
           if (response.role === 'admin') {
             this.router.navigate(['/admin-dashboard']);  // Navigate to admin dashboard
           } else if (response.role === 'auctioneer') {
-            this.router.navigate(['/auser-dashboard']);  // Navigate to auctioneer dashboard
+            this.router.navigate(['/user-dashboard']);  // Navigate to auctioneer dashboard
           } else {
             this.router.navigate(['/user-dashboard']);  // Default user dashboard or redirect based on the role
           }
