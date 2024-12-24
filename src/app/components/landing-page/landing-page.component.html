@@ -26,22 +26,45 @@
   </div>
 
   <!-- Navigation Bar -->
-  <div class="dashboard-nav">
-    <button 
-      class="nav-link" 
-      [ngClass]="{ active: selectedTab === 'activeAuctions' }"
-      (click)="setTab('activeAuctions')"
-    >
-      Active Auctions
-    </button>
-    <button 
-      class="nav-link" 
-      [ngClass]="{ active: selectedTab === 'soldItems' }"
-      (click)="setTab('soldItems')"
-    >
-      Sold Items
-    </button>
+  <div class="dashboard-header2">
+    <!-- Navigation Tabs -->
+    <div class="dashboard-nav">
+      <button class="nav-link" [ngClass]="{ active: selectedTab === 'activeAuctions' }"
+        (click)="setTab('activeAuctions')">
+        Active Auctions
+      </button>
+      <button class="nav-link" [ngClass]="{ active: selectedTab === 'soldItems' }" (click)="setTab('soldItems')">
+        Sold Items
+      </button>
+    </div>
+
+    <!-- Search and Filtering -->
+    <div class="filter-section">
+      <div class="categories">
+        <label [ngClass]="{ 'checked': electronicsChecked }">
+          <input type="checkbox" [(ngModel)]="electronicsChecked" (change)="toggleCategory('Electronics')" />
+          Electronics
+        </label>
+        <label [ngClass]="{ 'checked': clothingChecked }">
+          <input type="checkbox" [(ngModel)]="clothingChecked" (change)="toggleCategory('Clothing')" />
+          Clothing
+        </label>
+        <label [ngClass]="{ 'checked': homeChecked }">
+          <input type="checkbox" [(ngModel)]="homeChecked" (change)="toggleCategory('Home')" />
+          Home
+        </label>
+        <label [ngClass]="{ 'checked': booksChecked }">
+          <input type="checkbox" [(ngModel)]="booksChecked" (change)="toggleCategory('Books')" />
+          Books
+        </label>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search items..." [(ngModel)]="searchQuery" />
+        <button (click)="searchItems()">Search</button>
+      </div>
+    </div>
   </div>
+
 
   <!-- Dynamic Content -->
   <div class="dashboard-content">

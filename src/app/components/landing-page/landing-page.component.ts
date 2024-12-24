@@ -13,6 +13,16 @@ import { AddProductComponent } from '../add-product/add-product.component';
   styleUrl: './landing-page.component.css',
 })
 export class LandingPageComponent {
+electronicsChecked: boolean =false;
+clothingChecked: boolean =false;
+homeChecked: boolean =false;
+booksChecked: boolean = false;
+searchItems() {
+throw new Error('Method not implemented.');
+}
+toggleCategory(arg0: string) {
+throw new Error('Method not implemented.');
+}
   // Auctioneer and user data
   auctioneer = {
     name: 'sai hari',

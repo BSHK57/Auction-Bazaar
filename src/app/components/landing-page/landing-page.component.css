@@ -4,7 +4,7 @@
   color: #2c3e50; /* Dark gray for text */
   background-color: #ecf0f1; /* Light gray background */
   padding: 20px;
-  min-width: 90vw;
+  min-width: 95vw;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -63,10 +63,19 @@
    display: flex;
    background-color: white;
    border: 1px solid #ddd;
+   /* flex-wrap: wrap; */
+   gap: 10px;
    border-radius: 8px;
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
    padding: 20px;
    text-align: center;
+}
+
+.card-img img{
+  max-width: 150px;
+  max-height: 150px;
+  object-fit: cover; 
+  border-radius: 8px; 
 }
 
 .card-img div{
@@ -90,6 +99,15 @@
 }
 
 /* Navigation Bar */
+.dashboard-header2 {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+  border-radius: 8px;
+}
+
 .dashboard-nav {
   display: flex;
   justify-content: flex-start;
@@ -97,7 +115,7 @@
   margin-bottom: 20px;
 }
 
-.nav-link {
+.nav-link ,.categories label{
   background-color: #3498db; /* Blue from navbar gradient */
   color: white;
   border: none;
@@ -108,7 +126,7 @@
   transition: all 0.3s ease;
 }
 
-.nav-link.active {
+.nav-link.active,.categories label.checked {
   background-color: #1abc9c; /* Green for active links */
   color: white;
 }
@@ -117,15 +135,77 @@
   background-color: #2980b9; /* Slightly darker blue for hover */
 }
 
+.filter-section {
+  display: flex;
+  justify-content: space-between;
+  gap:10px;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.categories {
+  background-color: #3498db;
+  border-radius: 10px;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.categories label {
+  background: none;
+  border-radius: 0;
+}
+
+.categories label input{
+  display: none;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+}
+
+.search-bar button {
+  background-color: #1abc9c; /* Blue from navbar gradient */
+  color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+  background-color: #2980b9; /* Slightly darker blue for hover */
+}
+
+/* .filter-section .categories, */
+.filter-section .search-bar {
+  display: flex;
+  gap: 20px;
+}
+
+
 /* Dynamic Content */
 .dashboard-content {
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 20px;
+  max-width:100vw;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow-x: auto; /* Adds a vertical scrollbar when content overflows */
+  overflow-y: hidden; /* Hides horizontal overflow */
 }
 
 
@@ -135,7 +215,7 @@
   gap: 20px;
   justify-content: flex-start;
   overflow-x: hidden;
-  /* padding: 10px 0; */
+  padding: 10px 0;
 }
 
 .auction-list .card {

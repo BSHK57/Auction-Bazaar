@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component  } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http'; // Import HttpClientModule
 import { Router, RouterLink } from '@angular/router';
+import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,7 @@ export class LoginComponent {
         (response: any) => {
           alert(`Hi ${response.name}, Login Successful!`);
           loginForm.reset();
+          AppComponent.isSigned=true;
           // Redirect based on the role
           if (response.role === 'admin') {
             this.router.navigate(['/admin-dashboard']);  // Navigate to admin dashboard
