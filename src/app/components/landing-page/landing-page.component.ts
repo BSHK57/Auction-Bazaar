@@ -18,7 +18,7 @@ export class LandingPageComponent {
     name: 'sai hari',
     email: 'SHK@mail.com',
   };
-  userRole = 'auctioneer'; // Can be 'auctioneer' or 'bidder'
+  userRole = 'auctioneer'; 
 
   // Dashboard data
   totalSales = 45231;
@@ -27,7 +27,7 @@ export class LandingPageComponent {
       id: '1',
       productName: 'Vintage Watch',
       description: 'Luxury vintage timepiece',
-      currentBid: '₹1,500',
+      currentBid: '₹1,50,000',
       daysLeft: 2,
       image: 'vintage-watch.jpeg',
     },
@@ -35,7 +35,7 @@ export class LandingPageComponent {
       id: '2',
       productName: 'Art Painting',
       description: 'Original abstract art',
-      currentBid: '₹2,000',
+      currentBid: '₹20,000',
       daysLeft: 5,
       image: 'art-painting.png',
     },
@@ -45,23 +45,28 @@ export class LandingPageComponent {
     {
       id: '1',
       name: 'Antique Vase',
-      soldPrice: '₹1,200',
+      soldPrice: '₹12,00,000',
       soldDate: '12/12/2024',
       image: 'Vase.png',
     },
     {
       id: '2',
       name: 'Rare Book',
-      soldPrice: '₹800',
+      soldPrice: '₹80,000',
       soldDate: '10/12/2024',
       image: 'book.jpeg',
     },
+    {
+      id: '3',
+      name: 'Laptop',
+      soldPrice: '₹60,000',
+      soldDate: '01/12/2024',
+      image: 'laptop.jpeg',
+    },
   ];
 
-  // Tab selection
-  selectedTab: string = 'activeAuctions'; // Default tab
+  selectedTab: string = 'activeAuctions'; 
 
-  // Categories for filtering auctions
   categories = ['Electronics', 'Furniture', 'Books'];
   auctions = [
     { name: 'Auction 1', category: 'Electronics' },
