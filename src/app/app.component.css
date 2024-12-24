@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  /* width: 100%; Full width */
   margin: 0;
   box-sizing: border-box;
   overflow-x: hidden; /* Prevent horizontal overflow */
@@ -46,10 +45,53 @@
   color: #888;
 }
 
+.profile-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
 .profile-icon {
   font-size: 1.8rem;
   color: white;
-  cursor: pointer;
+}
+.profile-container :hover{
+  color:#3498db;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: linear-gradient(135deg, #667eea 120%, #764ba2 100%);
+  /* border: 1px solid #ccc; */
+  border-radius: 15px;
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: none; /* Initially hidden */
+}
+
+.dropdown-menu li {
+  padding: 5px 10px;
+}
+
+.dropdown-menu li a {
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.dropdown-menu li a:hover {
+  color: #2ecc71; /* Matching hover color from navbar */
+}
+
+.profile-container:hover .dropdown-menu {
+  display: block; /* Show the dropdown on hover */
 }
 
 /* Main Content */
@@ -58,10 +100,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* padding: 20px;  */
-  margin: 0 auto; 
-  max-width: 1200px; 
-  min-width: 100vw; 
+  margin: 0 auto;
+  max-width: 1200px;
+  min-width: 100vw;
   box-sizing: border-box; /* Ensure padding is included in width */
 }
 
@@ -87,7 +128,7 @@ footer {
 .footer-links a {
   color: #1abc9c;
   text-decoration: none;
-  font-size:18px;
+  font-size: 18px;
   transition: color 0.3s ease;
 }
 

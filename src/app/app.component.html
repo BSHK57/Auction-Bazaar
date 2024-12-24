@@ -1,20 +1,26 @@
 <div class="container">
   <header>
     <nav class="navbar">
-    <div class="navbar-left">
-      <h2>Auction Bazaar</h2>
-    </div>
-    <div class="navbar-right">
-      <input type="text" placeholder="Search..." class="search-bar" />
-      <i class="fas fa-user-circle profile-icon"></i>
-    </div>
-  </nav>
+      <div class="navbar-left">
+        <h2>Auction Bazaar</h2>
+      </div>
+      <div class="navbar-right">
+        <input type="text" placeholder="Search..." class="search-bar" />
+        <div class="profile-container" (mouseenter)="toggleDropdown(true)" (mouseleave)="toggleDropdown(false)">
+          <i class="fas fa-user-circle profile-icon"></i>
+          <!-- Dropdown -->
+          <ul class="dropdown-menu" *ngIf="isDropdownVisible">
+            <li><a routerLink="/user-dashboard">Dashboard</a></li>
+            <li><a (click)="logout()">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
   </header>
-  
+
   <div class="router-outlet">
-    <router-outlet ></router-outlet>
+    <router-outlet></router-outlet>
   </div>
-  
 
   <footer>
     <div class="footer-links">
