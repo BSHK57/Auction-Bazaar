@@ -12,7 +12,6 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 export class AppComponent {
   title = 'Auction_bazaar';
   isDropdownVisible: boolean = false;
-  static isSigned: boolean = false;
   constructor(private router: Router) {}
 
   toggleDropdown(state: boolean): void {
@@ -20,11 +19,12 @@ export class AppComponent {
   }
   get isSignedIn()
   {
-    return AppComponent.isSigned;
+
+    return  localStorage.getItem("User_Id");
   }
   logout(): void {
-    AppComponent.isSigned= false;
     // Implement logout functionality
+    localStorage.clear();
     console.log('User logged out');
     this.router.navigate(['/login']);
     

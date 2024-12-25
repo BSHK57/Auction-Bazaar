@@ -35,7 +35,8 @@ export class LoginComponent {
         (response: any) => {
           alert(`Hi ${response.name}, Login Successful!`);
           loginForm.reset();
-          AppComponent.isSigned=true;
+          localStorage.setItem("User_Id",response._id);
+          console.log(response._id);
           // Redirect based on the role
           if (response.role === 'admin') {
             this.router.navigate(['/admin-dashboard']);  // Navigate to admin dashboard
