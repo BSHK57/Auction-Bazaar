@@ -74,4 +74,8 @@ export class AddProductComponent {
     };
     this.filePreview = null;
   }
+
+  closeForm(){
+    this.dialogRef.close();
+  }
 }

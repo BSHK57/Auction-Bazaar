@@ -36,13 +36,14 @@ export class LoginComponent {
           alert(`Hi ${response.name}, Login Successful!`);
           loginForm.reset();
           localStorage.setItem("User_Id",response._id);
-          console.log(response._id);
           // Redirect based on the role
           if (response.role === 'admin') {
             this.router.navigate(['/admin-dashboard']);  // Navigate to admin dashboard
           } else if (response.role === 'auctioneer') {
+            localStorage.setItem("role","Auctioneer")
             this.router.navigate(['/user-dashboard']);  // Navigate to auctioneer dashboard
           } else {
+            localStorage.setItem("role","Bidder")
             this.router.navigate(['/user-dashboard']);  // Default user dashboard or redirect based on the role
           }
 

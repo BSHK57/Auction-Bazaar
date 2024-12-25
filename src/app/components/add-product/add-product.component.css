@@ -1,7 +1,16 @@
+form{
+    /* width: 850px; */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* padding: 20px; */
+    margin: auto;
+}
+
 .productDetail-wrapper {
     display: flex;
     flex-direction: row; 
-    width: 850px;
+    /* width: 850px; */
     background-color: white;
     border-radius: 0 0 15px 15px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
@@ -30,7 +39,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    border-right: 2px solid #e0e0e0; /* Add a separator between blocks */
+    border-right: 2px solid #e0e0e0; 
     padding-right: 20px;
 }
 
@@ -84,6 +93,7 @@
 .input-group input,
 .input-group select {
     width: 100%;
+    margin-right:10px ;
     padding: 12px;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
@@ -157,6 +167,15 @@ textarea::placeholder {
     margin-top: 10px;
 }
 
+.button-group button:last-child {
+    background: #f44336;  
+}
+
+.button-group button:last-child:hover {
+    background-color: #d32f2f;  
+}
+
+
 .button-group button:disabled {
     background: #ccc;
     cursor: not-allowed;
@@ -173,34 +192,31 @@ textarea::placeholder {
     transform: scale(0.95);
 }
 
-/* Styling for rows */
 .row-2 {
     display: flex;
     justify-content: space-between;
-    gap: 20px; /* Space between the time and date inputs */
+    gap: 20px; 
 }
 
 .row-2 .input-group {
     flex: 1; 
 }
 
-/* Styling for time and date inputs */
 .time-group input,
 .date-group input {
-    width: 100%; /* Stretch the inputs to fill their containers */
+    width: 100%; 
 }
 
-/* Responsive Design: Mobile and tablet adjustments */
 @media (max-width: 910px) {
     .productDetail-wrapper {
-        flex-direction: column; /* Stack elements on top of each other */
+        flex-direction: column; 
         width: 100%;
         padding: 10px;
     }
 
     .Product-image {
         border-radius: 15px;
-        margin-bottom: 15px; /* Add space between image and form */
+        margin-bottom: 15px; 
     }
 
     .product_form {
@@ -208,13 +224,13 @@ textarea::placeholder {
     }
 
     .product-image img {
-        max-width: 150px; /* Adjust image size */
+        max-width: 150px; 
         max-height: 150px;
     }
 
     .input-group input,
     .input-group select {
-        font-size: 16px; /* Make text larger for easier readability */
+        font-size: 16px;
         width: 100%;
     }
 
@@ -224,7 +240,7 @@ textarea::placeholder {
     }
 
     .button-group button {
-        width: 100%; /* Make buttons full width on small screens */
+        width: 100%; 
         margin-left: 0;
         margin-bottom: 10px;
     }
@@ -237,11 +253,10 @@ textarea::placeholder {
 
     .row-2 .input-group {
         margin-right: 0;
-        width: 100%; /* Full width for inputs */
+        width: 100%;
     }
 }
 
-/* Responsive Design: Extra small devices (mobile phones) */
 @media (max-width: 480px) {
     .productDetail-wrapper {
         width: 100%;
@@ -259,11 +274,11 @@ textarea::placeholder {
 
     .input-group input,
     .input-group select {
-        font-size: 14px; /* Smaller font size for small screens */
+        font-size: 14px; 
     }
 
     .button-group button {
-        font-size: 14px; /* Smaller font size for small screens */
+        font-size: 14px; 
         padding: 8px;
     }
 }
