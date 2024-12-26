@@ -1,9 +1,8 @@
 import { Component  } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http'; // Import HttpClientModule
+import {  HttpClient } from '@angular/common/http'; // Import HttpClientModule
 import { Router, RouterLink } from '@angular/router';
-import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +14,6 @@ import { AppComponent } from '../../app.component';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule // Add HttpClientModule here
   ],
 })
 export class LoginComponent {
@@ -33,26 +31,32 @@ export class LoginComponent {
       const loginData = { email: this.email, password: this.password,role:this.signinAs };
       this.http.post('http://localhost:5000/login', loginData).subscribe(
         (response: any) => {
-          alert(`Hi ${response.name}, Login Successful!`);
+          const user=response.user;
+          alert(`Hi ${user.name}, Login Successful!`);
           loginForm.reset();
-          localStorage.setItem("User_Id",response._id);
+          localStorage.setItem("User_Id",user._id);
           // Redirect based on the role
-          if (response.role === 'admin') {
+          if (user.role === 'admin') {
             this.router.navigate(['/admin-dashboard']);  // Navigate to admin dashboard
-          } else if (response.role === 'auctioneer') {
+          } else if (user.role === 'auctioneer') {
             localStorage.setItem("role","Auctioneer")
             this.router.navigate(['/user-dashboard']);  // Navigate to auctioneer dashboard
           } else {
             localStorage.setItem("role","Bidder")
             this.router.navigate(['/user-dashboard']);  // Default user dashboard or redirect based on the role
           }
-
           loginForm.reset();
         },
         (error) => {
-          this.errorMessage = 'Invalid email or password ';
+          if (error.error.error){
+            this.errorMessage=error.error.error;
+          }
+          else{
+            this.errorMessage = 'Invalid email or password ';
+          }
           
-          console.error('Login error:', error);
+          
+          // console.error('Login error:', error);
         }
       );
     } else {

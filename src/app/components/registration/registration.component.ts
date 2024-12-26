@@ -2,13 +2,12 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule,RouterLink], // Add HttpClientModule to imports here
+  imports: [CommonModule, FormsModule,RouterLink], // Add HttpClientModule to imports here
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
@@ -21,7 +20,7 @@ export class RegistrationComponent {
   password: string = "";
   signupAs: string = "";
 
-  constructor(private http: HttpClient) {} // Inject HttpClient directly into the component
+  constructor(private http: HttpClient,private router: Router) {} // Inject HttpClient directly into the component
 
   togglePasswordVisibility(): void {
     this.passwordFieldType =
@@ -53,11 +52,12 @@ export class RegistrationComponent {
         alert("SignUp Successful");
         console.log('User registered successfully:', response);
         signupForm.reset();
+        this.router.navigate(["/login"]);
       },
-      (error) => {
+      error => {
         // Handle error response
-        this.errorMessage = "Error registering user. Please try again.";
-        console.error('Error registering user:', error);
+        this.errorMessage = error.error.error;//"Error registering user. Please try again.";
+        // console.error('Error registering user:', error);
       }
     );
   }
