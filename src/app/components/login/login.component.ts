@@ -54,8 +54,6 @@ export class LoginComponent {
           else{
             this.errorMessage = 'Invalid email or password ';
           }
-          
-          
           // console.error('Login error:', error);
         }
       );
