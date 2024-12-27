@@ -8,92 +8,87 @@
     <h1>Auctioneer Dashboard</h1>
     <button class="add-product-btn" (click)="addproductfunction()">Add Product</button>
   </div>
-
-  <!-- Auctioneer Statistics -->
-  <div class="dashboard-grid">
-    <div class="card">
-      <h3>Active Auctions</h3>
-      <p>2</p>
-    </div>
-    <div class="card">
-      <h3>Total Sales</h3>
-      <p>₹13,40,000</p>
-    </div>
-    <div class="card">
-      <h3>Total Products</h3>
-      <p>5</p>
-    </div>
-  </div>
-
-  <!-- Navigation Bar -->
-  <div class="dashboard-header2">
-    <!-- Navigation Tabs -->
-    <div class="dashboard-nav">
-      <button class="nav-link" [ngClass]="{ active: selectedTab === 'activeAuctions' }"
-        (click)="setTab('activeAuctions')">
-        Active Auctions
-      </button>
-      <button class="nav-link" [ngClass]="{ active: selectedTab === 'soldItems' }" (click)="setTab('soldItems')">
-        Sold Items
-      </button>
-    </div>
-
-    <!-- Search and Filtering -->
-    <div class="filter-section">
-      <div class="categories">
-        <label [ngClass]="{ 'checked': electronicsChecked }">
-          <input type="checkbox" [(ngModel)]="electronicsChecked" (change)="toggleCategory('Electronics')" />
-          Electronics
-        </label>
-        <label [ngClass]="{ 'checked': clothingChecked }">
-          <input type="checkbox" [(ngModel)]="clothingChecked" (change)="toggleCategory('Clothing')" />
-          Clothing
-        </label>
-        <label [ngClass]="{ 'checked': homeChecked }">
-          <input type="checkbox" [(ngModel)]="homeChecked" (change)="toggleCategory('Home')" />
-          Home
-        </label>
-        <label [ngClass]="{ 'checked': booksChecked }">
-          <input type="checkbox" [(ngModel)]="booksChecked" (change)="toggleCategory('Books')" />
-          Books
-        </label>
+    <!-- Auctioneer Statistics -->
+    <div class="dashboard-grid">
+      <div class="card">
+        <h3>Active Auctions</h3>
+        <p>{{activeAuctions.length}}</p>
       </div>
-      <div class="search-bar">
-        <input type="text" placeholder="Search items..." [(ngModel)]="searchQuery" />
-        <button (click)="searchItems()">Search</button>
+      <div class="card">
+        <h3>Total Sales</h3>
+        <p>{{totalsales}}</p>
+      </div>
+      <div class="card">
+        <h3>Total Products</h3>
+        <p>{{activeAuctions.length + soldItems.length}}</p>
       </div>
     </div>
-  </div>
-
-
-  <!-- Dynamic Content -->
-  <div class="dashboard-content">
-    <!-- Active Auctions -->
-    <div *ngIf="selectedTab === 'activeAuctions'" class="auction-list">
-      <div class="card-img" *ngFor="let auction of activeAuctions">
-        <img [src]="auction.image" [alt]="auction.productName" class="auction-image">
-        <div class="img">
-          <h4>{{ auction.productName }}</h4>
-          <p>{{ auction.description }}</p>
-          <p>Current Bid: {{ auction.currentBid }}</p>
-          <p>{{ auction.daysLeft }} days left</p>
-          <button class="complete-auction-btn" (click)="completeAuction(auction.id)">
-            Complete Auction
+      <!-- Navigation Bar -->
+      <div class="dashboard-header2">
+        <!-- Navigation Tabs -->
+        <div class="dashboard-nav">
+          <button class="nav-link" [ngClass]="{ active: selectedTab === 'activeAuctions' }"
+            (click)="setTab('activeAuctions')">
+            Active Auctions
+          </button>
+          <button class="nav-link" [ngClass]="{ active: selectedTab === 'soldItems' }" (click)="setTab('soldItems')">
+            Sold Items
           </button>
         </div>
-      </div>
-    </div>
 
-    <!-- Sold Items -->
-    <div *ngIf="selectedTab === 'soldItems'" class="auction-list">
-      <div class="card-img" *ngFor="let item of soldItems">
-        <img [src]="item.image" [alt]="item.name" class="auction-image">
-        <div class="img">
-          <h4>{{ item.name }}</h4>
-          <p>Sold for: {{ item.soldPrice }}</p>
-          <p>Sold on: {{ item.soldDate }}</p>
+        <!-- Search and Filtering -->
+        <div class="filter-section">
+          <div class="categories">
+            <label *ngFor="let category of categories" [ngClass]="{ 'checked': category.checked}">
+              <input
+                type="checkbox"
+                [(ngModel)]="category.checked"
+                (change)="toggleCategory(category.name)"
+              />
+              {{ category.name }}
+            </label>
+          </div>
+          <div class="search-bar">
+            <input type="text" placeholder="Search items..." [(ngModel)]="searchQuery" />
+            <button (click)="searchItems()">Search</button>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+
+
+      <!-- Dynamic Content -->
+      <div class="dashboard-content">
+        <!-- Active Auctions -->
+        <div *ngIf="selectedTab === 'activeAuctions'" class="auction-list">
+          <div class="card-img" *ngFor="let auction of filteredAuctions">
+            <div class="img">
+              <img [src]="auction.image" [alt]="auction.productName">
+              <p>{{ auction.remainingTime }}</p> <!-- Countdown timer -->
+            </div>
+            <div class="details">
+              <h4>{{ auction.productName }}</h4>
+              <p>{{ auction.description }}</p>
+              <p>Current Bid: {{ auction.currentBid }}</p>
+              <p>Ends on:{{ auction.endDate | date: 'short' }}</p> <!-- Show formatted end date -->
+              <!-- <p>Remaining Time: {{ auction.remainingTime }}</p> Countdown timer -->
+              <button class="complete-auction-btn" (click)="completeAuction(auction.id)">
+                Complete Auction
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sold Items -->
+        <div *ngIf="selectedTab === 'soldItems'" class="auction-list">
+          <div class="card-img" *ngFor="let item of filteredSoldItems">
+            <img [src]="item.image" [alt]="item.name" class="auction-image">
+            <div class="details">
+              <h4>{{ item.name }}</h4>
+              <p>Sold for: {{ item.soldPrice }}</p>
+              <p>Sold on: {{ item.soldDate }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
 </div>

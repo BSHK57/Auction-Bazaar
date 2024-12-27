@@ -49,8 +49,8 @@ export class RegistrationComponent {
     this.http.post('http://localhost:5000/register', userData).subscribe(
       (response: any) => {
         // Handle successful response
-        alert("SignUp Successful");
-        console.log('User registered successfully:', response);
+        alert(response.message);
+        // console.log('User registered successfully:', response);
         signupForm.reset();
         this.router.navigate(["/login"]);
       },
