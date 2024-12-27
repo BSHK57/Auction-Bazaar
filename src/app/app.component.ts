@@ -19,7 +19,6 @@ export class AppComponent {
   }
   get isSignedIn()
   {
-
     return  localStorage.getItem("User_Id");
   }
   logout(): void {

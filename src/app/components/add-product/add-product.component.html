@@ -5,9 +5,8 @@
     <div class="productDetail-wrapper">
 
         <div class="product-image">
-
-            <p>File Selected: {{ product.selectedFile ? product.selectedFile.name : 'No file selected' }}</p>
-            <div *ngIf="isImage(product.selectedFile); else noFile">
+            <p>File Selected: {{ product.image ? product.image.name : 'No file selected' }}</p>
+            <div *ngIf="isImage(product.image); else noFile">
                 <img [src]="filePreview" alt="File preview" />
             </div>
             <ng-template #noFile>
@@ -21,22 +20,25 @@
         </div>
 
         <div class="product_form">
+            <!-- Product Name -->
             <div class="input-group">
-                <input type="text" id="productName" [(ngModel)]="product.productName" name="productName"
+                <input type="text" id="name" [(ngModel)]="product.name" name="name"
                     placeholder="Product Name*" required />
             </div>
 
+            <!-- Description -->
             <div class="input-group">
-                <textarea id="Description" [(ngModel)]="product.description" name="Description"
+                <textarea id="description" [(ngModel)]="product.description" name="description"
                     placeholder="Product Description*" required></textarea>
             </div>
 
-
+            <!-- Starting Price -->
             <div class="input-group">
-                <input type="number" id="minPrice" [(ngModel)]="product.minPrice" name="minPrice"
-                    placeholder="Min Price*" [value]="''" required />
+                <input type="number" id="startingPrice" [(ngModel)]="product.startingPrice" name="startingPrice"
+                    placeholder="Starting Price*" required />
             </div>
 
+            <!-- Category -->
             <div class="input-group">
                 <select id="category" [(ngModel)]="product.category" name="category" required>
                     <option value="" disabled selected hidden>Category*</option>
@@ -44,21 +46,23 @@
                 </select>
             </div>
 
+            <!-- Start and End Time (Date and Time combined) -->
             <div class="row-2">
                 <div class="input-group">
-                    <input type="time" id="time" [(ngModel)]="product.time" name="time" placeholder="Time" required />
+                    <label for="startTime">Start Date & Time</label>
+                    <input type="datetime-local" id="startTime" [(ngModel)]="product.startTime" name="startTime" placeholder="Start Time" required />
                 </div>
 
                 <div class="input-group">
-                    <input type="date" id="date" [(ngModel)]="product.date" name="date" placeholder="Date" required />
+                    <label for="endTime">End Date & Time</label>
+                    <input type="datetime-local" id="endTime" [(ngModel)]="product.endTime" name="endTime" placeholder="End Time" required />
                 </div>
             </div>
 
-
-
+            <!-- Buttons -->
             <div class="button-group">
                 <button type="submit"
-                    [disabled]="!product.selectedFile || !product.productName || !product.minPrice || !product.category || !product.time || !product.date">
+                    [disabled]="!product.image || !product.name || !product.startingPrice || !product.category || !product.startTime || !product.endTime">
                     Add Product
                 </button>
                 <button type="button" (click)="clearForm()">Clear Form</button>

@@ -2,8 +2,8 @@
   <!-- Dashboard Header -->
   <div class="dashboard-header">
     <div class="user-info">
-      <h2>Name: {{ auctioneer.name }}</h2>
-      <p>Email: {{ auctioneer.email }}</p>
+      <h2>Name: {{ userDetails.name }}</h2>
+      <p>Email: {{ userDetails.email }}</p>
     </div>
     <h1>Auctioneer Dashboard</h1>
     <button class="add-product-btn" (click)="addproductfunction()">Add Product</button>
@@ -12,11 +12,15 @@
     <div class="dashboard-grid">
       <div class="card">
         <h3>Active Auctions</h3>
-        <p>{{activeAuctions.length}}</p>
+        <p>{{auctioneer.activeAuctions}}</p>
       </div>
       <div class="card">
         <h3>Total Sales</h3>
         <p>{{totalsales}}</p>
+      </div>
+      <div class="card">
+        <h3>Total Profit</h3>
+        <p>{{auctioneer.totalProfit}}</p>
       </div>
       <div class="card">
         <h3>Total Products</h3>

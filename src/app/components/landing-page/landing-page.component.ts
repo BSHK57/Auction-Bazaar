@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { AddProductComponent } from '../add-product/add-product.component';
+import { AuctionService } from '../../auction.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
@@ -13,11 +15,70 @@ import { AddProductComponent } from '../add-product/add-product.component';
   styleUrls: ['./landing-page.component.css'],
 })
 export class LandingPageComponent implements OnInit{
+  userDetails: any;
+  auctioneer:any;
+  bidder:any;
+  auctions: any=[];
+  // Constructor
+  constructor(private dialog: MatDialog,private route: ActivatedRoute,private userService: AuctionService) {}
+
+  ngOnInit() {
+    setInterval(() => {
+      this.updateRemainingTime();
+    }, 1000);
+    this.getUserDetails();
+    this.getAuctions();
+  }
   // Auctioneer and user data
-  auctioneer = {
-    name: 'sai hari',
-    email: 'SHK@mail.com',
-  };
+  getUserDetails() {
+    const id=localStorage.getItem('User_Id')||'';
+    this.userService.getUserDetails(id).subscribe(
+      (response) => {
+        this.userDetails = response;
+        if (this.userDetails.auctioneer){
+          this.auctioneer=this.userDetails.auctioneer;
+        }
+        if (this.userDetails.bidder){
+          this.bidder=this.userDetails.bidder;
+        }
+        console.log(this.userDetails);
+      },
+      (error) => {
+        console.error('Error fetching user details:', error);
+      }
+    );
+  }
+
+  getAuctions() {
+    const id1=localStorage.getItem('A_Id')||'';
+    this.userService.getAuctionsByAuctioneerId(id1).subscribe(
+      (response) => {
+        this.auctions=response.auctions;
+        console.log(this.auctions);
+        this.splitAuctions(this.auctions);
+        console.log(this.auctions);
+        // this.splitAuctions(this.auctions);
+      },
+      (error) => {
+        console.error('Error fetching user details:', error);
+      }
+    );
+  }
+
+  splitAuctions(auctions:any){
+    for (const auction of auctions) {
+      auction.endDate=new Date(auction.endDate);
+      auction.remainingTime='';
+      auction.currentBid=Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+      }).format(auction.currentBid);
+      auction["id"]=auction.length+1;
+      this.activeAuctions.push(auction);
+    }
+    console.log(this.activeAuctions);
+  }
+
   userRole = 'auctioneer';
   get totalsales(){
     const totalSales =this.soldItems.reduce((sum, currentItem) => {
@@ -38,7 +99,7 @@ export class LandingPageComponent implements OnInit{
       description: 'Luxury vintage timepiece',
       currentBid: '₹1,50,000',
       remainingTime:"",
-      daysLeft: 2,
+      minPrice:0,
       endDate: new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
       image: 'vintage-watch.jpeg',
       category: 'Electronics',
@@ -48,7 +109,7 @@ export class LandingPageComponent implements OnInit{
       productName: 'Art Painting',
       description: 'Original abstract art',
       currentBid: '₹20,000',
-      daysLeft: 5,
+      minPrice:0,
       remainingTime:"",
       endDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
       image: 'art-painting.png',
@@ -59,8 +120,8 @@ export class LandingPageComponent implements OnInit{
       id: '3',
       productName: 'Sofa Set',
       description: 'Comfortable seating',
+      minPrice:0,
       currentBid: '₹15,000',
-      daysLeft: 3,
       remainingTime:"",
       endDate: new Date(new Date().getTime() + 3* 24 * 60 * 60 * 1000),
       image: 'sofa-set.jpeg',
@@ -100,21 +161,13 @@ export class LandingPageComponent implements OnInit{
     { name: 'Books', checked: false },
     { name: 'Laptops', checked: false },
     { name: 'Antiques', checked: false },
+    { name: 'Tv\'s', checked: false },
   ];
 
   selectedTab: string = 'activeAuctions';
 
   searchQuery = '';
   filterCategories :any= [];
-
-  // Constructor
-  constructor(private dialog: MatDialog) {}
-
-  ngOnInit() {
-    setInterval(() => {
-      this.updateRemainingTime();
-    }, 1000);
-  }
 
   updateRemainingTime() {
     this.activeAuctions.forEach((auction) => {
@@ -128,6 +181,7 @@ export class LandingPageComponent implements OnInit{
         auction.remainingTime = `${daysLeft}d ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
       } else {
         auction.remainingTime = 'Auction Ended';
+        this.completeAuction(auction.id);
       }
     });
   }
@@ -180,6 +234,7 @@ export class LandingPageComponent implements OnInit{
       if (result) {
         console.log('Product added:', result);
         // Logic to handle adding the product to active auctions
+        result.endDate=new Date(result.endDate);
         this.activeAuctions.push(result);
       }
     });

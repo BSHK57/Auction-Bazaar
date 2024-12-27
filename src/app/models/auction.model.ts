@@ -18,11 +18,13 @@ isHovered: any;
 }
 
 export interface Product {
-  productName: string;
-  minPrice: number | null;
-  category: string;
-  time: string;
-  date: string;
-  selectedFile: File | null;
-  description: string | null;
+  auctioneerId: string;       // The ID of the auctioneer
+  startTime: Date | string;    // The start time of the auction
+  endTime: Date | string;      // The end time of the auction
+  startingPrice: number;      // The starting price of the auction
+  name: string;               // Name of the item being auctioned
+  description: string;        // Description of the item
+  image: File | null; 
+  category : 'Electronics'| 'Fashion'| 'Laptops'| 'Books'|"TV's"|"Antiques"    // Image of the item being auctioned
 }
+

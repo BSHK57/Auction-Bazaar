@@ -21,11 +21,12 @@ export class LoginComponent {
   password: string = '';
   errorMessage: string = '';
   passwordFieldType: string = 'password';
-  signinAs: any;
+  signinAs: string='';
 
   constructor(private http: HttpClient,private router:Router) { } // Inject HttpClient
 
   onClick(loginForm: any): void {
+    console.log(this.signinAs);
     if (loginForm.valid) {
       this.errorMessage = '';
       const loginData = { email: this.email, password: this.password,role:this.signinAs };
@@ -33,15 +34,22 @@ export class LoginComponent {
         (response: any) => {
           const user=response.user;
           alert(`Hi ${user.name}, Login Successful!`);
-          loginForm.reset();
           localStorage.setItem("User_Id",user._id);
+          console.log(user._id);
           // Redirect based on the role
-          if (user.role === 'admin') {
+          if (this.signinAs === 'admin') {
             this.router.navigate(['/admin-dashboard']);  // Navigate to admin dashboard
-          } else if (user.role === 'auctioneer') {
-            localStorage.setItem("role","Auctioneer")
+          } 
+          if (this.signinAs === "auctioneer") {
+            console.log("hi");
+            localStorage.setItem("role","Auctioneer");
+            console.log(user.auctioneer.toString()+"fkb");
+            localStorage.setItem("A_Id",user.auctioneer.toString());
             this.router.navigate(['/user-dashboard']);  // Navigate to auctioneer dashboard
-          } else {
+          } 
+          if (this.signinAs === "bidder") {
+            console.log("hi11");
+
             localStorage.setItem("role","Bidder")
             this.router.navigate(['/user-dashboard']);  // Default user dashboard or redirect based on the role
           }
