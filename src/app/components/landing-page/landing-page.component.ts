@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AddProductComponent } from '../add-product/add-product.component';
 import { AuctionService } from '../../auction.service';
 import { ActivatedRoute } from '@angular/router';
-import {Auction} from '../../models/auction.model';
+import {Auction, SoldItems} from '../../models/auction.model';
 @Component({
   selector: 'app-landing-page',
   standalone: true,
@@ -20,6 +20,8 @@ export class LandingPageComponent implements OnInit{
   bidder:any;
   auctions: any=[];
   activeAuctions :Auction []=[];
+  notStarted:Auction []=[];
+  soldItems:SoldItems []=[];
   // Constructor
   constructor(private dialog: MatDialog,private route: ActivatedRoute,private userService: AuctionService) {}
 
@@ -54,7 +56,7 @@ export class LandingPageComponent implements OnInit{
     const id1=localStorage.getItem('A_Id')||'';
     this.userService.getAuctionsByAuctioneerId(id1).subscribe(
       (response) => {
-        this.auctions=response.auctions;
+        this.auctions=response;
         console.log(this.auctions);
         this.splitAuctions(this.auctions);
         console.log(this.auctions);
@@ -75,9 +77,30 @@ export class LandingPageComponent implements OnInit{
         currency: 'INR',
       }).format(auction.currentBid);
       console.log(auction);
-      this.activeAuctions.push(auction);
+      if (auction.status==="Not Started"){
+        this.notStarted.push(auction);
+      }
+      if (auction.status==="Active"){
+        this.activeAuctions.push(auction);
+      }
+      else{
+        this.addToSoldItems(auction);
+      }
     }
     console.log(this.activeAuctions);
+  }
+
+  addToSoldItems(auction:Auction){
+    this.soldItems.push({
+      _id : auction._id,
+      name: auction.productName,
+      description: auction.description,
+      soldPrice: auction.salePrice,
+      soldDate:new Date(auction.soldDate),
+      image: auction.image,
+      category: auction.category,
+      bids: auction.bids
+    });
   }
 
   userRole = 'auctioneer';
@@ -140,7 +163,7 @@ export class LandingPageComponent implements OnInit{
       image: 'sofa-set.jpeg',
       category: 'Home',
     },
-  ];*/
+  ];
 
   soldItems = [
     {
@@ -167,14 +190,14 @@ export class LandingPageComponent implements OnInit{
       soldDate: '01/12/2024',
       image: 'laptop.jpeg',
     },
-  ];
+  ];*/
   categories = [
     { name: 'Electronics', checked: false },
     { name: 'Fashion', checked: false },
     { name: 'Books', checked: false },
     { name: 'Laptops', checked: false },
     { name: 'Antiques', checked: false },
-    { name: 'Tv\'s', checked: false },
+    { name: "Tv's", checked: false },
   ];
 
   selectedTab: string = 'activeAuctions';
@@ -248,6 +271,10 @@ export class LandingPageComponent implements OnInit{
         console.log('Product added:', result);
         // Logic to handle adding the product to active auctions
         result.endDate=new Date(result.endDate);
+        result.startingPrice=Intl.NumberFormat('en-IN', {
+          style: 'currency',
+          currency: 'INR',
+        }).format(result.startingPrice);
         this.activeAuctions.push(result);
       }
     });
@@ -265,9 +292,11 @@ export class LandingPageComponent implements OnInit{
         _id: completedAuction._id,
         name: completedAuction.productName,
         soldPrice: completedAuction.currentBid,
-        category:completedAuction.category,
+        category: completedAuction.category,
         soldDate: new Date().toLocaleDateString(),
         image: completedAuction.image,
+        description: completedAuction.description,
+        bids: completedAuction.bids,
       });
       console.log(`Auction with ID ${auctionId} completed.`);
     }

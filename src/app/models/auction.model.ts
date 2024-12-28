@@ -9,6 +9,20 @@ export interface Auction {
   endDate: Date;
   image: string;
   category: string;
+  bids:any[];
+  soldDate:Date;
+  salePrice:string;
+}
+
+export interface SoldItems {
+  _id: string;
+  name: string;
+  description: string;
+  soldPrice: string;
+  soldDate: any;
+  image: string;
+  category: string;
+  bids:any[];
 }
 
 export interface Product {
