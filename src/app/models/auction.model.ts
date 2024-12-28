@@ -3,7 +3,7 @@ export interface Auction {
   _id: string;
   productName: string;
   description: string;
-  currentBid: string;
+  currentBid: number;
   remainingTime: string;
   minPrice: number;
   endDate: Date;
@@ -11,14 +11,16 @@ export interface Auction {
   category: string;
   bids:any[];
   soldDate:Date;
-  salePrice:string;
+  salePrice:number;
+  status:string;
+  startDate:Date;
 }
 
 export interface SoldItems {
   _id: string;
   name: string;
   description: string;
-  soldPrice: string;
+  soldPrice: number;
   soldDate: any;
   image: string;
   category: string;

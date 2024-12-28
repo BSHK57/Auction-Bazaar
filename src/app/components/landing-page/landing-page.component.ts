@@ -20,7 +20,7 @@ export class LandingPageComponent implements OnInit{
   bidder:any;
   auctions: any=[];
   activeAuctions :Auction []=[];
-  notStarted:Auction []=[];
+  // notStarted:Auction []=[];
   soldItems:SoldItems []=[];
   // Constructor
   constructor(private dialog: MatDialog,private route: ActivatedRoute,private userService: AuctionService) {}
@@ -31,6 +31,9 @@ export class LandingPageComponent implements OnInit{
     }, 1000);
     this.getUserDetails();
     this.getAuctions();
+  }
+  get totalSales(){
+    return this.auctioneer.totalSales;
   }
   // Auctioneer and user data
   getUserDetails() {
@@ -44,7 +47,7 @@ export class LandingPageComponent implements OnInit{
         if (this.userDetails.bidder){
           this.bidder=this.userDetails.bidder;
         }
-        console.log(this.userDetails);
+       // console.log(this.userDetails);
       },
       (error) => {
         console.error('Error fetching user details:', error);
@@ -59,8 +62,6 @@ export class LandingPageComponent implements OnInit{
         this.auctions=response;
         console.log(this.auctions);
         this.splitAuctions(this.auctions);
-        console.log(this.auctions);
-        // this.splitAuctions(this.auctions);
       },
       (error) => {
         console.error('Error fetching user details:', error);
@@ -71,51 +72,40 @@ export class LandingPageComponent implements OnInit{
   splitAuctions(auctions:any){
     for (const auction of auctions) {
       auction.endDate=new Date(auction.endDate);
+      auction.startDate=new Date(auction.startDate);
       auction.remainingTime='';
-      auction.currentBid=Intl.NumberFormat('en-IN', {
-        style: 'currency',
-        currency: 'INR',
-      }).format(auction.currentBid);
-      console.log(auction);
       if (auction.status==="Not Started"){
-        this.notStarted.push(auction);
+        this.activeAuctions.push(auction);
       }
-      if (auction.status==="Active"){
+      else if (auction.status==="Active"){
         this.activeAuctions.push(auction);
       }
       else{
+        // console.log(auction);
         this.addToSoldItems(auction);
       }
     }
-    console.log(this.activeAuctions);
+    // console.log(this.soldItems);
+    // console.log(this.activeAuctions);
   }
 
   addToSoldItems(auction:Auction){
+    const price=auction.salePrice;
     this.soldItems.push({
       _id : auction._id,
       name: auction.productName,
       description: auction.description,
-      soldPrice: auction.salePrice,
+      soldPrice: price,//Intl.NumberFormat('en-IN', {style: 'currency',currency: 'INR',}).format(price),
       soldDate:new Date(auction.soldDate),
       image: auction.image,
       category: auction.category,
       bids: auction.bids
     });
   }
-
-  userRole = 'auctioneer';
-  get totalsales(){
-    const totalSales =this.soldItems.reduce((sum, currentItem) => {
-      // Remove the currency symbol and commas, and convert the value to a number
-      let price = parseFloat(currentItem.soldPrice.replace('₹', '').replace(/,/g, ''));
-      return sum + price;
-    }, 0);
-
-    return Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-    }).format(totalSales);
+  currency(Number:number){
+    return Intl.NumberFormat('en-IN', {style: 'currency',currency: 'INR',}).format(Number);
   }
+  userRole = 'auctioneer';
   /*activeAuctions=[
     {
       id:'',
@@ -208,6 +198,11 @@ export class LandingPageComponent implements OnInit{
   updateRemainingTime() {
     this.activeAuctions.forEach((auction) => {
       const now = new Date();
+      if (auction.status==="Active" || auction.startDate<=now){
+      if(auction.status!=="Active"){
+        auction.status="Active"
+        this.userService.updateAuctionStatusAndBid(auction._id,auction.status);
+      }
       const remainingTime = auction.endDate.getTime() - now.getTime();
       if (remainingTime > 0) {
         const daysLeft = Math.floor(remainingTime / (1000 * 3600 * 24));
@@ -219,6 +214,7 @@ export class LandingPageComponent implements OnInit{
         auction.remainingTime = 'Auction Ended';
         this.completeAuction(auction._id);
       }
+    }
     });
   }
 
@@ -265,17 +261,13 @@ export class LandingPageComponent implements OnInit{
   // Add product function
   addproductfunction(): void {
     const dialogRef = this.dialog.open(AddProductComponent);
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        //window.location.reload();
         console.log('Product added:', result);
         // Logic to handle adding the product to active auctions
-        result.endDate=new Date(result.endDate);
-        result.startingPrice=Intl.NumberFormat('en-IN', {
-          style: 'currency',
-          currency: 'INR',
-        }).format(result.startingPrice);
-        this.activeAuctions.push(result);
+        //result.endDate=new Date(result.endDate);
+        this.getAuctions();
       }
     });
   }
@@ -285,7 +277,6 @@ export class LandingPageComponent implements OnInit{
     const auctionIndex = this.activeAuctions.findIndex(
       (auction) => auction._id === auctionId
     );
-
     if (auctionIndex !== -1) {
       const completedAuction = this.activeAuctions.splice(auctionIndex, 1)[0];
       this.soldItems.push({
@@ -298,7 +289,9 @@ export class LandingPageComponent implements OnInit{
         description: completedAuction.description,
         bids: completedAuction.bids,
       });
-      console.log(`Auction with ID ${auctionId} completed.`);
+      this.userService.updateAuctionStatusAndBid(completedAuction._id,"Ended",completedAuction.currentBid);
+      this.getAuctions();
+      console.log(`Auction with ID ${auctionId} completed.`+completedAuction.currentBid);
     }
   }
 }
