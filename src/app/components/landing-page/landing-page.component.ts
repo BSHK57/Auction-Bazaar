@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AddProductComponent } from '../add-product/add-product.component';
 import { AuctionService } from '../../auction.service';
 import { ActivatedRoute } from '@angular/router';
-
+import {Auction} from '../../models/auction.model';
 @Component({
   selector: 'app-landing-page',
   standalone: true,
@@ -19,6 +19,7 @@ export class LandingPageComponent implements OnInit{
   auctioneer:any;
   bidder:any;
   auctions: any=[];
+  activeAuctions :Auction []=[];
   // Constructor
   constructor(private dialog: MatDialog,private route: ActivatedRoute,private userService: AuctionService) {}
 
@@ -73,7 +74,7 @@ export class LandingPageComponent implements OnInit{
         style: 'currency',
         currency: 'INR',
       }).format(auction.currentBid);
-      auction["id"]=auction.length+1;
+      console.log(auction);
       this.activeAuctions.push(auction);
     }
     console.log(this.activeAuctions);
@@ -92,7 +93,19 @@ export class LandingPageComponent implements OnInit{
       currency: 'INR',
     }).format(totalSales);
   }
-  activeAuctions = [
+  /*activeAuctions=[
+    {
+      id:'',
+      productName: '',
+      description: '',
+      currentBid: '',
+      remainingTime:"",
+      minPrice:0,
+      endDate: new Date(),
+      image: '',
+      category: '',
+    }
+  ];/* [
     {
       id: '1',
       productName: 'Vintage Watch',
@@ -127,7 +140,7 @@ export class LandingPageComponent implements OnInit{
       image: 'sofa-set.jpeg',
       category: 'Home',
     },
-  ];
+  ];*/
 
   soldItems = [
     {
@@ -139,7 +152,7 @@ export class LandingPageComponent implements OnInit{
       image: 'Vase.png',
     },
     {
-      id: '2',
+      _id: '2',
       name: 'Rare Book',
       soldPrice: '₹80,000',
       soldDate: '10/12/2024',
@@ -147,7 +160,7 @@ export class LandingPageComponent implements OnInit{
       image: 'book.jpeg',
     },
     {
-      id: '3',
+      _id: '3',
       name: 'Laptop',
       category:"Laptops",
       soldPrice: '₹60,000',
@@ -181,7 +194,7 @@ export class LandingPageComponent implements OnInit{
         auction.remainingTime = `${daysLeft}d ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
       } else {
         auction.remainingTime = 'Auction Ended';
-        this.completeAuction(auction.id);
+        this.completeAuction(auction._id);
       }
     });
   }
@@ -243,13 +256,13 @@ export class LandingPageComponent implements OnInit{
   // Complete auction function
   completeAuction(auctionId: string): void {
     const auctionIndex = this.activeAuctions.findIndex(
-      (auction) => auction.id === auctionId
+      (auction) => auction._id === auctionId
     );
 
     if (auctionIndex !== -1) {
       const completedAuction = this.activeAuctions.splice(auctionIndex, 1)[0];
       this.soldItems.push({
-        id: completedAuction.id,
+        _id: completedAuction._id,
         name: completedAuction.productName,
         soldPrice: completedAuction.currentBid,
         category:completedAuction.category,

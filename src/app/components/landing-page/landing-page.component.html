@@ -75,7 +75,7 @@
               <p>Current Bid: {{ auction.currentBid }}</p>
               <p>Ends on:{{ auction.endDate | date: 'short' }}</p> <!-- Show formatted end date -->
               <!-- <p>Remaining Time: {{ auction.remainingTime }}</p> Countdown timer -->
-              <button class="complete-auction-btn" (click)="completeAuction(auction.id)">
+              <button class="complete-auction-btn" (click)="completeAuction(auction._id)">
                 Complete Auction
               </button>
             </div>

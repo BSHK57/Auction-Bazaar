@@ -238,17 +238,17 @@
   color: #7f8c8d;
 }
 
-.auction-list::-webkit-scrollbar {
+.dashboard-content::-webkit-scrollbar {
   width: 3px; /* Horizontal scrollbar width */
 
 }
 
-.auction-list::-webkit-scrollbar-thumb {
+.dashboard-content::-webkit-scrollbar-thumb {
   background: #888; /* Color of the scrollbar */
   border-radius: 5px;
 }
 
-.auction-list::-webkit-scrollbar-thumb:hover {
+.dashboard-content::-webkit-scrollbar-thumb:hover {
   background: #555; /* Hover effect for scrollbar */
   width: 10px;
 }
