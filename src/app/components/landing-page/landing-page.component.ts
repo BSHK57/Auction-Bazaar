@@ -197,7 +197,7 @@ export class LandingPageComponent implements OnInit{
     { name: 'Books', checked: false },
     { name: 'Laptops', checked: false },
     { name: 'Antiques', checked: false },
-    { name: "Tv's", checked: false },
+    { name: "TV's", checked: false },
   ];
 
   selectedTab: string = 'activeAuctions';
