@@ -41,14 +41,14 @@ export interface Product {
 export interface Bid {
   _id: string; // Unique identifier for the bid
   bidderId: string; // ID of the bidder
-  itemId: string; // ID of the item being bid on
+  // itemId: string; // ID of the item being bid on
   bidAmount: number; // Amount of the bid
   bidTime: Date; // Timestamp of the bid
 }
 
 export interface Item {
   _id: string; // Unique identifier for the item
-  auctionId: string; // ID of the associated auction
+  auction: string; // ID of the associated auction
   name: string; // Name of the item
   description: string; // Description of the item
   salePrice: number; // Final sale price (optional, for sold items)
@@ -69,11 +69,11 @@ export interface Auction1 {
 }
 
 export interface ParticipatedBid extends Bid {
-  item: Item; // Detailed information about the item
+  itemId: Item & { auctionId:Auction1}; // Detailed information about the item
 }
 
 export interface WonBid extends ParticipatedBid {
-  item: Item & { salePrice: number; soldDate: Date }; // Sold item with additional details
+  itemId: Item & { salePrice: number; soldDate: Date; auctionId:Auction1}; // Sold item with additional details
 }
 
 export interface AllAuction extends Auction1 {

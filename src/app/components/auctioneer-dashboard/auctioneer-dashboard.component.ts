@@ -32,7 +32,6 @@ export class AuctioneerDashboardComponent implements OnInit{
     }, 1000);
     this.getUserDetails();
     this.getAuctions();
-    
   }
   get totalSales(){
     return this.auctioneer.totalSales;
@@ -190,7 +189,7 @@ export class AuctioneerDashboardComponent implements OnInit{
     const dialogRef = this.dialog.open(AddProductComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        //window.location.reload();
+        window.location.reload();
         console.log('Product added:', result);
         // Logic to handle adding the product to active auctions
         //result.endDate=new Date(result.endDate);

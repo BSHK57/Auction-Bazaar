@@ -50,4 +50,26 @@ export class AuctionService {
   getBidderDashboardData(bidderId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/bids-dashboard/${bidderId}`);
   }
+
+  placeBid(bidData: { bidderId: string; itemId: string; bidAmount: number }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/place-bid`, bidData);
+  }
+  makeBid(bidderId:string,itemId:string,bidAmount:number) {
+    console.log(bidAmount);
+    if (bidAmount <= 0) {
+      alert('Please enter a valid bid amount.');
+      return;
+    }
+    const bidData = {bidderId,itemId,bidAmount};
+
+    this.placeBid(bidData).subscribe({
+      next: (response) => {
+        alert('Bid placed successfully!');
+        return response;
+      },
+      error: (error) => {
+        console.error(error.error.message || 'Failed to place bid.');
+      }
+    });
+  }
 }

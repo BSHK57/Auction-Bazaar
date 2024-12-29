@@ -374,4 +374,26 @@
   .place-bid-btn:hover {
     background: linear-gradient(135deg, #2980b9, #3498db); /* Reversed gradient for hover */
   }
+  .bid-input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.confirm-bid-btn {
+    background: linear-gradient(135deg, #28a745, #218838); /* Green gradient */
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.confirm-bid-btn:hover {
+    background: linear-gradient(135deg, #218838, #28a745); /* Reversed gradient for hover */
+}
   

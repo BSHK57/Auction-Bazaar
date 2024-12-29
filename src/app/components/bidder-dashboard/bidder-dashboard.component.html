@@ -63,14 +63,14 @@
     <div class="dashboard-content">
         <!-- Participated Bids -->
         <div *ngIf="selectedTab === 'participatedBids'" class="bid-list">
-            <div class="card-img" *ngFor="let bid of filteredParticipatedBids">
-                <img [src]="bid.item.image" [alt]="bid.item.name" class="auction-image">
+            <div class="card-img" *ngFor="let bid of participatedBids">
+                <img [src]="bid.itemId.image" [alt]="bid.itemId.name" class="auction-image">
                 <div class="details">
-                    <h4>{{ bid.item.name }}</h4>
-                    <p>Description: {{ bid.item.description }}</p>
+                    <h4>{{ bid.itemId.name }}</h4>
+                    <p>Description: {{ bid.itemId.description }}</p>
                     <p>Bid Amount: {{ currency(bid.bidAmount) }}</p>
                     <p>Bid Time: {{ bid.bidTime | date: 'short' }}</p>
-                    <button class="view-details-btn" (click)="viewDetails(bid.item._id,undefined,bid)">View Details</button>
+                    <button class="view-details-btn" (click)="viewDetails(bid.itemId,bid.itemId.auctionId,bid)">View Details</button>
                 </div>
             </div>
         </div>
@@ -78,29 +78,29 @@
         <!-- Won Bids -->
         <div *ngIf="selectedTab === 'wonBids'" class="bid-list">
             <div class="card-img" *ngFor="let bid of filteredWonBids">
-                <img [src]="bid.item.image" [alt]="bid.item.name" class="auction-image">
+                <img [src]="bid.itemId.image" [alt]="bid.itemId.name" class="auction-image">
                 <div class="details">
-                    <h4>{{ bid.item.name }}</h4>
-                    <p>Description: {{ bid.item.description }}</p>
-                    <p>Sold Price: {{ currency(bid.item.salePrice) }}</p>
-                    <p>Sold Date: {{ bid.item.soldDate | date: 'short' }}</p>
-                    <button class="view-details-btn" (click)="viewDetails(bid.item._id,undefined,bid)">View Details</button>
+                    <h4>{{ bid.itemId.name }}</h4>
+                    <p>Description: {{ bid.itemId.description }}</p>
+                    <p>Sold Price: {{ currency(bid.itemId.salePrice) }}</p>
+                    <p>Sold Date: {{ bid.itemId.auctionId.completedTime| date: 'short' }}</p>
+                    <button class="view-details-btn" (click)="viewDetails(bid.itemId,bid.itemId.auctionId,bid)">View Details</button>
                 </div>
             </div>
         </div>
 
         <!-- All Auctions -->
         <div *ngIf="selectedTab === 'allAuctions'" class="auction-list">
-            <div class="card-img" *ngFor="let auction of allAuctions">
+            <div class="card-img" *ngFor="let auction of filteredAuctions">
                 <img [src]="auction.item.image" [alt]="auction.item.name" class="auction-image">
                 <div class="details">
                     <h4>{{ auction.item.name }}</h4>
                     <p>Description: {{ auction.item.description }}</p>
-                    <p>Current Bid: {{ currency(auction.item.salePrice || auction.startingPrice) }}</p>
+                    <p>Current Bid: {{ auction.item.bids.length > 0 ? currency(auction.item.bids[0].bidAmount) : currency(auction.startingPrice) }}</p>
                     <p>Status: {{ auction.status }}</p>
                     <p *ngIf="auction.status === 'Active'">Ends on: {{ auction.endTime | date: 'short' }}</p>
                     <p *ngIf="auction.status === 'Not Started'">Starts on: {{ auction.startTime | date: 'short' }}</p>
-                    <button *ngIf="auction.status === 'Active'" class="bid-btn" (click)="placeBid(auction.item._id)">
+                    <button *ngIf="auction.status === 'Active'" class="bid-btn" (click)="placeBid(auction.item,auction)">
                         Place Bid
                     </button>
                     <button class="view-details-btn" (click)="viewDetails(auction.item,auction,auction.item.bids[0])">View Details</button>
@@ -124,9 +124,36 @@
         <p *ngIf="selectedAuction.status === 'Ended'"><strong>Sale Price</strong>{{currency(selectedItem?.salePrice)}}</p>
         <p><strong>Status:</strong> {{ selectedAuction.status }}</p>
         <p *ngIf="selectedAuction.endTime && selectedAuction.status === 'Active'"><strong>Ends On:</strong> {{ selectedAuction.endTime | date:'short' }}</p>
-        <p *ngIf="selectedAuction.auctionId?.startTime"><strong>Starts On:</strong> {{ selectedAuction.startTime | date: 'short' }}</p>
-        <button *ngIf="selectedAuction.status === 'Active'" class="place-bid-btn"(click)="placeBid(selectedItem?._id ||'')">
+        <p *ngIf="selectedAuction.status === 'Not Started'"><strong>Starts On:</strong> {{ selectedAuction.startTime | date: 'short' }}</p>
+        <p *ngIf="selectedAuction.status === 'Ended' "><strong>Ended On:</strong> {{ selectedAuction.completedTime | date: 'short' }}</p>
+        <button *ngIf="selectedAuction.status === 'Active'" class="place-bid-btn"(click)="placeBid(selectedItem,selectedAuction)">
             Place Bid
         </button>
+    </div>
+</div>
+
+
+<!-- Place Bid Modal -->
+<div class="modal-overlay" *ngIf="isPlaceBidModalOpen">
+    <div class="modal-content">
+        <span class="close-btn" (click)="closePlaceBidModal()">&times;</span>
+        <h4>Place Your Bid</h4>
+        <img [src]="selectedItem?.image" [alt]="selectedItem?.name" class="modal-image">
+        <p><strong>Item:</strong> {{ selectedItem?.name }}</p>
+        <p><strong>Current Bid:</strong> 
+            {{ currentBid?.bidAmount ? currency(currentBid.bidAmount) : currency(selectedAuction.startingPrice) }}
+        </p>
+        <form (submit)="submitBid(selectedItem)">
+            <label for="bidAmount"><strong>Your Bid Amount:</strong></label>
+            <input 
+                type="number" 
+                id="bidAmount" 
+                [(ngModel)]="bidAmount" 
+                name="bidAmount" 
+                min="{{ currentBid?.bidAmount || selectedAuction.startingPrice }}" 
+                required
+                class="bid-input">
+            <button type="submit" class="confirm-bid-btn">Confirm Bid</button>
+        </form>
     </div>
 </div>
