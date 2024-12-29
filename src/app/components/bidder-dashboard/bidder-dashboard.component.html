@@ -1,0 +1,111 @@
+<div class="dashboard-container" *ngIf="userRole === 'bidder'">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div class="user-info">
+            <h2>Name: {{ userDetails.name }}</h2>
+            <p>Email: {{ userDetails.email }}</p>
+        </div>
+        <h1>Bidder Dashboard</h1>
+    </div>
+    <!-- Bidder Statistics -->
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>Participated Bids</h3>
+            <p>{{ participatedBids.length }}</p>
+        </div>
+        <div class="card">
+            <h3>Won Bids</h3>
+            <p>{{ wonBids.length }}</p>
+        </div>
+        <div class="card">
+            <h3>Amount Spent</h3>
+            <p>{{ currency(bidder.totalSpent) }}</p>
+        </div>
+        <div class="card">
+            <h3>All Auctions</h3>
+            <p>{{ allAuctions.length }}</p>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="dashboard-header2">
+        <!-- Navigation Tabs -->
+        <div class="dashboard-nav">
+            <button class="nav-link" [ngClass]="{ active: selectedTab === 'participatedBids' }"
+                (click)="setTab('participatedBids')">
+                Participated Bids
+            </button>
+            <button class="nav-link" [ngClass]="{ active: selectedTab === 'wonBids' }" (click)="setTab('wonBids')">
+                Won Bids
+            </button>
+            <button class="nav-link" [ngClass]="{ active: selectedTab === 'allAuctions' }"
+                (click)="setTab('allAuctions')">
+                All Auctions
+            </button>
+        </div>
+
+        <!-- Search and Filtering -->
+        <div class="filter-section">
+            <div class="categories">
+                <label *ngFor="let category of categories" [ngClass]="{ 'checked': category.checked }">
+                    <input type="checkbox" [(ngModel)]="category.checked" (change)="toggleCategory(category.name)" />
+                    {{ category.name }}
+                </label>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search items..." [(ngModel)]="searchQuery" />
+                <button (click)="searchItems()">Search</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dynamic Content -->
+    <div class="dashboard-content">
+        <!-- Participated Bids -->
+        <div *ngIf="selectedTab === 'participatedBids'" class="bid-list">
+            <div class="card-img" *ngFor="let bid of filteredParticipatedBids">
+                <img [src]="bid.item.image" [alt]="bid.item.name" class="auction-image">
+                <div class="details">
+                    <h4>{{ bid.item.name }}</h4>
+                    <p>Description: {{ bid.item.description }}</p>
+                    <p>Bid Amount: {{ currency(bid.bidAmount) }}</p>
+                    <p>Bid Time: {{ bid.bidTime | date: 'short' }}</p>
+                    <button class="view-details-btn" (click)="viewDetails(bid.item._id)">View Details</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Won Bids -->
+        <div *ngIf="selectedTab === 'wonBids'" class="bid-list">
+            <div class="card-img" *ngFor="let bid of filteredWonBids">
+                <img [src]="bid.item.image" [alt]="bid.item.name" class="auction-image">
+                <div class="details">
+                    <h4>{{ bid.item.name }}</h4>
+                    <p>Description: {{ bid.item.description }}</p>
+                    <p>Sold Price: {{ currency(bid.item.salePrice) }}</p>
+                    <p>Sold Date: {{ bid.item.soldDate | date: 'short' }}</p>
+                    <button class="view-details-btn" (click)="viewDetails(bid.item._id)">View Details</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Auctions -->
+        <div *ngIf="selectedTab === 'allAuctions'" class="auction-list">
+            <div class="card-img" *ngFor="let auction of allAuctions">
+                <img [src]="auction.item.image" [alt]="auction.item.name" class="auction-image">
+                <div class="details">
+                    <h4>{{ auction.item.name }}</h4>
+                    <p>Description: {{ auction.item.description }}</p>
+                    <p>Current Bid: {{ currency(auction.item.salePrice || auction.startingPrice) }}</p>
+                    <p>Status: {{ auction.status }}</p>
+                    <p *ngIf="auction.status === 'Active'">Ends on: {{ auction.endTime | date: 'short' }}</p>
+                    <p *ngIf="auction.status === 'Not Started'">Starts on: {{ auction.startTime | date: 'short' }}</p>
+                    <button *ngIf="auction.status === 'Active'" class="bid-btn" (click)="placeBid(auction.item._id)">
+                        Place Bid
+                    </button>
+                    <button class="view-details-btn" (click)="viewDetails(auction.item._id)">View Details</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -38,3 +38,45 @@ export interface Product {
   category : 'Electronics'| 'Fashion'| 'Laptops'| 'Books'|"TV's"|"Antiques"    // Image of the item being auctioned
 }
 
+export interface Bid {
+  _id: string; // Unique identifier for the bid
+  bidderId: string; // ID of the bidder
+  itemId: string; // ID of the item being bid on
+  bidAmount: number; // Amount of the bid
+  bidTime: Date; // Timestamp of the bid
+}
+
+export interface Item {
+  _id: string; // Unique identifier for the item
+  auctionId: string; // ID of the associated auction
+  name: string; // Name of the item
+  description: string; // Description of the item
+  salePrice?: number; // Final sale price (optional, for sold items)
+  category: 'Electronics' | 'Fashion' | 'Laptops' | 'Books' | "TV's" | "Antiques"; // Category of the item
+  image: string; // Image URL of the item
+  bids: string[]; // Array of bid IDs associated with the item
+}
+
+export interface Auction1 {
+  _id: string; // Unique identifier for the auction
+  auctioneerId: string; // ID of the auctioneer
+  startTime: Date; // Auction start time
+  endTime: Date; // Auction end time
+  completedTime?: Date; // Completion time (optional)
+  status: 'Active' | 'Ended' | 'Cancelled' | 'Not Started'; // Current status of the auction
+  startingPrice: number; // Starting price for the auction
+  item: Item; // Associated item object
+}
+
+export interface ParticipatedBid extends Bid {
+  item: Item; // Detailed information about the item
+}
+
+export interface WonBid extends ParticipatedBid {
+  item: Item & { salePrice: number; soldDate: Date }; // Sold item with additional details
+}
+
+export interface AllAuction extends Auction1 {
+  item: Item; // Include the item details for each auction
+}
+

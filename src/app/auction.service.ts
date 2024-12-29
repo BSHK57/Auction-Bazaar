@@ -47,5 +47,7 @@ export class AuctionService {
       }
     });
   }
-
+  getBidderDashboardData(bidderId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/bids-dashboard/${bidderId}`);
+  }
 }

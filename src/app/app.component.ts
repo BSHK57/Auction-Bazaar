@@ -28,4 +28,11 @@ export class AppComponent {
     this.router.navigate(['/login']);
     
   }
+  get auctioneer(){
+    return localStorage.getItem('A_Id');
+  }
+
+  get bidder(){
+    return localStorage.getItem('B_Id');
+  }
 }

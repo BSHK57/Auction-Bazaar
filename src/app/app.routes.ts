@@ -8,6 +8,8 @@ import { ContactComponent } from './components/contact/contact.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { AuctioneerDashboardComponent } from './components/auctioneer-dashboard/auctioneer-dashboard.component';
+import { BidderDashboardComponent } from './components/bidder-dashboard/bidder-dashboard.component';
 
 export const routes: Routes = [
     {
@@ -35,7 +37,11 @@ export const routes: Routes = [
         component:ForgetPasswordComponent
     },
     {
-        path:"user-dashboard",
-        component:LandingPageComponent
+        path:"auctioneer-dashboard",
+        component:AuctioneerDashboardComponent
+    },
+    {
+        path:"bidder-dashboard",
+        component:BidderDashboardComponent
     }
 ];

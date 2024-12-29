@@ -8,13 +8,13 @@ import { AuctionService } from '../../auction.service';
 import { ActivatedRoute } from '@angular/router';
 import {Auction, SoldItems} from '../../models/auction.model';
 @Component({
-  selector: 'app-landing-page',
+  selector: 'app-auctioneer-dashboard',
   standalone: true,
   imports: [CommonModule, FormsModule, MatDialogModule, MatButtonModule],
-  templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.css'],
+  templateUrl: './auctioneer-dashboard.component.html',
+  styleUrl: './auctioneer-dashboard.component.css'
 })
-export class LandingPageComponent implements OnInit{
+export class AuctioneerDashboardComponent implements OnInit{
   userDetails: any;
   auctioneer:any;
   bidder:any;
@@ -22,7 +22,7 @@ export class LandingPageComponent implements OnInit{
   activeAuctions :Auction []=[];
   // notStarted:Auction []=[];
   soldItems:SoldItems []=[];
-  userRole = localStorage.getItem('role');
+  userRole = 'auctioneer';
   // Constructor
   constructor(private dialog: MatDialog,private route: ActivatedRoute,private userService: AuctionService) {}
 
@@ -31,7 +31,7 @@ export class LandingPageComponent implements OnInit{
       this.updateRemainingTime();
     }, 1000);
     this.getUserDetails();
-    if (this.userRole==='auctioneer') {this.getAuctions();}
+    this.getAuctions();
     
   }
   get totalSales(){
@@ -107,82 +107,7 @@ export class LandingPageComponent implements OnInit{
   currency(Number:number){
     return Intl.NumberFormat('en-IN', {style: 'currency',currency: 'INR',}).format(Number);
   }
-  
-  /*activeAuctions=[
-    {
-      id:'',
-      productName: '',
-      description: '',
-      currentBid: '',
-      remainingTime:"",
-      minPrice:0,
-      endDate: new Date(),
-      image: '',
-      category: '',
-    }
-  ];/* [
-    {
-      id: '1',
-      productName: 'Vintage Watch',
-      description: 'Luxury vintage timepiece',
-      currentBid: '₹1,50,000',
-      remainingTime:"",
-      minPrice:0,
-      endDate: new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
-      image: 'vintage-watch.jpeg',
-      category: 'Electronics',
-    },
-    {
-      id: '2',
-      productName: 'Art Painting',
-      description: 'Original abstract art',
-      currentBid: '₹20,000',
-      minPrice:0,
-      remainingTime:"",
-      endDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
-      image: 'art-painting.png',
-      category: 'Art',
-      
-    },
-    {
-      id: '3',
-      productName: 'Sofa Set',
-      description: 'Comfortable seating',
-      minPrice:0,
-      currentBid: '₹15,000',
-      remainingTime:"",
-      endDate: new Date(new Date().getTime() + 3* 24 * 60 * 60 * 1000),
-      image: 'sofa-set.jpeg',
-      category: 'Home',
-    },
-  ];
 
-  soldItems = [
-    {
-      id: '1',
-      name: 'Antique Vase',
-      soldPrice: '₹12,00,000',
-      soldDate: '12/12/2024',
-      category:"Antiques",
-      image: 'Vase.png',
-    },
-    {
-      _id: '2',
-      name: 'Rare Book',
-      soldPrice: '₹80,000',
-      soldDate: '10/12/2024',
-      category:"Books",
-      image: 'book.jpeg',
-    },
-    {
-      _id: '3',
-      name: 'Laptop',
-      category:"Laptops",
-      soldPrice: '₹60,000',
-      soldDate: '01/12/2024',
-      image: 'laptop.jpeg',
-    },
-  ];*/
   categories = [
     { name: 'Electronics', checked: false },
     { name: 'Fashion', checked: false },

@@ -49,6 +49,7 @@
   position: relative;
   display: inline-block;
   cursor: pointer;
+  width: fit-content;
 }
 
 .profile-icon {
@@ -77,6 +78,7 @@
 
 .dropdown-menu li {
   padding: 5px 10px;
+  text-align: center;
 }
 
 .dropdown-menu li a {

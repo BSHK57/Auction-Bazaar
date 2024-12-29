@@ -33,7 +33,13 @@ export class LoginComponent {
       this.http.post('http://localhost:5000/login', loginData).subscribe(
         (response: any) => {
           const user=response.user;
-          alert(`Hi ${user.name}, Login Successful!`);
+          alert(`Hi ${user.name}, Login Successful! as ${this.signinAs}`);
+          if (user.auctioneer){
+            localStorage.setItem("A_Id",user.auctioneer.toString());
+          }
+          if (user.bidder){
+            localStorage.setItem("B_Id",user.bidder.toString());
+          }
           localStorage.setItem("User_Id",user._id);
           console.log(user._id);
           // Redirect based on the role
@@ -41,17 +47,12 @@ export class LoginComponent {
             this.router.navigate(['/admin-dashboard']);  // Navigate to admin dashboard
           } 
           if (this.signinAs === "auctioneer") {
-            console.log("hi");
-            localStorage.setItem("role","Auctioneer");
-            console.log(user.auctioneer.toString()+"fkb");
-            localStorage.setItem("A_Id",user.auctioneer.toString());
-            this.router.navigate(['/user-dashboard']);  // Navigate to auctioneer dashboard
+            localStorage.setItem("role","auctioneer");
+            this.router.navigate(['/auctioneer-dashboard']);  // Navigate to auctioneer dashboard
           } 
           if (this.signinAs === "bidder") {
-            console.log("hi11");
-
-            localStorage.setItem("role","Bidder")
-            this.router.navigate(['/user-dashboard']);  // Default user dashboard or redirect based on the role
+            localStorage.setItem("role","bidder");
+            this.router.navigate(['/bidder-dashboard']);  // Default user dashboard or redirect based on the role
           }
           loginForm.reset();
         },
