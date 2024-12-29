@@ -51,7 +51,7 @@ export interface Item {
   auctionId: string; // ID of the associated auction
   name: string; // Name of the item
   description: string; // Description of the item
-  salePrice?: number; // Final sale price (optional, for sold items)
+  salePrice: number; // Final sale price (optional, for sold items)
   category: 'Electronics' | 'Fashion' | 'Laptops' | 'Books' | "TV's" | "Antiques"; // Category of the item
   image: string; // Image URL of the item
   bids: Bid[]; // Array of bid IDs associated with the item

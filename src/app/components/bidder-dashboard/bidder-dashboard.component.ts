@@ -13,7 +13,7 @@ import { AuctionService } from '../../auction.service';
 })
 export class BidderDashboardComponent implements OnInit {
   isModalOpen: boolean=false;
-  selectedItem: Item | undefined;
+  selectedItem: any;
   selectedAuction: any;
   currentBid: any;
 

@@ -120,7 +120,8 @@
         <img [src]="selectedItem?.image" [alt]="selectedItem?.name" class="modal-image">
         <p><strong>Description:</strong> {{ selectedItem?.description }}</p>
         <p><strong>Starting Price:</strong> {{ selectedAuction.startingPrice ? currency(selectedAuction.startingPrice) : 'N/A' }}</p>
-        <p><strong>Current Bid:</strong>  {{ currentBid?.bidAmount ? currency(currentBid?.bidAmount) : 'N/A' }}</p> 
+        <p *ngIf="selectedAuction.status === 'Active'"><strong>Current Bid:</strong>  {{ currentBid?.bidAmount ? currency(currentBid?.bidAmount) : 'N/A' }}</p> 
+        <p *ngIf="selectedAuction.status === 'Ended'"><strong>Sale Price</strong>{{currency(selectedItem?.salePrice)}}</p>
         <p><strong>Status:</strong> {{ selectedAuction.status }}</p>
         <p *ngIf="selectedAuction.endTime && selectedAuction.status === 'Active'"><strong>Ends On:</strong> {{ selectedAuction.endTime | date:'short' }}</p>
         <p *ngIf="selectedAuction.auctionId?.startTime"><strong>Starts On:</strong> {{ selectedAuction.startTime | date: 'short' }}</p>
