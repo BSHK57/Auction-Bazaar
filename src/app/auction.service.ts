@@ -68,6 +68,7 @@ export class AuctionService {
         return response;
       },
       error: (error) => {
+        alert(error.error.error);
         console.error(error.error.message || 'Failed to place bid.');
       }
     });

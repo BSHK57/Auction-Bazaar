@@ -56,6 +56,7 @@ export class BidderDashboardComponent implements OnInit {
     const id = localStorage.getItem('User_Id') || '';
     this.userService.getUserDetails(id).subscribe(
       (response) => {
+        console.log(response);
         this.userDetails = response;
         if (this.userDetails.auctioneer) {
           this.auctioneer = this.userDetails.auctioneer;
