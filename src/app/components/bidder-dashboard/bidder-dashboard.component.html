@@ -70,7 +70,7 @@
                     <p>Description: {{ bid.item.description }}</p>
                     <p>Bid Amount: {{ currency(bid.bidAmount) }}</p>
                     <p>Bid Time: {{ bid.bidTime | date: 'short' }}</p>
-                    <button class="view-details-btn" (click)="viewDetails(bid.item._id)">View Details</button>
+                    <button class="view-details-btn" (click)="viewDetails(bid.item._id,bid)">View Details</button>
                 </div>
             </div>
         </div>
@@ -84,7 +84,7 @@
                     <p>Description: {{ bid.item.description }}</p>
                     <p>Sold Price: {{ currency(bid.item.salePrice) }}</p>
                     <p>Sold Date: {{ bid.item.soldDate | date: 'short' }}</p>
-                    <button class="view-details-btn" (click)="viewDetails(bid.item._id)">View Details</button>
+                    <button class="view-details-btn" (click)="viewDetails(bid.item._id,bid)">View Details</button>
                 </div>
             </div>
         </div>
@@ -103,9 +103,34 @@
                     <button *ngIf="auction.status === 'Active'" class="bid-btn" (click)="placeBid(auction.item._id)">
                         Place Bid
                     </button>
-                    <button class="view-details-btn" (click)="viewDetails(auction.item._id)">View Details</button>
+                    <button class="view-details-btn" (click)="viewDetails(auction.item,auction)">View Details</button>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" *ngIf="isModalOpen">
+    <div class="modal-content">
+        <!-- Close Mark -->
+        <div class="close-mark" (click)="closeModal()">&#x25B2; Close</div>
+        <span class="close-btn" (click)="closeModal()">&times;</span>
+        <h3>{{ selectedItem?.name }}</h3>
+        <img [src]="selectedItem?.image" [alt]="selectedItem?.name" class="modal-image">
+        <p><strong>Description:</strong> {{ selectedItem?.description }}</p>
+        <!-- <p><strong>Starting Price:</strong> 
+            {{ selectedItem?.auctionId?.startingPrice ? currency(selectedItem?.auctionId?.startingPrice) : 'N/A' }}
+          </p>
+          <p><strong>Current Bid:</strong> 
+            {{ selectedItem?.bids?.[0]?.bidAmount ? currency(selectedItem?.bids?.[0]?.bidAmount) : 'N/A' }}
+          </p> -->
+          
+        <p><strong>Status:</strong> {{ selectedItem?.auctionId }}</p>
+        <!-- <p *ngIf="selectedItem?.auctionId?.endTime"><strong>Ends On:</strong> {{ selectedItem?.auctionId?.endTime | date:'short' }}</p>
+        <p *ngIf="selectedItem?.auctionId?.startTime"><strong>Starts On:</strong> {{ selectedItem?.auctionId?.startTime | date: 'short' }}</p> -->
+        <!-- <button *ngIf="selectedItem?.auctionId?.status === 'Active'" class="place-bid-btn"(click)="placeBid(selectedItem?._id ||'')"> -->
+            <!-- Place Bid -->
+        <!-- </button> -->
     </div>
 </div>

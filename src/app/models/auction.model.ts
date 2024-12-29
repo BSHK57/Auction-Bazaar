@@ -54,7 +54,7 @@ export interface Item {
   salePrice?: number; // Final sale price (optional, for sold items)
   category: 'Electronics' | 'Fashion' | 'Laptops' | 'Books' | "TV's" | "Antiques"; // Category of the item
   image: string; // Image URL of the item
-  bids: string[]; // Array of bid IDs associated with the item
+  bids: Bid[]; // Array of bid IDs associated with the item
 }
 
 export interface Auction1 {

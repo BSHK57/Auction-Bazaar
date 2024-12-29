@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AllAuction, ParticipatedBid, WonBid } from '../../models/auction.model';
+import { AllAuction, Auction1, Item, ParticipatedBid, WonBid } from '../../models/auction.model';
 import { ActivatedRoute } from '@angular/router';
 import { AuctionService } from '../../auction.service';
 
@@ -12,6 +12,8 @@ import { AuctionService } from '../../auction.service';
   styleUrl: './bidder-dashboard.component.css'
 })
 export class BidderDashboardComponent implements OnInit {
+  isModalOpen: boolean=false;
+  selectedItem: Item | undefined;
 
   constructor(private route: ActivatedRoute, private userService: AuctionService) { }
 
@@ -114,7 +116,13 @@ export class BidderDashboardComponent implements OnInit {
   placeBid(itemId: string) {
 
   }
-  viewDetails(arg0: string) {
-    throw new Error('Method not implemented.');
+  viewDetails(item: any,auction :any) {
+    this.selectedItem = item;
+    this.isModalOpen = true;
   }
+  closeModal() {
+    this.isModalOpen = false;
+    this.selectedItem = undefined;
+  }
+
 }

@@ -298,3 +298,80 @@
     }
   }
   
+
+  .close-mark {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f1f1f1;
+    color: #333;
+    font-size: 1.2em;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .close-mark:hover {
+    background-color: #eaeaea;
+    color: #000;
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .modal-image {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5em;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .close-btn:hover {
+    color: #000;
+  }
+  
+  .place-bid-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .place-bid-btn:hover {
+    background-color: #0056b3;
+  }
+  
