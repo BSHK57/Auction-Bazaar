@@ -14,6 +14,8 @@ import { AuctionService } from '../../auction.service';
 export class BidderDashboardComponent implements OnInit {
   isModalOpen: boolean=false;
   selectedItem: Item | undefined;
+  selectedAuction: any;
+  currentBid: any;
 
   constructor(private route: ActivatedRoute, private userService: AuctionService) { }
 
@@ -116,13 +118,18 @@ export class BidderDashboardComponent implements OnInit {
   placeBid(itemId: string) {
 
   }
-  viewDetails(item: any,auction :any) {
+  viewDetails(item: any,auction?:any,bidd?:any) {
     this.selectedItem = item;
+    this.selectedAuction=auction;
     this.isModalOpen = true;
+    this.currentBid=bidd;
   }
   closeModal() {
     this.isModalOpen = false;
     this.selectedItem = undefined;
+    this.currentBid=null;
+    this.selectedAuction=null;
+
   }
 
 }

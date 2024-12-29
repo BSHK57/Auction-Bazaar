@@ -298,24 +298,23 @@
     }
   }
   
-
   .close-mark {
     width: 100%;
     text-align: center;
     padding: 10px 0;
-    background-color: #f1f1f1;
-    color: #333;
+    background-color: #f1f1f1; /* Light gray */
+    color: #333; /* Dark gray */
     font-size: 1.2em;
     cursor: pointer;
     position: absolute;
     top: 0;
     left: 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd; /* Light gray */
   }
   
   .close-mark:hover {
-    background-color: #eaeaea;
-    color: #000;
+    background-color: #eaeaea; /* Slightly darker gray */
+    color: #000; /* Black */
   }
   
   .modal-overlay {
@@ -332,7 +331,7 @@
   }
   
   .modal-content {
-    background: #fff;
+    background: #fff; /* White */
     padding: 20px;
     border-radius: 8px;
     width: 80%;
@@ -354,24 +353,25 @@
     top: 10px;
     right: 10px;
     font-size: 1.5em;
-    color: #333;
+    color: #333; /* Dark gray */
     cursor: pointer;
   }
   
   .close-btn:hover {
-    color: #000;
+    color: #000; /* Black */
   }
   
   .place-bid-btn {
-    background-color: #007bff;
-    color: #fff;
+    background: linear-gradient(135deg, #3498db, #2980b9); /* Blue gradient */
+    color: #fff; /* White */
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background 0.3s ease;
   }
   
   .place-bid-btn:hover {
-    background-color: #0056b3;
+    background: linear-gradient(135deg, #2980b9, #3498db); /* Reversed gradient for hover */
   }
   
