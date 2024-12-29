@@ -110,7 +110,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- View Details Modal -->
 <div class="modal-overlay" *ngIf="isModalOpen">
     <div class="modal-content">
         <!-- Close Mark -->
@@ -144,7 +144,6 @@
             {{ currentBid?.bidAmount ? currency(currentBid.bidAmount) : currency(selectedAuction.startingPrice) }}
         </p>
         <form (submit)="submitBid(selectedItem)">
-            <label for="bidAmount"><strong>Your Bid Amount:</strong></label>
             <input 
                 type="number" 
                 id="bidAmount" 
@@ -152,6 +151,7 @@
                 name="bidAmount" 
                 min="{{ currentBid?.bidAmount || selectedAuction.startingPrice }}" 
                 required
+                placeholder="Enter Bid Amount*"
                 class="bid-input">
             <button type="submit" class="confirm-bid-btn">Confirm Bid</button>
         </form>
