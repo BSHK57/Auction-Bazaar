@@ -67,7 +67,7 @@
                 <img [src]="bid.itemId.image" [alt]="bid.itemId.name" class="auction-image">
                 <div class="details">
                     <h4>{{ bid.itemId.name }}</h4>
-                    <p>Description: {{ bid.itemId.description }}</p>
+                    <p>{{ bid.itemId.description }}</p>
                     <p>Bid Amount: {{ currency(bid.bidAmount) }}</p>
                     <p>Bid Time: {{ bid.bidTime | date: 'short' }}</p>
                     <button class="view-details-btn" (click)="viewDetails(bid.itemId,bid.itemId.auctionId,bid)">View Details</button>
@@ -81,7 +81,7 @@
                 <img [src]="bid.itemId.image" [alt]="bid.itemId.name" class="auction-image">
                 <div class="details">
                     <h4>{{ bid.itemId.name }}</h4>
-                    <p>Description: {{ bid.itemId.description }}</p>
+                    <p>{{ bid.itemId.description }}</p>
                     <p>Sold Price: {{ currency(bid.itemId.salePrice) }}</p>
                     <p>Sold Date: {{ bid.itemId.auctionId.completedTime| date: 'short' }}</p>
                     <button class="view-details-btn" (click)="viewDetails(bid.itemId,bid.itemId.auctionId,bid)">View Details</button>
@@ -93,17 +93,18 @@
         <div *ngIf="selectedTab === 'allAuctions'" class="auction-list">
             <div class="card-img" *ngFor="let auction of filteredAuctions">
                 <img [src]="auction.item.image" [alt]="auction.item.name" class="auction-image">
+                <p *ngIf="auction.status === 'Active'">{{ remainingtime(auction.endTime) }}</p>
                 <div class="details">
                     <h4>{{ auction.item.name }}</h4>
-                    <p>Description: {{ auction.item.description }}</p>
-                    <p>Current Bid: {{ auction.item.bids.length > 0 ? currency(auction.item.bids[0].bidAmount) : currency(auction.startingPrice) }}</p>
+                    <p>{{ auction.item.description }}</p>
+                    <p>Current Bid: {{ auction.item.bids.length > 0 ? currency(auction.item.bids[auction.item.bids.length-1].bidAmount) : currency(auction.startingPrice) }}</p>
                     <p>Status: {{ auction.status }}</p>
                     <p *ngIf="auction.status === 'Active'">Ends on: {{ auction.endTime | date: 'short' }}</p>
                     <p *ngIf="auction.status === 'Not Started'">Starts on: {{ auction.startTime | date: 'short' }}</p>
                     <button *ngIf="auction.status === 'Active'" class="bid-btn" (click)="placeBid(auction.item,auction)">
                         Place Bid
                     </button>
-                    <button class="view-details-btn" (click)="viewDetails(auction.item,auction,auction.item.bids[0])">View Details</button>
+                    <button class="view-details-btn" (click)="viewDetails(auction.item,auction,auction.item.bids[auction.item.bids.length-1])">View Details</button>
                 </div>
             </div>
         </div>
