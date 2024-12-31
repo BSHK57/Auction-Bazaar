@@ -54,7 +54,7 @@
             </div>
             <div class="search-bar">
                 <input type="text" placeholder="Search items..." [(ngModel)]="searchQuery" />
-                <button (click)="searchItems()">Search</button>
+                <button>Search</button>
             </div>
         </div>
     </div>
@@ -69,7 +69,7 @@
                     <h4>{{ bid.itemId.name }}</h4>
                     <p>{{ bid.itemId.description }}</p>
                     <p>Bid Amount: {{ currency(bid.bidAmount) }}</p>
-                    <p>Bid Time: {{ bid.bidTime | date: 'short' }}</p>
+                    <p>Bid Time: {{ bid.bidTime | date: 'dd/MM/yyyy hh:mm a' }}</p>
                     <button class="view-details-btn" (click)="viewDetails(bid.itemId,bid.itemId.auctionId,bid)">View Details</button>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                     <h4>{{ bid.itemId.name }}</h4>
                     <p>{{ bid.itemId.description }}</p>
                     <p>Sold Price: {{ currency(bid.itemId.salePrice) }}</p>
-                    <p>Sold Date: {{ bid.itemId.auctionId.completedTime| date: 'short' }}</p>
+                    <p>Sold Date: {{ bid.itemId.auctionId.completedTime| date: 'dd/MM/yyyy hh:mm a' }}</p>
                     <button class="view-details-btn" (click)="viewDetails(bid.itemId,bid.itemId.auctionId,bid)">View Details</button>
                 </div>
             </div>
@@ -99,8 +99,11 @@
                     <p>{{ auction.item.description }}</p>
                     <p>Current Bid: {{ auction.item.bids.length > 0 ? currency(auction.item.bids[auction.item.bids.length-1].bidAmount) : currency(auction.startingPrice) }}</p>
                     <p>Status: {{ auction.status }}</p>
-                    <p *ngIf="auction.status === 'Active'">Ends on: {{ auction.endTime | date: 'short' }}</p>
-                    <p *ngIf="auction.status === 'Not Started'">Starts on: {{ auction.startTime | date: 'short' }}</p>
+                    <h4 *ngIf="auction.status==='Not Started'" style="color: brown;" >
+                        Auction Not Started</h4>
+                    <p *ngIf="auction.status==='Ended'">Sold Price:{{auction.item.salePrice}}</p>
+                    <p *ngIf="auction.status === 'Active'">Ends on: {{ auction.endTime | date: 'dd/MM/yyyy hh:mm a' }}</p>
+                    <p *ngIf="auction.status === 'Not Started'">Starts on: {{ auction.startTime | date: 'dd/MM/yyyy hh:mm a' }}</p>
                     <button *ngIf="auction.status === 'Active'" class="bid-btn" (click)="placeBid(auction.item,auction)">
                         Place Bid
                     </button>
@@ -123,10 +126,11 @@
         <p><strong>Starting Price:</strong> {{ selectedAuction.startingPrice ? currency(selectedAuction.startingPrice) : 'N/A' }}</p>
         <p *ngIf="selectedAuction.status === 'Active'"><strong>Current Bid:</strong>  {{ currentBid?.bidAmount ? currency(currentBid?.bidAmount) : 'N/A' }}</p> 
         <p *ngIf="selectedAuction.status === 'Ended'"><strong>Sale Price</strong>{{currency(selectedItem?.salePrice)}}</p>
+        <p *ngIf="selectedAuction.status !== 'Not Started'" (click)="viewBids(selectedItem.bids)" class="view-bids">View All bids</p>
         <p><strong>Status:</strong> {{ selectedAuction.status }}</p>
-        <p *ngIf="selectedAuction.endTime && selectedAuction.status === 'Active'"><strong>Ends On:</strong> {{ selectedAuction.endTime | date:'short' }}</p>
-        <p *ngIf="selectedAuction.status === 'Not Started'"><strong>Starts On:</strong> {{ selectedAuction.startTime | date: 'short' }}</p>
-        <p *ngIf="selectedAuction.status === 'Ended' "><strong>Ended On:</strong> {{ selectedAuction.completedTime | date: 'short' }}</p>
+        <p *ngIf="selectedAuction.endTime && selectedAuction.status === 'Active'"><strong>Ends On:</strong> {{ selectedAuction.endTime | date: 'dd/MM/yyyy hh:mm a' }}</p>
+        <p *ngIf="selectedAuction.status === 'Not Started'"><strong>Starts On:</strong> {{ selectedAuction.startTime | date: 'dd/MM/yyyy hh:mm a' }}</p>
+        <p *ngIf="selectedAuction.status === 'Ended' "><strong>Ended On:</strong> {{ selectedAuction.completedTime | date: 'dd/MM/yyyy hh:mm a' }}</p>
         <button *ngIf="selectedAuction.status === 'Active'" class="place-bid-btn"(click)="placeBid(selectedItem,selectedAuction)">
             Place Bid
         </button>
@@ -158,3 +162,34 @@
         </form>
     </div>
 </div>
+
+
+<!-- View Bids Modal -->
+<div class="modal-overlay" *ngIf="isBidsModalOpen">
+    <div class="modal-content">
+        <span class="close-btn" (click)="closeBidsModal()">&times;</span>
+        <h4>Bids for {{ selectedItem?.name }}</h4>
+        <!-- Check if there are any bids -->
+        <div *ngIf="selectedBids?.length ||0 > 0; else noBids">
+            <table class="bids-table">
+                <thead>
+                    <tr>
+                        <th>Bid Amount</th>
+                        <th>Bid Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let bid of selectedBids">
+                        <td>{{ currency(bid.bidAmount)}}</td>
+                        <td>{{ bid.bidTime | date: 'dd/MM/yyyy hh:mm a' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- No Bids Placeholder -->
+        <ng-template #noBids>
+            <p>No bids available for this auction.</p>
+        </ng-template>
+    </div>
+</div>
+

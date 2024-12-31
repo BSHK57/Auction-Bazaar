@@ -69,13 +69,13 @@
             <h4>{{ auction.productName }}</h4>
             <p>{{ auction.description }}</p>
             <p>Current Bid: {{ currency(auction.currentBid)}}</p>
-            <p *ngIf="auction.status==='Active'">Ends on:{{ auction.endDate | date: 'short' }}</p> <!-- Show formatted end date -->
+            <p *ngIf="auction.status==='Active'">Ends on:{{ auction.endDate | date: 'dd/MM/yyyy hh:mm a' }}</p> <!-- Show formatted end date -->
             <!-- <p>Remaining Time: {{ auction.remainingTime }}</p> Countdown timer -->
             <button *ngIf="auction.status==='Active'" class="complete-auction-btn" (click)="completeAuction(auction._id)">
               Complete Auction
             </button>
             <h4 *ngIf="auction.status!=='Active'" style="color: brown;" >
-              Auction Not Started<br>Starts on:<p>{{ auction.startDate | date:'short'}}</p> 
+              Auction Not Started<br>Starts on:<p>{{ auction.startDate | date: 'dd/MM/yyyy hh:mm a'}}</p> 
             </h4>
           </div>
         </div>
@@ -89,7 +89,7 @@
           <div class="details">
             <h4>{{ item.name }}</h4>
             <p>Sold for: {{ currency(item.soldPrice)}}</p>
-            <p>Sold on: {{ item.soldDate | date:'short' }}</p>
+            <p>Sold on: {{ item.soldDate | date: 'dd/MM/yyyy hh:mm a' }}</p>
           </div>
         </div>
       </div>

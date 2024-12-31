@@ -80,6 +80,7 @@ export class AddProductComponent {
 
   // Handle form submission
   onSubmit() {
+    const now = new Date();
     const formData = new FormData();
     const startTime = new Date(this.product.startTime);
     const endTime = new Date(this.product.endTime);
@@ -92,7 +93,15 @@ export class AddProductComponent {
     formData.append('name', this.product.name);
     formData.append('description', this.product.description);
     formData.append('category', this.product.category);
+    if (startTime <= now) {
+      alert('Start time must be greater than the current time.');
+      return ;
+    }
 
+    if (startTime >= endTime) {
+      alert('End time must be greater than the start time.');
+      return ;
+    }
     // Append the image file to formData
     if (this.product.image) {
       formData.append('itemImage', this.product.image, this.product.image.name);
