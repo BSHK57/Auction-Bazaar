@@ -63,7 +63,7 @@
     <div class="dashboard-content">
         <!-- Participated Bids -->
         <div *ngIf="selectedTab === 'participatedBids'" class="bid-list">
-            <div class="card-img" *ngFor="let bid of participatedBids">
+            <div class="card-img" *ngFor="let bid of filteredParticipatedBids">
                 <img [src]="bid.itemId.image" [alt]="bid.itemId.name" class="auction-image">
                 <div class="details">
                     <h4>{{ bid.itemId.name }}</h4>
