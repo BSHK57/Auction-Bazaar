@@ -113,6 +113,7 @@ export class BidderDashboardComponent implements OnInit {
   }
 
   get filteredParticipatedBids() {
+    this.getUserDetails();
     const now = new Date;
     for (const bid of this.participatedBids){
       this.check([bid.itemId.auctionId]);
@@ -142,6 +143,7 @@ export class BidderDashboardComponent implements OnInit {
   
 
   get filteredAuctions() {
+    this.getUserDetails();
     const now = new Date;
     this.check(this.allAuctions);
     // console.log("Checked");
@@ -153,6 +155,7 @@ export class BidderDashboardComponent implements OnInit {
   }
 
   get filteredWonBids() {
+    this.getUserDetails();
     return this.wonBids.filter(
       (bid) =>
         bid.itemId.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
