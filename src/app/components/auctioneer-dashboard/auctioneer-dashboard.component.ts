@@ -23,6 +23,7 @@ export class AuctioneerDashboardComponent implements OnInit{
   // notStarted:Auction []=[];
   soldItems:SoldItems []=[];
   userRole = 'auctioneer';
+  activeAuctionsCount:number=0;
   // Constructor
   constructor(private dialog: MatDialog,private route: ActivatedRoute,private userService: AuctionService) {}
 
@@ -63,6 +64,12 @@ export class AuctioneerDashboardComponent implements OnInit{
         this.auctions=response;
         console.log(this.auctions);
         this.splitAuctions(this.auctions);
+        this.activeAuctionsCount=0;
+        for (let auction of this.activeAuctions) {
+          if (auction.status === "Active") {
+              this.activeAuctionsCount++;
+          }
+      }
       },
       (error) => {
         console.error('Error fetching user details:', error);

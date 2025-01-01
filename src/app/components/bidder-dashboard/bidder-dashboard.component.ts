@@ -19,7 +19,7 @@ export class BidderDashboardComponent implements OnInit {
   isPlaceBidModalOpen: boolean = false;
   bidAmount: number | null = null;
   isBidsModalOpen:boolean =false;
-  selectedBids: Bid[]=[];
+  selectedBids: any;
   constructor(private route: ActivatedRoute, private userService: AuctionService) { }
 
   ngOnInit() {
@@ -93,7 +93,10 @@ export class BidderDashboardComponent implements OnInit {
         console.log(this.participatedBids, "all");
 
         this.wonBids = response.wonBids;
-        this.allAuctions = response.allAuctions;
+        this.allAuctions = response.allAuctions.sort((a: any, b: any) => {
+          const priority = (status: string) => (status === "Not Started" || status === "Ended" ? 1 : 0);
+          return priority(a.status) - priority(b.status);
+      });      
         console.log(this.allAuctions, this.wonBids);
       }, (error) => {
         console.error('Error fetching bidder dashboard data', error);
@@ -156,6 +159,7 @@ export class BidderDashboardComponent implements OnInit {
 
   get filteredWonBids() {
     this.getUserDetails();
+    this.getBidderDashboardData();
     return this.wonBids.filter(
       (bid) =>
         bid.itemId.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
@@ -224,7 +228,7 @@ export class BidderDashboardComponent implements OnInit {
 
   viewBids(bids:any){
     this.isBidsModalOpen=true;
-    this.selectedBids=bids;
+    this.selectedBids=bids.reverse();
   }
 
   closeBidsModal(){

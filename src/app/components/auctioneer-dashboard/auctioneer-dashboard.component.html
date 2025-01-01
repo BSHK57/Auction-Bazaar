@@ -12,7 +12,7 @@
     <div class="dashboard-grid">
       <div class="card">
         <h3>Active Auctions</h3>
-        <p>{{activeAuctions.length}}</p>
+        <p>{{activeAuctionsCount}}</p>
       </div>
       <div class="card">
         <h3>Total Sales</h3>
@@ -63,7 +63,7 @@
         <div class="card-img" *ngFor="let auction of filteredAuctions">
           <div class="img">
             <img [src]="auction.image" [alt]="auction.productName">
-            <p>{{ auction.remainingTime }}</p> <!-- Countdown timer -->
+            <p *ngIf="auction.status==='Active'" class="remainingTime">{{ auction.remainingTime }}</p> <!-- Countdown timer -->
           </div>
           <div class="details">
             <h4>{{ auction.productName }}</h4>

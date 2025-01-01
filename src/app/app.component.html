@@ -12,6 +12,7 @@
           <ul class="dropdown-menu" *ngIf="isDropdownVisible">
             <li *ngIf="auctioneer"><a routerLink="/auctioneer-dashboard">Auctioneer&nbsp;Dashboard</a></li>
             <li *ngIf="bidder"><a routerLink="/bidder-dashboard">Bidder&nbsp;Dashboard</a></li>
+            <hr>
             <li *ngIf="isSignedIn"><a (click)="logout()">Logout</a></li>
             <li *ngIf="!isSignedIn"><a routerLink="/login">Login</a></li>
           </ul>

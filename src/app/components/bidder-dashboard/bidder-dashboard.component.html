@@ -93,7 +93,7 @@
         <div *ngIf="selectedTab === 'allAuctions'" class="auction-list">
             <div class="card-img" *ngFor="let auction of filteredAuctions">
                 <img [src]="auction.item.image" [alt]="auction.item.name" class="auction-image">
-                <p *ngIf="auction.status === 'Active'">{{ remainingtime(auction.endTime) }}</p>
+                <p *ngIf="auction.status === 'Active'" class="remainingTime">{{ remainingtime(auction.endTime) }}</p>
                 <div class="details">
                     <h4>{{ auction.item.name }}</h4>
                     <p>{{ auction.item.description }}</p>
@@ -174,12 +174,14 @@
             <table class="bids-table">
                 <thead>
                     <tr>
+                        <th>Bidder Name</th>
                         <th>Bid Amount</th>
                         <th>Bid Time</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let bid of selectedBids">
+                        <td>{{bid.bidderId.userId.name}}</td>
                         <td>{{ currency(bid.bidAmount)}}</td>
                         <td>{{ bid.bidTime | date: 'dd/MM/yyyy hh:mm a' }}</td>
                     </tr>
