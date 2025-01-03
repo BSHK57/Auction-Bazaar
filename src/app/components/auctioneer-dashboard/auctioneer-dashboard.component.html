@@ -63,7 +63,6 @@
         <div class="card-img" *ngFor="let auction of filteredAuctions">
           <div class="img">
             <img [src]="auction.image" [alt]="auction.productName">
-            <p *ngIf="auction.status==='Active'" class="remainingTime">{{ auction.remainingTime }}</p> <!-- Countdown timer -->
           </div>
           <div class="details">
             <h4>{{ auction.productName }}</h4>
@@ -74,10 +73,13 @@
             <button *ngIf="auction.status==='Active'" class="complete-auction-btn" (click)="completeAuction(auction._id)">
               Complete Auction
             </button>
+            <button class="view-details-btn" (click)="viewDetails(auction,auction.bids[auction.bids.length-1])">View Details</button>
             <h4 *ngIf="auction.status!=='Active'" style="color: brown;" >
               Auction Not Started<br>Starts on:<p>{{ auction.startDate | date: 'dd/MM/yyyy hh:mm a'}}</p> 
             </h4>
           </div>
+          <div *ngIf="auction.status==='Active'" class="remainingTime">{{ auction.remainingTime }}</div> <!-- Countdown timer -->
+
         </div>
   
       </div>
@@ -85,13 +87,66 @@
       <!-- Sold Items -->
       <div *ngIf="selectedTab === 'soldItems'" class="auction-list">
         <div class="card-img" *ngFor="let item of filteredSoldItems">
-          <img [src]="item.image" [alt]="item.name" class="auction-image">
+          <img [src]="item.image" [alt]="item.productName" class="auction-image">
           <div class="details">
-            <h4>{{ item.name }}</h4>
+            <h4>{{ item.productName }}</h4>
             <p>Sold for: {{ currency(item.soldPrice)}}</p>
             <p>Sold on: {{ item.soldDate | date: 'dd/MM/yyyy hh:mm a' }}</p>
+            <button class="view-details-btn" (click)="viewDetails(item,item.bids[item.bids.length-1])">View Details</button>
+          
           </div>
         </div>
       </div>
     </div>
   </div>
+
+
+  <!-- View Details Modal -->
+<div class="modal-overlay" *ngIf="isModalOpen">
+  <div class="modal-content">
+      <span class="close-btn" (click)="closeModal()">&times;</span>
+      <h4>{{ selectedAuction?.productName }}</h4>
+      <img [src]="selectedAuction?.image" [alt]="selectedAuction?.name" class="modal-image">
+      <p><strong>Description:</strong> {{ selectedAuction?.description }}</p>
+      <p><strong>Starting Price:</strong> {{ selectedAuction.minPrice ? currency(selectedAuction.minPrice) : 'N/A' }}</p>
+      <p *ngIf="selectedAuction.status === 'Active'"><strong>Current Bid:</strong>  {{ currentBid?.bidAmount ? currency(currentBid?.bidAmount) : 'N/A' }}</p> 
+      <p *ngIf="selectedAuction.status === 'Ended'"><strong>Sale Price</strong>{{currency(selectedAuction?.soldPrice)}}</p>
+      <h5 *ngIf="selectedAuction.status !== 'Not Started'" (click)="viewBids(selectedAuction.bids)" class="view-bids">View All bids</h5>
+      <p><strong>Status:</strong> {{ selectedAuction.status }}</p>
+      <p *ngIf="selectedAuction.endDate && selectedAuction.status === 'Active'"><strong>Ends On:</strong> {{ selectedAuction.endDate | date: 'dd/MM/yyyy hh:mm a' }}</p>
+      <p *ngIf="selectedAuction.status === 'Not Started'"><strong>Starts On:</strong> {{ selectedAuction.startDate | date: 'dd/MM/yyyy hh:mm a' }}</p>
+      <p *ngIf="selectedAuction.status === 'Ended' "><strong>Ended On:</strong> {{ selectedAuction.endDate | date: 'dd/MM/yyyy hh:mm a' }}</p>
+  </div>
+</div>
+
+
+<!-- View Bids Modal -->
+<div class="modal-overlay" *ngIf="isBidsModalOpen">
+  <div class="modal-content">
+      <span class="close-btn" (click)="closeBidsModal()">&times;</span>
+      <h4>Bids for {{ selectedAuction?.name }}</h4>
+      <!-- Check if there are any bids -->
+      <div *ngIf="selectedBids?.length ||0 > 0; else noBids">
+          <table class="bids-table">
+              <thead>
+                  <tr>
+                      <th>Bidder Name</th>
+                      <th>Bid Amount</th>
+                      <th>Bid Time</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let bid of selectedBids">
+                      <td>{{bid.bidderId.userId.name}}</td>
+                      <td>{{ currency(bid.bidAmount)}}</td>
+                      <td>{{ bid.bidTime | date: 'dd/MM/yyyy hh:mm a' }}</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      <!-- No Bids Placeholder -->
+      <ng-template #noBids>
+          <p>No bids available for this auction.</p>
+      </ng-template>
+  </div>
+</div>

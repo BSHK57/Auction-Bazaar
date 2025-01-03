@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AddProductComponent } from '../add-product/add-product.component';
 import { AuctionService } from '../../auction.service';
 import { ActivatedRoute } from '@angular/router';
-import {Auction, SoldItems} from '../../models/auction.model';
+import { Auction, SoldItems } from '../../models/auction.model';
 @Component({
   selector: 'app-auctioneer-dashboard',
   standalone: true,
@@ -14,18 +14,23 @@ import {Auction, SoldItems} from '../../models/auction.model';
   templateUrl: './auctioneer-dashboard.component.html',
   styleUrl: './auctioneer-dashboard.component.css'
 })
-export class AuctioneerDashboardComponent implements OnInit{
+export class AuctioneerDashboardComponent implements OnInit {
   userDetails: any;
-  auctioneer:any;
-  bidder:any;
-  auctions: any=[];
-  activeAuctions :Auction []=[];
+  auctioneer: any;
+  bidder: any;
+  auctions: any = [];
+  activeAuctions: Auction[] = [];
   // notStarted:Auction []=[];
-  soldItems:SoldItems []=[];
+  soldItems: SoldItems[] = [];
   userRole = 'auctioneer';
-  activeAuctionsCount:number=0;
+  activeAuctionsCount: number = 0;
+  isBidsModalOpen: boolean = false;
+  selectedBids: any;
+  selectedAuction: any;
+  isModalOpen: boolean = false;
+  currentBid: any;
   // Constructor
-  constructor(private dialog: MatDialog,private route: ActivatedRoute,private userService: AuctionService) {}
+  constructor(private dialog: MatDialog, private route: ActivatedRoute, private userService: AuctionService) { }
 
   ngOnInit() {
     setInterval(() => {
@@ -34,22 +39,22 @@ export class AuctioneerDashboardComponent implements OnInit{
     this.getUserDetails();
     this.getAuctions();
   }
-  get totalSales(){
+  get totalSales() {
     return this.auctioneer.totalSales;
   }
   // Auctioneer and user data
   getUserDetails() {
-    const id=localStorage.getItem('User_Id')||'';
+    const id = localStorage.getItem('User_Id') || '';
     this.userService.getUserDetails(id).subscribe(
       (response) => {
         this.userDetails = response;
-        if (this.userDetails.auctioneer){
-          this.auctioneer=this.userDetails.auctioneer;
+        if (this.userDetails.auctioneer) {
+          this.auctioneer = this.userDetails.auctioneer;
         }
-        if (this.userDetails.bidder){
-          this.bidder=this.userDetails.bidder;
+        if (this.userDetails.bidder) {
+          this.bidder = this.userDetails.bidder;
         }
-       // console.log(this.userDetails);
+        // console.log(this.userDetails);
       },
       (error) => {
         console.error('Error fetching user details:', error);
@@ -58,18 +63,18 @@ export class AuctioneerDashboardComponent implements OnInit{
   }
 
   getAuctions() {
-    const id1=localStorage.getItem('A_Id')||'';
+    const id1 = localStorage.getItem('A_Id') || '';
     this.userService.getAuctionsByAuctioneerId(id1).subscribe(
       (response) => {
-        this.auctions=response;
+        this.auctions = response;
         console.log(this.auctions);
         this.splitAuctions(this.auctions);
-        this.activeAuctionsCount=0;
+        this.activeAuctionsCount = 0;
         for (let auction of this.activeAuctions) {
           if (auction.status === "Active") {
-              this.activeAuctionsCount++;
+            this.activeAuctionsCount++;
           }
-      }
+        }
       },
       (error) => {
         console.error('Error fetching user details:', error);
@@ -77,18 +82,18 @@ export class AuctioneerDashboardComponent implements OnInit{
     );
   }
 
-  splitAuctions(auctions:any){
+  splitAuctions(auctions: any) {
     for (const auction of auctions) {
-      auction.endDate=new Date(auction.endDate);
-      auction.startDate=new Date(auction.startDate);
-      auction.remainingTime='';
-      if (auction.status==="Not Started"){
+      auction.endDate = new Date(auction.endDate);
+      auction.startDate = new Date(auction.startDate);
+      auction.remainingTime = '';
+      if (auction.status === "Not Started") {
         this.activeAuctions.push(auction);
       }
-      else if (auction.status==="Active"){
+      else if (auction.status === "Active") {
         this.activeAuctions.push(auction);
       }
-      else{
+      else {
         // console.log(auction);
         this.addToSoldItems(auction);
       }
@@ -97,21 +102,26 @@ export class AuctioneerDashboardComponent implements OnInit{
     // console.log(this.activeAuctions);
   }
 
-  addToSoldItems(auction:Auction){
-    const price=auction.salePrice;
+  addToSoldItems(auction: Auction) {
+    const price = auction.salePrice;
+    console.log(auction.bids);
     this.soldItems.push({
-      _id : auction._id,
-      name: auction.productName,
+      _id: auction._id,
+      productName: auction.productName,
       description: auction.description,
       soldPrice: price,//Intl.NumberFormat('en-IN', {style: 'currency',currency: 'INR',}).format(price),
-      soldDate:new Date(auction.soldDate),
+      soldDate: new Date(auction.soldDate),
       image: auction.image,
       category: auction.category,
-      bids: auction.bids
+      bids: auction.bids,
+      startDate: auction.startDate,
+      minPrice:auction.minPrice,
+      status: auction.status,
+      endDate:auction.endDate,
     });
   }
-  currency(Number:number){
-    return Intl.NumberFormat('en-IN', {style: 'currency',currency: 'INR',}).format(Number);
+  currency(Number: number) {
+    return Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', }).format(Number);
   }
 
   categories = [
@@ -126,28 +136,28 @@ export class AuctioneerDashboardComponent implements OnInit{
   selectedTab: string = 'activeAuctions';
 
   searchQuery = '';
-  filterCategories :any= [];
+  filterCategories: any = [];
 
   updateRemainingTime() {
     this.activeAuctions.forEach((auction) => {
       const now = new Date();
-      if (auction.status==="Active" || auction.startDate<=now){
-      if(auction.status!=="Active"){
-        auction.status="Active"
-        this.userService.updateAuctionStatusAndBid(auction._id,auction.status);
+      if (auction.status === "Active" || auction.startDate <= now) {
+        if (auction.status !== "Active") {
+          auction.status = "Active"
+          this.userService.updateAuctionStatusAndBid(auction._id, auction.status);
+        }
+        const remainingTime = auction.endDate.getTime() - now.getTime();
+        if (remainingTime > 0) {
+          const daysLeft = Math.floor(remainingTime / (1000 * 3600 * 24));
+          const hoursLeft = Math.floor((remainingTime % (1000 * 3600 * 24)) / (1000 * 3600));
+          const minutesLeft = Math.floor((remainingTime % (1000 * 3600)) / (1000 * 60));
+          const secondsLeft = Math.floor((remainingTime % (1000 * 60)) / 1000);
+          auction.remainingTime = `${daysLeft}d ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+        } else {
+          auction.remainingTime = 'Auction Ended';
+          this.completeAuction(auction._id);
+        }
       }
-      const remainingTime = auction.endDate.getTime() - now.getTime();
-      if (remainingTime > 0) {
-        const daysLeft = Math.floor(remainingTime / (1000 * 3600 * 24));
-        const hoursLeft = Math.floor((remainingTime % (1000 * 3600 * 24)) / (1000 * 3600));
-        const minutesLeft = Math.floor((remainingTime % (1000 * 3600)) / (1000 * 60));
-        const secondsLeft = Math.floor((remainingTime % (1000 * 60)) / 1000);
-        auction.remainingTime = `${daysLeft}d ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
-      } else {
-        auction.remainingTime = 'Auction Ended';
-        this.completeAuction(auction._id);
-      }
-    }
     });
   }
 
@@ -181,7 +191,7 @@ export class AuctioneerDashboardComponent implements OnInit{
   get filteredSoldItems() {
     return this.soldItems.filter(
       (item) =>
-        item.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+        item.productName.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
         (this.filterCategories.length === 0 || this.filterCategories.includes(item.category))
     );
   }
@@ -214,17 +224,44 @@ export class AuctioneerDashboardComponent implements OnInit{
       const completedAuction = this.activeAuctions.splice(auctionIndex, 1)[0];
       this.soldItems.push({
         _id: completedAuction._id,
-        name: completedAuction.productName,
+        productName: completedAuction.productName,
         soldPrice: completedAuction.currentBid,
         category: completedAuction.category,
         soldDate: new Date().toLocaleDateString(),
         image: completedAuction.image,
         description: completedAuction.description,
         bids: completedAuction.bids,
+        startDate: completedAuction.startDate,
+      minPrice:completedAuction.minPrice,
+      status: completedAuction.status,
+        endDate:completedAuction.endDate,
       });
-      this.userService.updateAuctionStatusAndBid(completedAuction._id,"Ended",completedAuction.currentBid);
-      this.getAuctions();
-      console.log(`Auction with ID ${auctionId} completed.`+completedAuction.currentBid);
+      this.userService.updateAuctionStatusAndBid(completedAuction._id, "Ended", completedAuction.currentBid);
+      // this.getAuctions();
+      window.location.reload();
+      console.log(`Auction with ID ${auctionId} completed.` + completedAuction.currentBid);
     }
+  }
+
+  viewDetails(auction?: any, bid?: any) {
+    this.selectedAuction = auction;
+    this.isModalOpen = true;
+    this.currentBid = bid || auction.bids[auction.bids.length - 1];
+  }
+  closeModal() {
+    this.isModalOpen = false;
+    this.currentBid = null;
+    this.selectedAuction = null;
+
+  }
+
+  viewBids(bids: any) {
+    this.isBidsModalOpen = true;
+    this.selectedBids = bids.reverse();
+  }
+
+  closeBidsModal() {
+    this.isBidsModalOpen = false;
+    this.selectedBids = [];
   }
 }

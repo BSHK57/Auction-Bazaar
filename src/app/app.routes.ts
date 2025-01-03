@@ -7,7 +7,6 @@ import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
-import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { AuctioneerDashboardComponent } from './components/auctioneer-dashboard/auctioneer-dashboard.component';
 import { BidderDashboardComponent } from './components/bidder-dashboard/bidder-dashboard.component';
 

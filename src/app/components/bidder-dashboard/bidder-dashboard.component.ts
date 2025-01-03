@@ -23,9 +23,6 @@ export class BidderDashboardComponent implements OnInit {
   constructor(private route: ActivatedRoute, private userService: AuctionService) { }
 
   ngOnInit() {
-    setInterval(() => {
-      this.updateAuctions();
-    }, 1000);
     this.getUserDetails();
     this.getBidderDashboardData();
   }
@@ -82,7 +79,6 @@ export class BidderDashboardComponent implements OnInit {
     );
   }
 
-
   getBidderDashboardData() {
     const Id = localStorage.getItem('B_Id') || '';
     this.userService.getBidderDashboardData(Id)
@@ -106,17 +102,9 @@ export class BidderDashboardComponent implements OnInit {
   // filteredParticipatedBids = this.participatedBids;
   // filteredWonBids = this.wonBids;
   // filteredAuctions = this.allAuctions;
-  updateAuctions() {
-    const now = new Date;
-    for (let auction of this.allAuctions) {
-      if (auction.endTime <= now && auction.status === "Active") {
-        this.userService.updateAuctionStatusAndBid(auction._id, "Ended", auction.item.bids[auction.item.bids.length - 1].bidAmount | auction.startingPrice);
-      }
-    }
-  }
 
   get filteredParticipatedBids() {
-    this.getUserDetails();
+    // this.getUserDetails();
     const now = new Date;
     for (const bid of this.participatedBids){
       this.check([bid.itemId.auctionId]);
@@ -130,12 +118,12 @@ export class BidderDashboardComponent implements OnInit {
   check(a: AllAuction[]) {
     const now = new Date();
     for (const auction of a) { 
-      if (auction.startTime <= now) {
+      if (auction.startTime <= now && auction.status!=="Active") {
         auction.status="Active"; 
         this.userService.updateAuctionStatusAndBid(auction._id,"Active");
         this.getBidderDashboardData();
       }
-      if (new Date(auction.endTime)<=now){
+      if (new Date(auction.endTime)<=now && auction.status!=="Ended"){
         auction.status="Ended"; 
         const saleprice=auction.item?.bids[auction.item.bids.length-1]?.bidAmount || auction.startingPrice;
         this.userService.updateAuctionStatusAndBid(auction._id,"Ended",saleprice);
@@ -146,10 +134,8 @@ export class BidderDashboardComponent implements OnInit {
   
 
   get filteredAuctions() {
-    this.getUserDetails();
     const now = new Date;
     this.check(this.allAuctions);
-    // console.log("Checked");
     return this.allAuctions.filter(
       (auction) =>
         auction.item.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
@@ -158,8 +144,6 @@ export class BidderDashboardComponent implements OnInit {
   }
 
   get filteredWonBids() {
-    this.getUserDetails();
-    this.getBidderDashboardData();
     return this.wonBids.filter(
       (bid) =>
         bid.itemId.name.toLowerCase().includes(this.searchQuery.toLowerCase()) &&

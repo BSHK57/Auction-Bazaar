@@ -18,13 +18,17 @@ export interface Auction {
 
 export interface SoldItems {
   _id: string;
-  name: string;
+  productName: string;
   description: string;
   soldPrice: number;
   soldDate: any;
   image: string;
   category: string;
-  bids:any[];
+  bids:Bid[];
+  startDate:Date;
+  status:string;
+  endDate:Date;
+  minPrice:number;
 }
 
 export interface Product {

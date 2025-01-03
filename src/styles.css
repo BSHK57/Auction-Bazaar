@@ -29,9 +29,17 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.remainingTime{
-  background-color: blue;
-  font-size: 20px;
-  color: wheat;
-  padding: 10px 0 10px 0;
- }
+
+.remainingTime {
+  padding: 5px 0;
+  font-size: 17px;
+  color: white;
+  background: red;
+  max-width: 140px;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  margin: auto; 
+  margin-top: 5px;
+  border-radius: 4px;
+}
