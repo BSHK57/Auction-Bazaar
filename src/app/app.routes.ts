@@ -9,6 +9,7 @@ import { ForgetPasswordComponent } from './components/forget-password/forget-pas
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AuctioneerDashboardComponent } from './components/auctioneer-dashboard/auctioneer-dashboard.component';
 import { BidderDashboardComponent } from './components/bidder-dashboard/bidder-dashboard.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
     {
@@ -42,5 +43,9 @@ export const routes: Routes = [
     {
         path:"bidder-dashboard",
         component:BidderDashboardComponent
+    },
+    {
+        path:"admin-dashboard",
+        component:AdminDashboardComponent
     }
 ];

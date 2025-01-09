@@ -1,0 +1,148 @@
+<div class="dashboard-container" *ngIf="userRole === 'admin'">
+  <!-- Dashboard Header -->
+  <div>
+    <div class="dashboard-header">
+      <h1>Admin Dashboard</h1>
+      <div class="user-info">
+        <div class="profile-image">
+          <img src="{{ adminDetails.profileImage }}" alt="Profile Image" class="profile-img">
+        </div>
+        <div>
+          <h2>Name: {{ adminDetails.name }}</h2>
+          <p>Email: {{ adminDetails.email }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Administrative Statistics -->
+    <div class="dashboard-grid">
+      <div class="card" (click)="setTab('manageUsers')">
+        <h3>Total Users</h3>
+        <p>{{ totalUsers }}</p>
+      </div>
+      <div class="card" >
+        <h3>Active Auctions</h3>
+        <p>{{ activeAuctionsCount }}</p>
+      </div>
+      <div class="card" (click)="setTab('reviewAuctions')">
+        <h3>Pending Approvals</h3>
+        <p>{{ pendingApprovalsCount }}</p>
+      </div>
+      <div class="card" (click)="setTab('manageItems')">
+        <h3>Total Products</h3>
+        <p>57</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="next">
+    <!-- Navigation Bar -->
+    <div class="dashboard-nav">
+      <button class="nav-link" [ngClass]="{ active: selectedTab === 'manageUsers' }" (click)="setTab('manageUsers')">
+        Manage Users
+      </button>
+      <button class="nav-link" [ngClass]="{ active: selectedTab === 'reviewAuctions' }"
+        (click)="setTab('reviewAuctions')">
+        Review Auctions
+      </button>
+      <button class="nav-link" [ngClass]="{ active: selectedTab === 'insights' }" (click)="setTab('insights')">
+        Insights
+      </button>
+      <button class="nav-link" [ngClass]="{ active: selectedTab === 'manageItems' }" (click)="setTab('manageItems')">
+        Manage Items
+      </button>
+    </div>
+
+    <!-- Dynamic Content -->
+    <div class="dashboard-content">
+      <!-- Manage Items -->
+      <div *ngIf="selectedTab === 'manageItems'" class="manage-items">
+        <h3>Manage Items</h3>
+        <table class="item-table">
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Description</th>
+              <th>Sale Price</th>
+              <th>Category</th>
+              <th>Image</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of items">
+              <td>{{ item.name }}</td>
+              <td>{{ item.description }}</td>
+              <td>{{ item.salePrice | currency:'INR' }}</td>
+              <td>{{ item.category }}</td>
+              <td><img [src]="item.image" alt="Item Image" class="item-img" /></td>
+              <td>
+                <button (click)="editItem(item.auctionId)" class="edit-btn">Edit</button>
+                <button (click)="deleteItem(item.auctionId)" class="delete-btn">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Manage Users -->
+      <div *ngIf="selectedTab === 'manageUsers'" class="user-management">
+        <h3>User Management</h3>
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>User Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>{{ user.status }}</td>
+              <td>
+                <button (click)="toggleUserStatus(user.id)" [ngClass]="getStatusButtonClass(user.status)"
+                  class="toggle-btn">
+                  {{ user.status === 'Active' ? 'Deactivate' : 'Activate' }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Review Auctions -->
+      <div *ngIf="selectedTab === 'reviewAuctions'" class="auction-review">
+        <h3>Pending Auction Approvals</h3>
+        <div class="s12344">
+          <ng-container *ngIf="pendingApprovals.length; else noApprovals">
+            <ul>
+              <li *ngFor="let auction of pendingApprovals" class="auction-card">
+                <h4><strong>{{ auction.productName }}</strong></h4>
+                <p>{{ auction.description }}</p>
+                <p>Submitted by {{auction.submittedBy}}</p>
+                <button (click)="approveAuction(auction.id)" class="approve-btn">Approve</button>
+                <button (click)="rejectAuction(auction.id)" class="reject-btn">Reject</button>
+              </li>
+            </ul>
+          </ng-container>
+          <ng-template #noApprovals>
+            <p>No pending approvals</p>
+          </ng-template>
+        </div>
+      </div>
+
+      <!-- Insights -->
+      <div *ngIf="selectedTab === 'insights'" class="auction-insights">
+        <h3>Auction Insights</h3>
+        <div  id="data-visualization-container">
+          <app-user-auction-chart ></app-user-auction-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

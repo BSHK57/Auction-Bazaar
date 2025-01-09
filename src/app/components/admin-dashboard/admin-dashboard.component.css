@@ -1,0 +1,344 @@
+.dashboard-container {
+  font-family: 'Arial', sans-serif;
+  color: #2c3e50; /* Dark gray for text */
+  background-color: #ecf0f1; /* Light gray background */
+  padding: 20px;
+  width: 95vw;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap:35px;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #3498db, #2ecc71); /* Blue to green gradient */
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  width: 25vw;
+}
+
+.dashboard-header h1 {
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+}
+
+/* Statistics Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.user-info{
+  display: flex;
+  align-items: center;
+}
+
+.profile-image {
+  margin-right: 20px; /* Add some spacing between the image and text */
+}
+
+.profile-img {
+  width: 100px; /* Set the width of the profile image */
+  height: 100px; /* Set the height of the profile image */
+  border-radius: 50%; /* Make it a circular image */
+  object-fit: cover; /* Ensure the image fills the container */
+}
+
+
+.next {
+  width: 65vw;
+  align-self: auto;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  height: 100px;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #3498db;
+}
+
+.card p {
+  font-size: 16px;
+  margin: 5px 0;
+  color: #2c3e50;
+}
+
+/* Navigation Bar */
+.dashboard-nav {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.nav-link {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-link.active {
+  background-color: #1abc9c;
+}
+
+.nav-link:hover {
+  background-color: #2980b9;
+}
+
+/* Dynamic Content */
+.dashboard-content {
+  min-height: 250px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  overflow-x: auto;
+  height: fit-content;
+  max-width: 95vw;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* User Management Table */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.user-table th,
+.user-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.user-table th {
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+}
+
+.user-table td {
+  color: #2c3e50;
+}
+
+.user-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.user-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.toggle-btn {
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-btn.inactive {
+  background-color: #1abc9c; /* Active color */
+}
+
+.toggle-btn.inactive:hover {
+  background-color: #16a085; /* Hover color for active */
+}
+
+.toggle-btn.active {
+  background-color: #e22b2b; /* Inactive color */
+}
+
+.toggle-btn.active:hover {
+  background-color: #a11515; /* Keep the same color on hover for inactive */
+}
+
+.item-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.item-table th,
+.item-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.item-table th {
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+}
+
+.item-table td {
+  color: #2c3e50;
+}
+
+.item-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.item-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.item-img {
+  width: 50px; /* Adjust the size of the item image */
+  height: auto;
+  border-radius: 5px;
+}
+
+.edit-btn,
+.delete-btn {
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+}
+
+.edit-btn {
+  background-color: #3498db; /* Blue for edit button */
+  margin: 10px;
+}
+
+.edit-btn:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}
+
+.delete-btn {
+  background-color: #e22b2b; /* Red for delete button */
+}
+
+.delete-btn:hover {
+  background-color: #a11515; /* Darker red on hover */
+}
+
+
+ul{
+  display: flex;
+  gap:30px;
+}
+
+/* Auction Review Cards */
+.auction-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.auction-card h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #3498db;
+}
+
+.auction-card p {
+  margin: 5px 0;
+  color: #7f8c8d;
+}
+
+.approve-btn,
+.reject-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.approve-btn {
+  background-color: #2ecc71;
+}
+
+.approve-btn:hover {
+  background-color: #27ae60;
+}
+
+.reject-btn {
+  background-color: #e74c3c;
+}
+
+.reject-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Data Visualization Section */
+#data-visualization-container {
+  padding: 10px; /* Reduced padding */
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  margin-top: 10px;
+  max-width: 80%; /* Limit the width to make it smaller */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.s12344{
+  display:flex;
+  gap: 30px;
+}
+/* Responsive Design */
+@media (max-width: 865px) {
+  .dashboard-header {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .dashboard-grid {
+      grid-template-columns: 1fr;
+  }
+
+  .dashboard-nav {
+      flex-wrap: wrap;
+      gap: 5px;
+  }
+
+  .auction-list {
+      flex-direction: column;
+  }
+}
