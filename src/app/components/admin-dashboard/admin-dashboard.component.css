@@ -157,7 +157,7 @@
   background-color: #f1f1f1;
 }
 
-.toggle-btn {
+.toggle-btn,.view-btn {
   color: white;
   border: none;
   padding: 8px 12px;
@@ -166,21 +166,25 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
-.toggle-btn.inactive {
-  background-color: #1abc9c; /* Active color */
+.view-btn{
+  background: #2ecc71; 
+  ;
 }
 
-.toggle-btn.inactive:hover {
-  background-color: #16a085; /* Hover color for active */
+.toggle-btn.inactive {
+  background-color: #1abc9c; 
+}
+
+.toggle-btn.inactive:hover ,.view-btn:hover{
+  background-color: #16a085; 
 }
 
 .toggle-btn.active {
-  background-color: #e22b2b; /* Inactive color */
+  background-color: #e22b2b; 
 }
 
 .toggle-btn.active:hover {
-  background-color: #a11515; /* Keep the same color on hover for inactive */
+  background-color: #a11515; 
 }
 
 .item-table {

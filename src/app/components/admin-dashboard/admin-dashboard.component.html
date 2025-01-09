@@ -20,7 +20,7 @@
         <h3>Total Users</h3>
         <p>{{ totalUsers }}</p>
       </div>
-      <div class="card" >
+      <div class="card">
         <h3>Active Auctions</h3>
         <p>{{ activeAuctionsCount }}</p>
       </div>
@@ -95,7 +95,8 @@
               <th>Email</th>
               <th>Role</th>
               <th>Status</th>
-              <th>Actions</th>
+              <th>Status Actions</th>
+              <th>Role-Based Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -104,10 +105,25 @@
               <td>{{ user.email }}</td>
               <td>{{ user.role }}</td>
               <td>{{ user.status }}</td>
+
+              <!-- Status Actions Column -->
               <td>
                 <button (click)="toggleUserStatus(user.id)" [ngClass]="getStatusButtonClass(user.status)"
                   class="toggle-btn">
                   {{ user.status === 'Active' ? 'Deactivate' : 'Activate' }}
+                </button>
+              </td>
+
+              <!-- Role-Based Actions Column -->
+              <td>
+                <!-- View All Bids Button for Bidders -->
+                <button *ngIf="user.role === 'Bidder'" (click)="viewAllBids(user.id)" class="view-btn">
+                  View All Bids
+                </button>
+
+                <!-- View All Items Button for Auctioneers -->
+                <button *ngIf="user.role === 'Auctioneer'" (click)="viewAllItems(user.id)" class="view-btn">
+                  View All Items
                 </button>
               </td>
             </tr>
@@ -139,8 +155,8 @@
       <!-- Insights -->
       <div *ngIf="selectedTab === 'insights'" class="auction-insights">
         <h3>Auction Insights</h3>
-        <div  id="data-visualization-container">
-          <app-user-auction-chart ></app-user-auction-chart>
+        <div id="data-visualization-container">
+          <app-user-auction-chart></app-user-auction-chart>
         </div>
       </div>
     </div>

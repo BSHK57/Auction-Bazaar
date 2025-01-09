@@ -125,4 +125,14 @@ export class AdminDashboardComponent {
     this.items = this.items.filter((item) => item.auctionId !== itemId);
     console.log('Deleted item with ID:', itemId);
   }
+  viewAllBids(userId: any): void {
+    console.log(`Viewing all bids for user with ID: ${userId}`);
+    // Add logic to navigate or fetch data
+  }
+  
+  viewAllItems(userId: any): void {
+    console.log(`Viewing all items for user with ID: ${userId}`);
+    // Add logic to navigate or fetch data
+  }
+  
 }
