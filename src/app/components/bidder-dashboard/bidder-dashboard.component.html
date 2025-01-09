@@ -101,7 +101,7 @@
                     <p>Status: {{ auction.status }}</p>
                     <h4 *ngIf="auction.status==='Not Started'" style="color: brown;" >
                         Auction Not Started</h4>
-                    <p *ngIf="auction.status==='Ended'">Sold Price:{{auction.item.salePrice}}</p>
+                    <p *ngIf="auction.status==='Ended'">Sold Price:{{auction.item.salePrice | currency:'INR':'symbol':'1.2-2'}}</p>
                     <p *ngIf="auction.status === 'Active'">Ends on: {{ auction.endTime | date: 'dd/MM/yyyy hh:mm a' }}</p>
                     <p *ngIf="auction.status === 'Not Started'">Starts on: {{ auction.startTime | date: 'dd/MM/yyyy hh:mm a' }}</p>
                     <button *ngIf="auction.status === 'Active'" class="bid-btn" (click)="placeBid(auction.item,auction)">
