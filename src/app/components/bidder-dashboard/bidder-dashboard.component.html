@@ -108,7 +108,7 @@
                         Place Bid
                     </button>
                     <button class="view-details-btn" (click)="viewDetails(auction.item,auction,auction.item.bids[auction.item.bids.length-1])">View Details</button>
-                    <div *ngIf="auction.status==='Active'" class="remainingTime">{{  remainingtime(auction.endTime)}}</div> <!-- Countdown timer -->
+                    <div *ngIf="auction.status==='Active'" class="remainingTime">{{auction.remainingTime}}</div> <!-- Countdown timer -->
                 
                 </div>
             </div>

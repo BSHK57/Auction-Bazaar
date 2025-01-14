@@ -5,11 +5,11 @@
       <h1>Admin Dashboard</h1>
       <div class="user-info">
         <div class="profile-image">
-          <img src="{{ adminDetails.profileImage }}" alt="Profile Image" class="profile-img">
+          <img src="{{ admin.profilePicture }}" alt="Profile Image" class="profile-img">
         </div>
         <div>
-          <h2>Name: {{ adminDetails.name }}</h2>
-          <p>Email: {{ adminDetails.email }}</p>
+          <h2>Name: {{ admin.name }}</h2>
+          <p>Email: {{ admin.email }}</p>
         </div>
       </div>
     </div>
@@ -29,8 +29,8 @@
         <p>{{ pendingApprovalsCount }}</p>
       </div>
       <div class="card" (click)="setTab('manageItems')">
-        <h3>Total Products</h3>
-        <p>57</p>
+        <h3>Total Revenue</h3>
+        <p>{{currency(totalRevenue)}}</p>
       </div>
     </div>
   </div>
@@ -57,12 +57,21 @@
     <div class="dashboard-content">
       <!-- Manage Items -->
       <div *ngIf="selectedTab === 'manageItems'" class="manage-items">
-        <h3>Manage Items</h3>
+        <div style="display: flex;justify-content: space-between;">
+          <h3>Manage Items</h3>
+          <button class="nav-link" (click)="setTab('manageCategories')">
+            Manage Categories
+          </button>
+        </div>
+        <div class="scrollable-container">
         <table class="item-table">
           <thead>
             <tr>
+              <th>S.No.</th>
               <th>Item Name</th>
               <th>Description</th>
+              <th>Status</th>
+              <th>Current Bid</th>
               <th>Sale Price</th>
               <th>Category</th>
               <th>Image</th>
@@ -70,21 +79,63 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of items">
+            <tr *ngFor="let item of items;let i =index">
+              <td>{{i+1}}</td>
               <td>{{ item.name }}</td>
               <td>{{ item.description }}</td>
-              <td>{{ item.salePrice | currency:'INR' }}</td>
+              <td>{{item.auctionId.status}}</td>
+              <td>
+                {{
+                  item.bids?.[item.bids.length - 1]?.bidAmount != null
+                    ? (item.bids?.[item.bids.length - 1]?.bidAmount | currency: 'INR')
+                    : "--"
+                }}
+              </td>
+              <td>{{ item.salePrice != null ? (item.salePrice | currency:'INR') : "--" }}</td>
+
               <td>{{ item.category }}</td>
               <td><img [src]="item.image" alt="Item Image" class="item-img" /></td>
               <td>
-                <button (click)="editItem(item.auctionId)" class="edit-btn">Edit</button>
-                <button (click)="deleteItem(item.auctionId)" class="delete-btn">Delete</button>
+                <!-- <button (click)="editItem(item.auctionId)" class="edit-btn">Edit</button> -->
+                <button (click)="deleteItem(item._id)" class="delete-btn">Delete</button>
               </td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
       </div>
 
+      <!-- Manage Categories -->
+      <div *ngIf="selectedTab === 'manageCategories'" class="manage-categories">
+        <div style="display: flex;justify-content: space-between;">
+          <h3>Manage Categories</h3>
+          <div class="category-actions">
+            <button (click)="showAddCategoryModal = true" class="add-category-btn">Add Category</button>
+          </div>
+        </div>
+
+        <div class="scrollable-container">
+          <table class="category-table">
+            <thead>
+              <tr>
+                <th>S.No.</th>
+                <th>Category Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let category of categories; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ category }}</td>
+                <td>
+                  <button (click)="editCategory(i, category)" class="edit-btn">Edit</button>
+                  <button (click)="deleteCategory(category)" class="delete-btn">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+      </div>
       <!-- Manage Users -->
       <div *ngIf="selectedTab === 'manageUsers'" class="user-management">
         <h3>User Management</h3>
@@ -108,7 +159,7 @@
 
               <!-- Status Actions Column -->
               <td>
-                <button (click)="toggleUserStatus(user.id)" [ngClass]="getStatusButtonClass(user.status)"
+                <button (click)="toggleUserStatus(user._id)" [ngClass]="getStatusButtonClass(user.status)"
                   class="toggle-btn">
                   {{ user.status === 'Active' ? 'Deactivate' : 'Activate' }}
                 </button>
@@ -117,12 +168,14 @@
               <!-- Role-Based Actions Column -->
               <td>
                 <!-- View All Bids Button for Bidders -->
-                <button *ngIf="user.role === 'Bidder'" (click)="viewAllBids(user.id)" class="view-btn">
+                <button *ngIf="user.role === 'Bidder' || user.role==='Both(Auctioneer and Bidder)'"
+                  (click)="viewAllBids(user.bidder.toString())" class="view-btn">
                   View All Bids
                 </button>
 
                 <!-- View All Items Button for Auctioneers -->
-                <button *ngIf="user.role === 'Auctioneer'" (click)="viewAllItems(user.id)" class="view-btn">
+                <button *ngIf="user.role === 'Auctioneer' || user.role==='Both(Auctioneer and Bidder)'"
+                  (click)="viewAllItems(user.auctioneer.toString())" class="view-btn">
                   View All Items
                 </button>
               </td>
@@ -138,11 +191,15 @@
           <ng-container *ngIf="pendingApprovals.length; else noApprovals">
             <ul>
               <li *ngFor="let auction of pendingApprovals" class="auction-card">
-                <h4><strong>{{ auction.productName }}</strong></h4>
-                <p>{{ auction.description }}</p>
-                <p>Submitted by {{auction.submittedBy}}</p>
-                <button (click)="approveAuction(auction.id)" class="approve-btn">Approve</button>
-                <button (click)="rejectAuction(auction.id)" class="reject-btn">Reject</button>
+                <div class="img">
+                  <img [src]="auction.item.image" [alt]="auction.item.productName">
+                </div>
+                <h4><strong>{{ auction.item.name }}</strong></h4>
+                <p><strong>Starting Price:</strong>{{currency(auction.startingPrice )}}</p>
+                <p>{{ auction.item.description }}</p>
+                <p>Submitted by {{auction.auctioneerId.userId.name}}</p>
+                <button (click)="approveAuction(auction._id)" class="approve-btn">Approve</button>
+                <button (click)="rejectAuction(auction._id)" class="reject-btn">Reject</button>
               </li>
             </ul>
           </ng-container>
@@ -154,11 +211,126 @@
 
       <!-- Insights -->
       <div *ngIf="selectedTab === 'insights'" class="auction-insights">
-        <h3>Auction Insights</h3>
+        <h1>Auction Insights Dashboard</h1>
         <div id="data-visualization-container">
           <app-user-auction-chart></app-user-auction-chart>
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+
+<div *ngIf="showAddCategoryModal || showEditCategoryModal" class="modal-overlay"></div>
+
+<!-- Add Category Modal -->
+<div *ngIf="showAddCategoryModal" class="modal">
+  <div class="modal-content">
+    <h3>Add New Category</h3>
+    <div class="modal-actions">
+      <button (click)="onCloseModal()" class="close-btn">&times;</button>
+    </div>
+    <div id="add-category">
+      <input type="text" [(ngModel)]="newCategory" placeholder="Category Name" class="modal-input" />
+      <div class="modal-actions">
+        <button (click)="onAddCategory()" class="save-btn">Save</button>
+        <button (click)="onCloseModal()" class="cancel-btn">Cancel</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- Edit  Category Modal -->
+<div *ngIf="showEditCategoryModal" class="modal">
+  <div class="modal-content">
+    <h3>Edit Category</h3>
+    <div class="modal-actions">
+      <button (click)="onCloseModal()" class="close-btn">&times;</button>
+    </div>
+    <div id="add-category">
+    <input type="text" [(ngModel)]="editCategory1" placeholder="Category Name" class="modal-input" />
+    <div class="modal-actions">
+      <button (click)="onEditCategory()" class="save-btn">Save</button>
+      <button (click)="onCloseModal()" class="cancel-btn">Cancel</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- View All Bids Modal -->
+<div *ngIf="showBidsModal" class="modal">
+  <div class="modal-content">
+    <h3>All Bids</h3>
+    <div class="modal-actions">
+      <button (click)="closeBidsModal()" class="close-btn">&times;</button>
+    </div>
+    <div class="scrollable-container">
+    <table class="item-table" *ngIf="selectedBids.length>0">
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>Bid Amount</th>
+          <th>Item Name</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bid of selectedBids; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ bid.bidAmount | currency:'INR' }}</td>
+          <td>{{ bid.itemId.name }}</td>
+          <td>{{ bid.bidTime | date:'dd/MM/YYYY HH:mm:ss' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="selectedBids.length===0">
+      No Bids found for this user
+    </div>
+  </div>
+  
+  </div>
+</div>
+
+<!-- View All Items Modal -->
+<div *ngIf="showItemsModal" class="modal">
+  <div class="modal-content">
+    <h3>All Items</h3>
+    <div class="modal-actions">
+      <button (click)="closeItemsModal()" class="close-btn">&times;</button>
+    </div>
+    <div class="scrollable-container">
+    <table class="item-table" *ngIf="selectedItems.length>0" >
+      <thead>
+        <tr>
+          <th>S.No.</th>
+          <th>Item Name</th>
+          <th>Description</th>
+          <th>Current Bid</th>
+          <th>Sale Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of selectedItems; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.description }}</td>
+          <td>
+            {{
+              item.bids?.[item.bids.length - 1]?.bidAmount != null
+                ? (item.bids?.[item.bids.length - 1]?.bidAmount | currency: 'INR')
+                : "--"
+            }}
+          </td>
+          <td>{{ item.salePrice != null ? (item.salePrice | currency:'INR') : "--" }}</td>
+          <td>{{ item.auctionId.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="selectedItems.length===0">
+      No Items found for this user
+    </div>
+  </div>
   </div>
 </div>

@@ -44,6 +44,7 @@ export class LoginComponent {
           console.log(user._id);
           // Redirect based on the role
           if (this.signinAs === 'admin') {
+            localStorage.setItem("Admin_Id",user._id);
             this.router.navigate(['/admin-dashboard']);  // Navigate to admin dashboard
           } 
           if (this.signinAs === "auctioneer") {

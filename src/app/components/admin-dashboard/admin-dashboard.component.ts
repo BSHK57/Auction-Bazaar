@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { UserAuctionChartComponent } from '../user-auction-chart/user-auction-chart.component';
+import { CategoryService } from '../../category.service';
 
 @Component({
   standalone: true,
@@ -10,129 +12,207 @@ import { UserAuctionChartComponent } from '../user-auction-chart/user-auction-ch
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css'],
 })
-export class AdminDashboardComponent {
+export class AdminDashboardComponent implements OnInit {
   userRole: string = 'admin'; // Mocked user role
   selectedTab: string = 'manageUsers'; // Default tab
   isSidebarCollapsed = false;
 
-  // Mocked admin details
-  adminDetails = {
-    name: 'John Doe',
-    email: 'admin@example.com',
-    profileImage: 'Admin123.webp',
-  };
+  // Admin details
+  admin: any;
 
-  // Mocked dashboard statistics
-  totalUsers: number = 3;
-  activeAuctionsCount: number = 15;
-  pendingApprovalsCount: number = 3;
-  totalRevenue: number = 105000; // Example revenue
+  // Dashboard statistics
+  totalUsers: number = 0;
+  activeAuctionsCount: number = 0;
+  pendingApprovalsCount: number = 0;
+  totalRevenue: number = 0;
 
-  // Mocked user data
-  users = [
-    { id: 1, name: 'Alice', email: 'alice@example.com', role: 'Bidder', status: 'Active' },
-    { id: 2, name: 'Bob', email: 'bob@example.com', role: 'Auctioneer', status: 'Inactive' },
-    { id: 3, name: 'Charlie', email: 'charlie@example.com', role: 'Bidder', status: 'Active' },
-  ];
+  // Data
+  users: any[] = [];
+  pendingApprovals: any[] = [];
+  items: any[] = [];
+  selectedBids: any;
+  showBidsModal: boolean = false;
+  showItemsModal: boolean = false;
+  selectedItems: any;
 
-  // Mocked pending auction approvals
-  pendingApprovals = [
-    {
-      id: 101,
-      productName: 'Vintage Watch',
-      description: 'A rare vintage watch from the 1950s.',
-      submittedBy: 'Alice',
-    },
-    {
-      id: 102,
-      productName: 'Antique Vase',
-      description: 'A beautiful handcrafted vase from the 1800s.',
-      submittedBy: 'Bob',
-    },
-  ];
+  constructor(private http: HttpClient, private categoryService: CategoryService) { }
 
-  // Mocked categories and items
-  categories = [
-    { id: 1, name: 'Watches' },
-    { id: 2, name: 'Vases' },
-    { id: 3, name: 'Jewelry' },
-  ];
-
-  items = [
-    {
-      auctionId: '123',
-      name: 'Vintage Watch',
-      description: 'A rare vintage watch from the 1950s.',
-      salePrice: 15000,
-      category: 'Watches',
-      image: 'path/to/image.jpg',
-    },
-    {
-      auctionId: '124',
-      name: 'Antique Vase',
-      description: 'A beautiful handcrafted vase from the 1800s.',
-      salePrice: 5000,
-      category: 'Vases',
-      image: 'path/to/image2.jpg',
-    },
-    {
-      auctionId: '125',
-      name: 'Gold Necklace',
-      description: 'A stunning 24K gold necklace.',
-      salePrice: 20000,
-      category: 'Jewelry',
-      image: 'path/to/image3.jpg',
-    },
-  ];
-
-  toggleSidebar() {
-    this.isSidebarCollapsed = !this.isSidebarCollapsed;
+  ngOnInit() {
+    this.fetchAdminData();
+    this.fetchDashboardStats();
+    this.fetchUsers();
+    this.fetchPendingApprovals();
+    this.fetchItems();
+    this.getcategory();
+  }
+  fetchAdminData() {
+    this.http.get(`http://localhost:5000/admin/${localStorage.getItem('Admin_Id')}`).subscribe((admin: any) => {
+      this.admin = admin;
+      console.log(admin);
+      this.admin.profilePicture = "Admin123.webp";
+      console.log(this.admin);
+    });
+  }
+  // Fetch dashboard statistics
+  fetchDashboardStats() {
+    this.http.get('http://localhost:5000/api/dashboard/stats').subscribe((stats: any) => {
+      this.totalUsers = stats.totalUsers;
+      this.activeAuctionsCount = stats.activeAuctionsCount;
+      this.pendingApprovalsCount = stats.pendingApprovalsCount;
+      this.totalRevenue = stats.totalRevenue;
+    });
   }
 
+  currency(Number: number) {
+    return Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', }).format(Number);
+  }
+
+  // Fetch all users
+  fetchUsers() {
+    this.http.get('http://localhost:5000/api/users').subscribe((users: any) => {
+      this.users = users;
+      for (const user of this.users) {
+        if (user.auctioneer && !user.bidder) {
+          user.role = "Auctioneer";
+        }
+        else if (!user.auctioneer && user.bidder) {
+          user.role = "Bidder";
+        }
+        else {
+          user.role = "Both(Auctioneer and Bidder)";
+        }
+      }
+      console.log(this.users);
+    });
+
+
+  }
+
+  // Fetch pending auction approvals
+  fetchPendingApprovals() {
+    this.http.get('http://localhost:5000/api/auctions/pending').subscribe((approvals: any) => {
+      this.pendingApprovals = approvals;
+    });
+  }
+
+  // Fetch all items
+  fetchItems() {
+    this.http.get('http://localhost:5000/api/items').subscribe((items: any) => {
+      this.items = items;
+    });
+  }
+
+  // Set active tab
   setTab(tab: string) {
     this.selectedTab = tab;
   }
 
+  // Toggle user status
   toggleUserStatus(userId: number) {
-    const user = this.users.find((u) => u.id === userId);
-    if (user) {
-      user.status = user.status === 'Active' ? 'Inactive' : 'Active';
-    }
+    this.http.patch(`http://localhost:5000/api/users/${userId}/status`, {}).subscribe(() => {
+      this.fetchUsers();
+    });
   }
 
-  approveAuction(auctionId: number) {
-    this.pendingApprovals = this.pendingApprovals.filter((auction) => auction.id !== auctionId);
-    this.pendingApprovalsCount--;
-    this.activeAuctionsCount++; // Example logic: Add to active auctions count
+  // Approve an auction
+  approveAuction(auctionId: string) {
+    this.http.patch(`http://localhost:5000/api/auctions/${auctionId}/approve`, {}).subscribe(() => {
+      this.fetchPendingApprovals();
+      this.fetchDashboardStats();
+    });
   }
 
+  // Reject an auction
   rejectAuction(auctionId: number) {
-    this.pendingApprovals = this.pendingApprovals.filter((auction) => auction.id !== auctionId);
-    this.pendingApprovalsCount--;
+    this.http.patch(`http://localhost:5000/api/auctions/${auctionId}/reject`, {}).subscribe(() => {
+      this.fetchPendingApprovals();
+    });
   }
 
+  // Delete an item
+  deleteItem(itemId: string) {
+    this.http.delete(`http://localhost:5000/api/items/${itemId}`).subscribe(() => {
+      this.fetchItems();
+    });
+  }
+
+  // View all bids for a user
+  viewAllBids(bidderId: any) {
+    this.http.get(`http://localhost:5000/api/bids/${bidderId}`).subscribe((bids: any) => {
+      this.selectedBids = bids;
+      this.showBidsModal = true;
+      console.log('Bids:', this.selectedBids, this.showBidsModal);
+    }); this.showBidsModal = true;
+  }
+
+  // View all items for a user
+  viewAllItems(auctioneerId: any) {
+    this.http.get(`http://localhost:5000/api/items/${auctioneerId}`).subscribe((items: any) => {
+      console.log('Items:', items);
+      this.selectedItems = items;
+      this.showItemsModal = true;
+    });
+  }
+
+  // Get status button class
   getStatusButtonClass(status: string): string {
     return status === 'Active' ? 'active' : 'inactive';
   }
-
-  // Methods for managing categories and items
-  editItem(itemId: string) {
-    console.log('Editing item with ID:', itemId);
-    // Implement editing functionality
+  categories: any[] = []; // Array to store categories
+  newCategory: string = ''; // For new category input
+  showAddCategoryModal: boolean = false;
+  showEditCategoryModal: boolean = false;
+  editCategory1: string = ''; editIndex: any;
+  getcategory() {
+    this.categoryService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+    });
   }
 
-  deleteItem(itemId: string) {
-    this.items = this.items.filter((item) => item.auctionId !== itemId);
-    console.log('Deleted item with ID:', itemId);
+  editCategory(i: number, category1: string) {
+    this.editIndex = i;
+    this.editCategory1 = category1;
+    this.showEditCategoryModal = true;
   }
-  viewAllBids(userId: any): void {
-    console.log(`Viewing all bids for user with ID: ${userId}`);
-    // Add logic to navigate or fetch data
+  onEditCategory() {
+    if (this.editCategory1.trim()) {
+      this.categoryService.updateCategory(this.editIndex, this.editCategory1);
+      this.updateCategories();
+      this.editCategory1 = '';
+      this.editIndex = null;
+      this.showEditCategoryModal = false; // Close the modal
+    }
   }
-  
-  viewAllItems(userId: any): void {
-    console.log(`Viewing all items for user with ID: ${userId}`);
-    // Add logic to navigate or fetch data
+  deleteCategory(category: string) {
+    this.categoryService.removeCategory(category);
+    this.updateCategories();
   }
-  
+
+  onAddCategory() {
+    if (this.newCategory.trim()) {
+      this.categoryService.addCategory(this.newCategory);
+      this.updateCategories();
+      this.newCategory = '';
+      this.showAddCategoryModal = false; // Close the modal
+    }
+  }
+
+  private updateCategories(): void {
+    this.categoryService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+    });
+  }
+
+  // Close the modal without adding
+  onCloseModal() {
+    this.newCategory = '';
+    this.showAddCategoryModal = false;
+    this.showEditCategoryModal = false;
+  }
+  closeBidsModal() {
+    this.showBidsModal = false;
+  }
+  closeItemsModal() {
+    this.showItemsModal = false;
+  }
 }

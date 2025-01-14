@@ -13,11 +13,9 @@ export class AuctionService {
   getAuctionsByAuctioneerId(auctioneerId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/auctions/${auctioneerId}`);
   }
-
   getUserDetails(userId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/users/${userId}`);
   }
-
   updateAuction(auctionId: string, status?: string, salePrice?: number, bid?: any): Observable<any> {
     const updateParams: any = {  };
 
@@ -35,7 +33,6 @@ export class AuctionService {
 
     return this.http.put<any>(`${this.apiUrl}/auctions/${auctionId}`, updateParams);
   }
-
   updateAuctionStatusAndBid(auctionId: string, status?: string, salePrice?: number, bid?: any) {
     console.log(salePrice);
     this.updateAuction(auctionId, status, salePrice, bid).subscribe({
@@ -50,7 +47,6 @@ export class AuctionService {
   getBidderDashboardData(bidderId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/bids-dashboard/${bidderId}`);
   }
-
   placeBid(bidData: { bidderId: string; itemId: string; bidAmount: number }): Observable<any> {
     return this.http.post(`${this.apiUrl}/place-bid`, bidData);
   }

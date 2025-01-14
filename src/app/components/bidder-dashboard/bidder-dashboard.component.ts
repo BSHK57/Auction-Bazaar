@@ -23,6 +23,9 @@ export class BidderDashboardComponent implements OnInit {
   constructor(private route: ActivatedRoute, private userService: AuctionService) { }
 
   ngOnInit() {
+    setInterval(() => {
+      this.updateRemainingtime();
+    }, 1000);
     this.getUserDetails();
     this.getBidderDashboardData();
   }
@@ -35,6 +38,14 @@ export class BidderDashboardComponent implements OnInit {
   allAuctions: AllAuction[] = []; // Populate from API
 
   selectedTab = 'participatedBids';
+
+  updateRemainingtime(){
+    for (const auction of this.allAuctions){
+      if (auction.status==="Active"){
+        auction.remainingTime=this.remainingtime(auction.endTime);
+      }
+    }
+  }
 
   // Filters
   remainingtime(time1: Date) {
@@ -207,7 +218,6 @@ export class BidderDashboardComponent implements OnInit {
     this.selectedItem = undefined;
     this.currentBid = null;
     this.selectedAuction = null;
-
   }
 
   viewBids(bids:any){

@@ -90,10 +90,10 @@ export class AuctioneerDashboardComponent implements OnInit {
       if (auction.status === "Not Started") {
         this.activeAuctions.push(auction);
       }
-      else if (auction.status === "Active") {
+      else if (auction.status === "Active" || auction.status === "Pending") {
         this.activeAuctions.push(auction);
       }
-      else {
+      else if (auction.status === "Ended") {
         // console.log(auction);
         this.addToSoldItems(auction);
       }
@@ -142,7 +142,7 @@ export class AuctioneerDashboardComponent implements OnInit {
     this.activeAuctions.forEach((auction) => {
       const now = new Date();
       if (auction.status === "Active" || auction.startDate <= now) {
-        if (auction.status !== "Active") {
+        if (auction.status === "Not Started" ) {
           auction.status = "Active"
           this.userService.updateAuctionStatusAndBid(auction._id, auction.status);
         }

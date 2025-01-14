@@ -70,6 +70,7 @@ export interface Auction1 {
   status: 'Active' | 'Ended' | 'Cancelled' | 'Not Started'; // Current status of the auction
   startingPrice: number; // Starting price for the auction
   item: Item; // Associated item object
+  remainingTime:string;
 }
 
 export interface ParticipatedBid extends Bid {
