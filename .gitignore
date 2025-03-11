@@ -1,42 +1,44 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# Restrict all rules to the Auction-Bazaar directory
+/Auction-Bazaar/dist
+/Auction-Bazaar/tmp
+/Auction-Bazaar/out-tsc
+/Auction-Bazaar/bazel-out
 
 # Node
-/node_modules
-npm-debug.log
-yarn-error.log
+/Auction-Bazaar/node_modules
+/Auction-Bazaar/npm-debug.log
+/Auction-Bazaar/yarn-error.log
 
 # IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+/Auction-Bazaar/.idea/
+/Auction-Bazaar/.project
+/Auction-Bazaar/.classpath
+/Auction-Bazaar/.c9/
+/Auction-Bazaar/*.launch
+/Auction-Bazaar/.settings/
+/Auction-Bazaar/*.sublime-workspace
 
 # Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
+/Auction-Bazaar/.vscode/*
+!/Auction-Bazaar/.vscode/settings.json
+!/Auction-Bazaar/.vscode/tasks.json
+!/Auction-Bazaar/.vscode/launch.json
+!/Auction-Bazaar/.vscode/extensions.json
+/Auction-Bazaar/.history/*
 
 # Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
+/Auction-Bazaar/.angular/cache
+/Auction-Bazaar/.sass-cache/
+/Auction-Bazaar/connect.lock
+/Auction-Bazaar/coverage
+/Auction-Bazaar/libpeerconnection.log
+/Auction-Bazaar/testem.log
+/Auction-Bazaar/typings
 
 # System files
-.DS_Store
-Thumbs.db
+/Auction-Bazaar/.DS_Store
+/Auction-Bazaar/Thumbs.db
+
+/auction-backend/node_modules/
