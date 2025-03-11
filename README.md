@@ -4,6 +4,11 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## Development server
 
+Navigate to Frontend Directory
+```bash
+cd Auction-Bazaar
+```
+
 To start a local development server, run:
 
 ```bash
@@ -52,8 +57,35 @@ For end-to-end (e2e) testing, run:
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs. 
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Running the Backend Server  
+
+The backend for AuctionBazaar must be started separately. Ensure you have [Node.js](https://nodejs.org/) installed.  
+
+### Steps to Run the Backend  
+
+1. Navigate to the Backend directory:  
+
+   ```bash
+   cd auction-backend
+   ```
+
+2. Install dependencies:  
+
+   ```bash
+   npm install
+   ```
+
+3. Start the backend server:  
+
+   ```bash
+   npm start
+   ```
+
+4. By default, the backend will run on `http://localhost:3000/`. Update the frontend configuration if needed to match the correct backend URL.  
+
+---
+
