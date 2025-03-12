@@ -94,7 +94,7 @@
               <td>{{ item.salePrice != null ? (item.salePrice | currency:'INR') : "--" }}</td>
 
               <td>{{ item.category }}</td>
-              <td><img [src]="item.image" alt="Item Image" class="item-img" /></td>
+              <td><img [src]="'data:image/png;base64,'+item.image" alt="Item Image" class="item-img" /></td>
               <td>
                 <!-- <button (click)="editItem(item.auctionId)" class="edit-btn">Edit</button> -->
                 <button (click)="deleteItem(item._id)" class="delete-btn">Delete</button>
@@ -192,7 +192,7 @@
             <ul>
               <li *ngFor="let auction of pendingApprovals" class="auction-card">
                 <div class="img">
-                  <img [src]="auction.item.image" [alt]="auction.item.productName">
+                  <img [src]="'data:image/png;base64,'+auction.item.image" [alt]="auction.item.productName">
                 </div>
                 <h4><strong>{{ auction.item.name }}</strong></h4>
                 <p><strong>Starting Price:</strong>{{currency(auction.startingPrice )}}</p>

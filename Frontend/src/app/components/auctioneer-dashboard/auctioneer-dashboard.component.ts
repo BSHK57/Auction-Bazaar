@@ -98,8 +98,8 @@ export class AuctioneerDashboardComponent implements OnInit {
         this.addToSoldItems(auction);
       }
     }
-    // console.log(this.soldItems);
-    // console.log(this.activeAuctions);
+    console.log(this.soldItems);
+    console.log(this.activeAuctions);
   }
 
   addToSoldItems(auction: Auction) {

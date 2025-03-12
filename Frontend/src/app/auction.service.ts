@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuctionService {
-  private apiUrl = 'http://localhost:5000';  // Adjust with your backend API URL
+  apiUrl = 'https://online-auction-bazaar.onrender.com';  // Adjust with your backend API URL
 
   constructor(private http: HttpClient) {} 
 

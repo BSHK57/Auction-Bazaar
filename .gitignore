@@ -1,44 +1,47 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-# Restrict all rules to the Auction-Bazaar directory
-/Auction-Bazaar/dist
-/Auction-Bazaar/tmp
-/Auction-Bazaar/out-tsc
-/Auction-Bazaar/bazel-out
+# Restrict all rules to the Frontend directory
+/Frontend/dist
+/Frontend/tmp
+/Frontend/out-tsc
+/Frontend/bazel-out
 
 # Node
-/Auction-Bazaar/node_modules
-/Auction-Bazaar/npm-debug.log
-/Auction-Bazaar/yarn-error.log
+/Frontend/node_modules
+/Frontend/npm-debug.log
+/Frontend/yarn-error.log
 
 # IDEs and editors
-/Auction-Bazaar/.idea/
-/Auction-Bazaar/.project
-/Auction-Bazaar/.classpath
-/Auction-Bazaar/.c9/
-/Auction-Bazaar/*.launch
-/Auction-Bazaar/.settings/
-/Auction-Bazaar/*.sublime-workspace
+/Frontend/.idea/
+/Frontend/.project
+/Frontend/.classpath
+/Frontend/.c9/
+/Frontend/*.launch
+/Frontend/.settings/
+/Frontend/*.sublime-workspace
 
 # Visual Studio Code
-/Auction-Bazaar/.vscode/*
-!/Auction-Bazaar/.vscode/settings.json
-!/Auction-Bazaar/.vscode/tasks.json
-!/Auction-Bazaar/.vscode/launch.json
-!/Auction-Bazaar/.vscode/extensions.json
-/Auction-Bazaar/.history/*
+/Frontend/.vscode/*
+!/Frontend/.vscode/settings.json
+!/Frontend/.vscode/tasks.json
+!/Frontend/.vscode/launch.json
+!/Frontend/.vscode/extensions.json
+/Frontend/.history/*
+.vscode/
 
 # Miscellaneous
-/Auction-Bazaar/.angular/cache
-/Auction-Bazaar/.sass-cache/
-/Auction-Bazaar/connect.lock
-/Auction-Bazaar/coverage
-/Auction-Bazaar/libpeerconnection.log
-/Auction-Bazaar/testem.log
-/Auction-Bazaar/typings
+/Frontend/.angular/cache
+/Frontend/.sass-cache/
+/Frontend/connect.lock
+/Frontend/coverage
+/Frontend/libpeerconnection.log
+/Frontend/testem.log
+/Frontend/typings
 
 # System files
-/Auction-Bazaar/.DS_Store
-/Auction-Bazaar/Thumbs.db
+/Frontend/.DS_Store
+/Frontend/Thumbs.db
 
-/auction-backend/node_modules/
+/Backend/node_modules/
+/Backend/package-lock.json
+/Backend/backend.zip

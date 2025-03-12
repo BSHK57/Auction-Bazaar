@@ -211,7 +211,7 @@ export class BidderDashboardComponent implements OnInit {
     this.selectedItem = item;
     this.selectedAuction = auction;
     this.isModalOpen = true;
-    this.currentBid = bid || item.bids[item.bids.length - 1];
+    this.currentBid = item.bids[item.bids.length - 1];
   }
   closeModal() {
     this.isModalOpen = false;

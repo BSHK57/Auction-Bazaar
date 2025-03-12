@@ -64,7 +64,7 @@
         <!-- Participated Bids -->
         <div *ngIf="selectedTab === 'participatedBids'" class="bid-list">
             <div class="card-img" *ngFor="let bid of filteredParticipatedBids">
-                <img [src]="bid.itemId.image" [alt]="bid.itemId.name" class="auction-image">
+                <img [src]="'data:image/png;base64,'+bid.itemId.image" [alt]="bid.itemId.name" class="auction-image">
                 <div class="details">
                     <h4>{{ bid.itemId.name }}</h4>
                     <p>{{ bid.itemId.description }}</p>
@@ -78,7 +78,7 @@
         <!-- Won Bids -->
         <div *ngIf="selectedTab === 'wonBids'" class="bid-list">
             <div class="card-img" *ngFor="let bid of filteredWonBids">
-                <img [src]="bid.itemId.image" [alt]="bid.itemId.name" class="auction-image">
+                <img [src]="'data:image/png;base64,'+bid.itemId.image" [alt]="bid.itemId.name" class="auction-image">
                 <div class="details">
                     <h4>{{ bid.itemId.name }}</h4>
                     <p>{{ bid.itemId.description }}</p>
@@ -92,7 +92,7 @@
         <!-- All Auctions -->
         <div *ngIf="selectedTab === 'allAuctions'" class="auction-list">
             <div class="card-img" *ngFor="let auction of filteredAuctions">
-                <img [src]="auction.item.image" [alt]="auction.item.name" class="auction-image">
+                <img [src]="'data:image/png;base64,'+auction.item.image" [alt]="auction.item.name" class="auction-image">
                 <!-- <p *ngIf="auction.status === 'Active'" class="remainingTime">{{ remainingtime(auction.endTime) }}</p> -->
                 <div class="details">
                     <h4>{{ auction.item.name }}</h4>
@@ -123,7 +123,7 @@
         <!-- <div class="close-mark" (click)="closeModal()">&#x25B2; Close</div> -->
         <span class="close-btn" (click)="closeModal()">&times;</span>
         <h4>{{ selectedItem?.name }}</h4>
-        <img [src]="selectedItem?.image" [alt]="selectedItem?.name" class="modal-image">
+        <img [src]="'data:image/png;base64,'+selectedItem?.image" [alt]="selectedItem?.name" class="modal-image">
         <p><strong>Description:</strong> {{ selectedItem?.description }}</p>
         <p><strong>Starting Price:</strong> {{ selectedAuction.startingPrice ? currency(selectedAuction.startingPrice) : 'N/A' }}</p>
         <p *ngIf="selectedAuction.status === 'Active'"><strong>Current Bid:</strong>  {{ currentBid?.bidAmount ? currency(currentBid?.bidAmount) : 'N/A' }}</p> 
@@ -145,7 +145,7 @@
     <div class="modal-content">
         <span class="close-btn" (click)="closePlaceBidModal()">&times;</span>
         <h4>Place Your Bid</h4>
-        <img [src]="selectedItem?.image" [alt]="selectedItem?.name" class="modal-image">
+        <img [src]="'data:image/png;base64,'+selectedItem?.image" [alt]="selectedItem?.name" class="modal-image">
         <p><strong>Item:</strong> {{ selectedItem?.name }}</p>
         <p><strong>Current Bid:</strong> 
             {{ currentBid?.bidAmount ? currency(currentBid.bidAmount) : currency(selectedAuction.startingPrice) }}

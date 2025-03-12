@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { UserAuctionChartComponent } from '../user-auction-chart/user-auction-chart.component';
 import { CategoryService } from '../../category.service';
+import { AuctionService } from '../../auction.service';
 
 @Component({
   standalone: true,
@@ -34,8 +35,9 @@ export class AdminDashboardComponent implements OnInit {
   showBidsModal: boolean = false;
   showItemsModal: boolean = false;
   selectedItems: any;
+  
 
-  constructor(private http: HttpClient, private categoryService: CategoryService) { }
+  constructor(private http: HttpClient, private categoryService: CategoryService,private userService: AuctionService) { }
 
   ngOnInit() {
     this.fetchAdminData();
@@ -46,7 +48,7 @@ export class AdminDashboardComponent implements OnInit {
     this.getcategory();
   }
   fetchAdminData() {
-    this.http.get(`http://localhost:5000/admin/${localStorage.getItem('Admin_Id')}`).subscribe((admin: any) => {
+    this.http.get(`${this.userService.apiUrl}/admin/${localStorage.getItem('Admin_Id')}`).subscribe((admin: any) => {
       this.admin = admin;
       console.log(admin);
       this.admin.profilePicture = "Admin123.webp";
@@ -55,7 +57,7 @@ export class AdminDashboardComponent implements OnInit {
   }
   // Fetch dashboard statistics
   fetchDashboardStats() {
-    this.http.get('http://localhost:5000/api/dashboard/stats').subscribe((stats: any) => {
+    this.http.get(`${this.userService.apiUrl}/api/dashboard/stats`).subscribe((stats: any) => {
       this.totalUsers = stats.totalUsers;
       this.activeAuctionsCount = stats.activeAuctionsCount;
       this.pendingApprovalsCount = stats.pendingApprovalsCount;
@@ -69,7 +71,7 @@ export class AdminDashboardComponent implements OnInit {
 
   // Fetch all users
   fetchUsers() {
-    this.http.get('http://localhost:5000/api/users').subscribe((users: any) => {
+    this.http.get(`${this.userService.apiUrl}/api/users`).subscribe((users: any) => {
       this.users = users;
       for (const user of this.users) {
         if (user.auctioneer && !user.bidder) {
@@ -90,14 +92,14 @@ export class AdminDashboardComponent implements OnInit {
 
   // Fetch pending auction approvals
   fetchPendingApprovals() {
-    this.http.get('http://localhost:5000/api/auctions/pending').subscribe((approvals: any) => {
+    this.http.get(`${this.userService.apiUrl}/api/auctions/pending`).subscribe((approvals: any) => {
       this.pendingApprovals = approvals;
     });
   }
 
   // Fetch all items
   fetchItems() {
-    this.http.get('http://localhost:5000/api/items').subscribe((items: any) => {
+    this.http.get(`${this.userService.apiUrl}/api/items`).subscribe((items: any) => {
       this.items = items;
     });
   }
@@ -109,14 +111,14 @@ export class AdminDashboardComponent implements OnInit {
 
   // Toggle user status
   toggleUserStatus(userId: number) {
-    this.http.patch(`http://localhost:5000/api/users/${userId}/status`, {}).subscribe(() => {
+    this.http.patch(`${this.userService.apiUrl}/api/users/${userId}/status`, {}).subscribe(() => {
       this.fetchUsers();
     });
   }
 
   // Approve an auction
   approveAuction(auctionId: string) {
-    this.http.patch(`http://localhost:5000/api/auctions/${auctionId}/approve`, {}).subscribe(() => {
+    this.http.patch(`${this.userService.apiUrl}/api/auctions/${auctionId}/approve`, {}).subscribe(() => {
       this.fetchPendingApprovals();
       this.fetchDashboardStats();
     });
@@ -124,21 +126,21 @@ export class AdminDashboardComponent implements OnInit {
 
   // Reject an auction
   rejectAuction(auctionId: number) {
-    this.http.patch(`http://localhost:5000/api/auctions/${auctionId}/reject`, {}).subscribe(() => {
+    this.http.patch(`${this.userService.apiUrl}/api/auctions/${auctionId}/reject`, {}).subscribe(() => {
       this.fetchPendingApprovals();
     });
   }
 
   // Delete an item
   deleteItem(itemId: string) {
-    this.http.delete(`http://localhost:5000/api/items/${itemId}`).subscribe(() => {
+    this.http.delete(`${this.userService.apiUrl}/api/items/${itemId}`).subscribe(() => {
       this.fetchItems();
     });
   }
 
   // View all bids for a user
   viewAllBids(bidderId: any) {
-    this.http.get(`http://localhost:5000/api/bids/${bidderId}`).subscribe((bids: any) => {
+    this.http.get(`${this.userService.apiUrl}/api/bids/${bidderId}`).subscribe((bids: any) => {
       this.selectedBids = bids;
       this.showBidsModal = true;
       console.log('Bids:', this.selectedBids, this.showBidsModal);
@@ -147,7 +149,7 @@ export class AdminDashboardComponent implements OnInit {
 
   // View all items for a user
   viewAllItems(auctioneerId: any) {
-    this.http.get(`http://localhost:5000/api/items/${auctioneerId}`).subscribe((items: any) => {
+    this.http.get(`${this.userService.apiUrl}/api/items/${auctioneerId}`).subscribe((items: any) => {
       console.log('Items:', items);
       this.selectedItems = items;
       this.showItemsModal = true;
