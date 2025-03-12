@@ -30,7 +30,7 @@ export class LoginComponent {
     if (loginForm.valid) {
       this.errorMessage = '';
       const loginData = { email: this.email, password: this.password,role:this.signinAs };
-      this.http.post('http://localhost:5000/login', loginData).subscribe(
+      this.http.post('https://online-auction-bazaar.onrender.com/login', loginData).subscribe(
         (response: any) => {
           const user=response.user;
           alert(`Hi ${user.name}, Login Successful! as ${this.signinAs}`);

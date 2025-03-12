@@ -108,7 +108,7 @@ export class AddProductComponent {
     }
 
     // Send the data to the backend API
-    this.http.post('http://localhost:5000/create-auction', formData).subscribe(
+    this.http.post('https://online-auction-bazaar.onrender.com/create-auction', formData).subscribe(
       (response) => {
         console.log('Product created successfully:', response);
         // const item=response.item;

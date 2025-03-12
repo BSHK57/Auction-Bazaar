@@ -46,7 +46,7 @@ export class RegistrationComponent {
     const userData = { name, username, email, password, role: signupAs };
 
     // Make the POST request to the backend
-    this.http.post('http://localhost:5000/register', userData).subscribe(
+    this.http.post('https://online-auction-bazaar.onrender.com/register', userData).subscribe(
       (response: any) => {
         // Handle successful response
         alert(response.message);
