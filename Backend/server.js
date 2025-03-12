@@ -22,7 +22,7 @@ const upload = multer({ storage });
 
 // Middleware
 app.use(cors({
-  origin: ["https://auction-bazaar-24.netlify.app"],
+  origin: ["https://auction-bazaar-24.netlify.app","0.0.0.0/0"],
   credentials: true
 }));
 app.use(bodyParser.json({ limit: '10mb' })); // Increase limit for image uploads
