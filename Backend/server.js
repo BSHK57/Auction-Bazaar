@@ -21,7 +21,10 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ["https://auction-bazaar-24.netlify.app"],
+  credentials: true
+}));
 app.use(bodyParser.json({ limit: '10mb' })); // Increase limit for image uploads
 
 // Connect to MongoDB
