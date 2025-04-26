@@ -1,4 +1,5 @@
 # AuctionBazaar
+Welcome to AuctionBazaar, a real-time auction platform designed to provide seamless and engaging bidding experiences for users. This application allows bidders and auctioneers to interact in real time, making online auctions faster, transparent, and efficient.
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 18.0.0.
 
